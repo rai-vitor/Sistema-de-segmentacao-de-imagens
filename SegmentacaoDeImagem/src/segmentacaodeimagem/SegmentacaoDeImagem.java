@@ -22,6 +22,7 @@ public class SegmentacaoDeImagem {
     /**
      * @param args the command line arguments
      */
+    /*
      public static void main(String[] args) {
         // Segmentação com parâmetros 0.99, 40 e 1000
         ImageInformation seg = ImageSegmentation.performSegmentation("imgs/model.jpg", 0.99,40,1000);        
@@ -37,5 +38,5 @@ public class SegmentacaoDeImagem {
         frame.pack();
         frame.setVisible(true);
     }
-    
+    */
 }
