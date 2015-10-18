@@ -8,7 +8,9 @@ package segmentacaodeimagem;
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
 import java.awt.FlowLayout;
+import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
@@ -18,7 +20,8 @@ import javax.swing.SpinnerNumberModel;
  * @author rai_desk
  */
 public class FormSegmentacao extends javax.swing.JFrame {
-
+    JFileChooser fc;
+    String path = null;
     /**
      * Creates new form FormSegmentacao
      */
@@ -37,6 +40,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        jDialog1 = new javax.swing.JDialog();
         PanelImg = new javax.swing.JPanel();
         PanelCtrl = new javax.swing.JPanel();
         ValBlur = new javax.swing.JSpinner();
@@ -48,6 +52,19 @@ public class FormSegmentacao extends javax.swing.JFrame {
         LabelRegioes = new javax.swing.JLabel();
         ButtonSegmentar = new javax.swing.JButton();
         ButtonRotulos = new javax.swing.JButton();
+        ButtonImg = new javax.swing.JButton();
+        LabelImg = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 638, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 399, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 200));
@@ -68,11 +85,11 @@ public class FormSegmentacao extends javax.swing.JFrame {
         PanelImg.setLayout(PanelImgLayout);
         PanelImgLayout.setHorizontalGroup(
             PanelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
+            .addGap(0, 396, Short.MAX_VALUE)
         );
         PanelImgLayout.setVerticalGroup(
             PanelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
+            .addGap(0, 396, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -107,6 +124,20 @@ public class FormSegmentacao extends javax.swing.JFrame {
         });
 
         ButtonRotulos.setText("Mostrar mapa de rótulos");
+        ButtonRotulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonRotulosActionPerformed(evt);
+            }
+        });
+
+        ButtonImg.setText("Selecionar Imagem");
+        ButtonImg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonImgActionPerformed(evt);
+            }
+        });
+
+        LabelImg.setText("NomeImg:");
 
         javax.swing.GroupLayout PanelCtrlLayout = new javax.swing.GroupLayout(PanelCtrl);
         PanelCtrl.setLayout(PanelCtrlLayout);
@@ -132,9 +163,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCtrlLayout.createSequentialGroup()
                         .addGroup(PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(ButtonImg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ButtonSegmentar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ButtonRotulos, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
-                        .addContainerGap())))
+                            .addComponent(ButtonRotulos, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
+                        .addContainerGap())
+                    .addGroup(PanelCtrlLayout.createSequentialGroup()
+                        .addComponent(LabelImg)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         PanelCtrlLayout.setVerticalGroup(
             PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,9 +186,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 .addGroup(PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ValSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LabelSize))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(LabelRegioes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LabelImg)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addComponent(ButtonImg)
+                .addGap(9, 9, 9)
                 .addComponent(ButtonSegmentar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ButtonRotulos)
@@ -173,19 +212,22 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ConfigForm(){
+        fc = new JFileChooser();
         ValBlur.setModel(new SpinnerNumberModel(0.50, 0.00, 100.00, 0.01));
         ValRadius.setModel(new SpinnerNumberModel(50, 1, 100, 1));
         ValSize.setModel(new SpinnerNumberModel(500, 1, 1000, 10));
     }
     
     private void ButtonSegmentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSegmentarActionPerformed
-      
+        if(path == null){
+            return;
+        }
+        
         double blur = (double) ValBlur.getValue();
         int radius = (int) ValRadius.getValue();
         int size = (int) ValSize.getValue();
-        System.out.print(blur);
         
-        ImageInformation seg = ImageSegmentation.performSegmentation("imgs/model.jpg", blur, radius, size);        
+        ImageInformation seg = ImageSegmentation.performSegmentation(path, blur, radius, size);        
         
         // Impressão na tela da quantidade de regiões gerada
         LabelRegioes.setText("Total de regiões: "+seg.getTotalRegions());
@@ -204,9 +246,24 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonSegmentarActionPerformed
 
     private void PanelImgComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_PanelImgComponentAdded
-        // TODO add your handling code here:
-        System.out.print(evt.paramString());
     }//GEN-LAST:event_PanelImgComponentAdded
+
+    private void ButtonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRotulosActionPerformed
+    }//GEN-LAST:event_ButtonRotulosActionPerformed
+
+    private void ButtonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonImgActionPerformed
+        int returnVal = fc.showOpenDialog(jDialog1);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
+            if(file.getName().contains("jpg")){
+                LabelImg.setText("NomeImg: "+file.getName());
+                path = file.getAbsolutePath();
+            } else{
+                LabelImg.setText("Utilize somente imagens jpg");
+            }
+        }
+    }//GEN-LAST:event_ButtonImgActionPerformed
 
     /**
      * @param args the command line arguments
@@ -244,9 +301,11 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonImg;
     private javax.swing.JButton ButtonRotulos;
     private javax.swing.JButton ButtonSegmentar;
     private javax.swing.JLabel LabelBlur;
+    private javax.swing.JLabel LabelImg;
     private javax.swing.JLabel LabelRadius;
     private javax.swing.JLabel LabelRegioes;
     private javax.swing.JLabel LabelSize;
@@ -255,5 +314,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private javax.swing.JSpinner ValBlur;
     private javax.swing.JSpinner ValRadius;
     private javax.swing.JSpinner ValSize;
+    private javax.swing.JDialog jDialog1;
     // End of variables declaration//GEN-END:variables
 }
