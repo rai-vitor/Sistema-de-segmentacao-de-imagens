@@ -7,12 +7,19 @@ package segmentacaodeimagem;
 
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -20,8 +27,10 @@ import javax.swing.SpinnerNumberModel;
  * @author rai_desk
  */
 public class FormSegmentacao extends javax.swing.JFrame {
+
     JFileChooser fc;
     String path = null;
+
     /**
      * Creates new form FormSegmentacao
      */
@@ -67,7 +76,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("frame");
         setMinimumSize(new java.awt.Dimension(400, 200));
+        setName("frame"); // NOI18N
         setPreferredSize(new java.awt.Dimension(800, 550));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
@@ -208,35 +219,34 @@ public class FormSegmentacao extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(11, 10, 11, 10);
         getContentPane().add(PanelCtrl, gridBagConstraints);
 
+        getAccessibleContext().setAccessibleDescription("frame");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ConfigForm(){
+    private void ConfigForm() {
         fc = new JFileChooser();
         ValBlur.setModel(new SpinnerNumberModel(0.50, 0.00, 100.00, 0.01));
         ValRadius.setModel(new SpinnerNumberModel(50, 1, 100, 1));
         ValSize.setModel(new SpinnerNumberModel(500, 1, 1000, 10));
     }
-    
+
     private void ButtonSegmentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSegmentarActionPerformed
-        if(path == null){
+        if (path == null) {
             return;
         }
-        
+
         double blur = (double) ValBlur.getValue();
         int radius = (int) ValRadius.getValue();
         int size = (int) ValSize.getValue();
-        
-        ImageInformation seg = ImageSegmentation.performSegmentation(path, blur, radius, size);        
+
+        ImageInformation seg = ImageSegmentation.performSegmentation(path, blur, radius, size);
         
         // Impressão na tela da quantidade de regiões gerada
-        LabelRegioes.setText("Total de regiões: "+seg.getTotalRegions());
+        LabelRegioes.setText("Total de regiões: " + seg.getTotalRegions());
         // Criação de um JFrame e inserção de 2 JLabels com cada uma das imagens.
         //PanelImg.add(new JLabel(new ImageIcon(seg.getOriginalImage())));
-       /* JLabel picLabel = new JLabel(new ImageIcon(seg.getOriginalImage()));
-        PanelImg.add(picLabel);
-        PanelImg.setVisible(true);*/
-        
+
         JFrame frame = new JFrame();
         frame.getContentPane().setLayout(new FlowLayout());
         frame.getContentPane().add(new JLabel(new ImageIcon(seg.getOriginalImage()))); // Imagem original
@@ -246,6 +256,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonSegmentarActionPerformed
 
     private void PanelImgComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_PanelImgComponentAdded
+        System.out.println(evt);
     }//GEN-LAST:event_PanelImgComponentAdded
 
     private void ButtonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRotulosActionPerformed
@@ -253,13 +264,18 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
     private void ButtonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonImgActionPerformed
         int returnVal = fc.showOpenDialog(jDialog1);
-
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
-            if(file.getName().contains("jpg")){
-                LabelImg.setText("NomeImg: "+file.getName());
+            if (file.getName().contains("jpg")) {
+                LabelImg.setText("NomeImg: " + file.getName());
                 path = file.getAbsolutePath();
-            } else{
+                ImageIcon image = new ImageIcon(path);
+                JLabel label = new JLabel("", image, JLabel.CENTER);
+                PanelImg = new JPanel();
+                PanelImg.add( label, BorderLayout.CENTER );
+                PanelImg.setVisible(true);
+                PanelImg.setLayout(null);
+            } else {
                 LabelImg.setText("Utilize somente imagens jpg");
             }
         }
