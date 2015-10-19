@@ -2,14 +2,10 @@ package segmentacaodeimagem;
 
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -20,7 +16,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
     JFileChooser fc;
     String path = null;
-
+    JLabel imgOriginal;
+    JLabel imgSegmentada;
     /**
      * Creates new form FormSegmentacao
      */
@@ -40,7 +37,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jDialog1 = new javax.swing.JDialog();
-        PanelImg = new javax.swing.JPanel();
         PanelCtrl = new javax.swing.JPanel();
         ValBlur = new javax.swing.JSpinner();
         ValRadius = new javax.swing.JSpinner();
@@ -71,37 +67,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
         setName("frame"); // NOI18N
         setPreferredSize(new java.awt.Dimension(800, 550));
         getContentPane().setLayout(new java.awt.GridBagLayout());
-
-        PanelImg.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        PanelImg.setMinimumSize(new java.awt.Dimension(100, 50));
-        PanelImg.setName("PanelImg"); // NOI18N
-        PanelImg.setPreferredSize(new java.awt.Dimension(400, 400));
-        PanelImg.addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                PanelImgComponentAdded(evt);
-            }
-        });
-
-        javax.swing.GroupLayout PanelImgLayout = new javax.swing.GroupLayout(PanelImg);
-        PanelImg.setLayout(PanelImgLayout);
-        PanelImgLayout.setHorizontalGroup(
-            PanelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
-        );
-        PanelImgLayout.setVerticalGroup(
-            PanelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
-        );
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 400;
-        gridBagConstraints.ipady = 400;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(11, 10, 11, 0);
-        getContentPane().add(PanelImg, gridBagConstraints);
 
         PanelCtrl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         PanelCtrl.setToolTipText("Ajustes");
@@ -234,17 +199,22 @@ public class FormSegmentacao extends javax.swing.JFrame {
         
         // Impressão na tela da quantidade de regiões gerada
         LabelRegioes.setText("Total de regiões: " + seg.getTotalRegions());
+        
+        
+        if(imgSegmentada != null){
+            remove(imgSegmentada);
+        }
+        imgSegmentada = new JLabel(new ImageIcon(seg.getRegionMarkedImage()));
+        add(imgSegmentada);
+        /*        
         // Criação de um JFrame e inserção de 2 JLabels com cada uma das imagens.
-        //PanelImg.add(new JLabel(new ImageIcon(seg.getOriginalImage())));
-
-        add(new JLabel(new ImageIcon(seg.getOriginalImage())));
-        add(new JLabel(new ImageIcon(seg.getRegionMarkedImage())));
         JFrame frame = new JFrame();
         frame.getContentPane().setLayout(new FlowLayout());
         frame.getContentPane().add(new JLabel(new ImageIcon(seg.getOriginalImage()))); // Imagem original
         frame.getContentPane().add(new JLabel(new ImageIcon(seg.getRegionMarkedImage()))); // Imagem segmentada
         frame.pack();
         frame.setVisible(true);
+        */
     }//GEN-LAST:event_ButtonSegmentarActionPerformed
 
     private void ButtonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRotulosActionPerformed
@@ -260,18 +230,14 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 path = file.getAbsolutePath();
                 
                 ImageIcon image = new ImageIcon(path);
-                JLabel label = new JLabel(image);
-                PanelImg.add(label);
-                PanelImg.setVisible(true);
+                imgOriginal = new JLabel(image);
+                add(imgOriginal);
+                
             } else {
                 LabelImg.setText("Utilize somente imagens jpg");
             }
         }
     }//GEN-LAST:event_ButtonImgActionPerformed
-
-    private void PanelImgComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_PanelImgComponentAdded
-        System.out.println(evt.toString());
-    }//GEN-LAST:event_PanelImgComponentAdded
 
     /**
      * @param args the command line arguments
@@ -317,7 +283,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private javax.swing.JLabel LabelRegioes;
     private javax.swing.JLabel LabelSize;
     private javax.swing.JPanel PanelCtrl;
-    private javax.swing.JPanel PanelImg;
     private javax.swing.JSpinner ValBlur;
     private javax.swing.JSpinner ValRadius;
     private javax.swing.JSpinner ValSize;
