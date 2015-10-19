@@ -1,20 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package segmentacaodeimagem;
 
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -24,7 +14,7 @@ import javax.swing.SpinnerNumberModel;
 
 /**
  *
- * @author rai_desk
+ * @author Rai Vitor
  */
 public class FormSegmentacao extends javax.swing.JFrame {
 
@@ -96,11 +86,11 @@ public class FormSegmentacao extends javax.swing.JFrame {
         PanelImg.setLayout(PanelImgLayout);
         PanelImgLayout.setHorizontalGroup(
             PanelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
+            .addGap(0, 496, Short.MAX_VALUE)
         );
         PanelImgLayout.setVerticalGroup(
             PanelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
+            .addGap(0, 496, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -247,6 +237,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
         // Criação de um JFrame e inserção de 2 JLabels com cada uma das imagens.
         //PanelImg.add(new JLabel(new ImageIcon(seg.getOriginalImage())));
 
+        add(new JLabel(new ImageIcon(seg.getOriginalImage())));
+        add(new JLabel(new ImageIcon(seg.getRegionMarkedImage())));
         JFrame frame = new JFrame();
         frame.getContentPane().setLayout(new FlowLayout());
         frame.getContentPane().add(new JLabel(new ImageIcon(seg.getOriginalImage()))); // Imagem original
@@ -255,11 +247,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
         frame.setVisible(true);
     }//GEN-LAST:event_ButtonSegmentarActionPerformed
 
-    private void PanelImgComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_PanelImgComponentAdded
-        System.out.println(evt);
-    }//GEN-LAST:event_PanelImgComponentAdded
-
     private void ButtonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRotulosActionPerformed
+        //adicionar info dos rótulos aqui
     }//GEN-LAST:event_ButtonRotulosActionPerformed
 
     private void ButtonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonImgActionPerformed
@@ -269,17 +258,20 @@ public class FormSegmentacao extends javax.swing.JFrame {
             if (file.getName().contains("jpg")) {
                 LabelImg.setText("NomeImg: " + file.getName());
                 path = file.getAbsolutePath();
+                
                 ImageIcon image = new ImageIcon(path);
-                JLabel label = new JLabel("", image, JLabel.CENTER);
-                PanelImg = new JPanel();
-                PanelImg.add( label, BorderLayout.CENTER );
+                JLabel label = new JLabel(image);
+                PanelImg.add(label);
                 PanelImg.setVisible(true);
-                PanelImg.setLayout(null);
             } else {
                 LabelImg.setText("Utilize somente imagens jpg");
             }
         }
     }//GEN-LAST:event_ButtonImgActionPerformed
+
+    private void PanelImgComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_PanelImgComponentAdded
+        System.out.println(evt.toString());
+    }//GEN-LAST:event_PanelImgComponentAdded
 
     /**
      * @param args the command line arguments
@@ -307,7 +299,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(FormSegmentacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -77,7 +77,7 @@ public class SegmentacaoDeImagem {
             }
         }
         
-/*        
+        /*        
         int regiao = 0;
         int tmp = 0;
 
@@ -90,7 +90,7 @@ public class SegmentacaoDeImagem {
                 System.out.println("Working? " + x + " - " + " - " + y + " - " + rgb);
             }
         }                
-  */     
+        */     
 
         frame.getContentPane().add(new JLabel(new ImageIcon(seg.getRegionMarkedImage()))); //mapa de rótulos :/      
         
