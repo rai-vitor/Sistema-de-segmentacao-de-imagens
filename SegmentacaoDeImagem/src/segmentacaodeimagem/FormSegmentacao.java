@@ -1,12 +1,17 @@
 package segmentacaodeimagem;
 
+import boofcv.io.image.UtilImageIO;
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
+import java.awt.FlowLayout;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
+
 
 /**
  *
@@ -219,6 +224,14 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
     private void ButtonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRotulosActionPerformed
         //adicionar info dos rótulos aqui
+        BufferedImage image = UtilImageIO.loadImage(path);
+        BufferedImage outColor = ExampleSegmentSuperpixels.FazerTudo(image);
+        
+        JFrame frame = new JFrame();
+        frame.getContentPane().setLayout(new FlowLayout());
+        frame.getContentPane().add(new JLabel(new ImageIcon(outColor)));
+        frame.pack();
+        frame.setVisible(true);
     }//GEN-LAST:event_ButtonRotulosActionPerformed
 
     private void ButtonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonImgActionPerformed
@@ -230,9 +243,11 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 path = file.getAbsolutePath();
                 
                 ImageIcon image = new ImageIcon(path);
+                if(imgOriginal != null)
+                    remove(imgOriginal);
+                
                 imgOriginal = new JLabel(image);
                 add(imgOriginal);
-                
             } else {
                 LabelImg.setText("Utilize somente imagens jpg");
             }
