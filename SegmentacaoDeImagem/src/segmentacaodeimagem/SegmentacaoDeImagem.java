@@ -9,11 +9,19 @@ package segmentacaodeimagem;
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
 
-public class SegmentacaoDeImagem {
+public class SegmentacaoDeImagem {      
 
+    /**
+     * Array de inteiros que contem mapa de regioes [0−N ] da segmentacao.
+     * O mapa de regioes tem o mesmo tamanho do array 'pixelsDaImagemSegmentada',
+     * para cada pixel da imagem, uma regiao [0-N] é definida.
+     */
     private static int[] mapaDaRegiaoSegmentada;
+    /* Array de inteiros que contem os pixels da imagem RGB segmentada.*/
     private static int[] pixelsDaImagemSegmentada; 
+    /* Array de inteiros que contem uma tonalidade cinza especifica para cade regiao [0-N] da segmentacao.*/
     private static int[] variacaoGray;
+    /* Define a intensidade da tonalidade cinza inicial a ser utilizada*/
     private static int defGrey;
     
     /**
@@ -27,9 +35,8 @@ public class SegmentacaoDeImagem {
      * a imagem segmentada, o mapa de regiões e a quantidade de regiões geradas após o processo de segmentação.
      */
 
-    public static ImageInformation segmentar(String path, double blur, int radius, int size) {
-                        
-        // Segmentação com parâmetros 0.99, 40 e 1000
+    public static ImageInformation segmentar(String path, double blur, int radius, int size) 
+    {                        
         ImageInformation seg = ImageSegmentation.performSegmentation(path, blur,radius,size);
 
         mapaDaRegiaoSegmentada = seg.getSegmentedImageMap();
@@ -50,15 +57,17 @@ public class SegmentacaoDeImagem {
      * @return Retorna imagem segmentada rotulada.
     */
     
-    public static ImageInformation rotular(ImageInformation imagemSegmentada) {
-        
+    public static ImageInformation rotular(ImageInformation imagemSegmentada) 
+    {        
+        /* Recebe a tonalidade cinza de uma regiao.*/
         int gray = 0;
+        /* Pixel RGB de tonalidade cinza a ser mapeado para o array pixelsDaImagemSegmentada. */
         int rgb = 0;        
         
         for(int i = 0; i < imagemSegmentada.getTotalRegions(); i++) {
             variacaoGray[i] = defGrey*i;
         }    
-        
+        /* A magica do mapa de rotulos aconte aqui.*/
         for(int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
             gray = variacaoGray[mapaDaRegiaoSegmentada[i]];
             rgb = ((gray&0x0ff)<<16)|((gray&0x0ff)<<8)|(gray&0x0ff);
