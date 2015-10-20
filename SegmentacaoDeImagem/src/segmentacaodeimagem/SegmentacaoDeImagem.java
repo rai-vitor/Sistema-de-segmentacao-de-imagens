@@ -39,49 +39,47 @@ public class SegmentacaoDeImagem {
     /**
      * @param args the command line arguments
      */
+    
+    private static int[] mapaDaRegiaoSegmentada;
+    private static int[] pixelsDaImagemSegmentada; 
+    private static int[] variacaoGray;
+    private static int defGrey;
 
- /*  
-    public static ImageInformation printLabelsMap(ImageInformation image) {
-        image.getRegionMarkedImage().setRGB(0,0,121);        
-    }
- */
-    public static void main(String[] args) {
+    public static ImageInformation segmentar(String path, double blur, int radius, int size) {
                         
         // Segmentação com parâmetros 0.99, 40 e 1000
-        ImageInformation seg = ImageSegmentation.performSegmentation("imgs/imd.jpg", 0.99,40,1000);
-        //BufferedImage image = seg.getRegionMarkedImage(); // imagem para testar o mapa de rótulos
-        
-        int height = seg.getRegionMarkedImage().getHeight(); // altura da imagem
-        int width = seg.getRegionMarkedImage().getWidth(); // largura da imagem
-  
-        int[] pixel; // array que contém as coordenadas x,y e o valor rgb do pixel.
-        int[] mapaDaRegiaoSegmentada = seg.getSegmentedImageMap();
-        int[] pixelsDaImagemSegmentada = seg.getRegionMarkedPixels();
-        int[] variacaoGray = new int[seg.getTotalRegions()];
-        
-        int defGrey = 255/seg.getTotalRegions();
-        
-        
-        for(int i = 0; i < seg.getTotalRegions(); i++) {
-            variacaoGray[i] = defGrey*i;
-        }
-        
-        Color grey = new Color(121, 121, 121); // uma cor para teste
-        int rgb = grey.getRGB();
+        ImageInformation seg = ImageSegmentation.performSegmentation(path, blur,radius,size);
 
-        // Impressão na tela da quantidade de regiões gerada
-        //System.out.println("Total de regiões: " + seg.getTotalRegions());
-        //System.out.println("Tamanho: " + seg.getRegionMarkedPixels().length + " | Pixels RGB da Imagem Segmentada: " + Arrays.toString(seg.getRegionMarkedPixels()));
-        //System.out.println("Tamanho: " + seg.getOriginalPixels().length + " | Pixels RGB da Imagem Originalxx: " + Arrays.toString(seg.getOriginalPixels()));
-        //System.out.println("Tamanho: " + seg.getSegmentedImageMap().length + " | Mapa da Imagem Segmentada: " + Arrays.toString(seg.getSegmentedImageMap()));        
-        
+        mapaDaRegiaoSegmentada = seg.getSegmentedImageMap();
+        pixelsDaImagemSegmentada = seg.getRegionMarkedPixels();
+        variacaoGray = new int[seg.getTotalRegions()];        
+        defGrey = 255/seg.getTotalRegions();
+                   
+       
         // Criação de um JFrame e inserção de 2 JLabels com cada uma das imagens.
+        /*
         JFrame frame = new JFrame();
         frame.getContentPane().setLayout(new FlowLayout());
         frame.getContentPane().add(new JLabel(new ImageIcon(seg.getOriginalImage()))); // Imagem original
         frame.getContentPane().add(new JLabel(new ImageIcon(seg.getRegionMarkedImage()))); // Imagem segmentada             
+        */
         
-        /**
+        /*
+        for(int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
+            gray = variacaoGray[mapaDaRegiaoSegmentada[i]];
+            rgb = ((gray&0x0ff)<<16)|((gray&0x0ff)<<8)|(gray&0x0ff);
+            pixelsDaImagemSegmentada[i] = rgb;            
+        } */        
+         /*       
+        frame.getContentPane().add(new JLabel(new ImageIcon(seg.getRegionMarkedImage()))); // Imagem segmentada         
+        frame.pack();
+        frame.setVisible(true);
+                 */
+        
+        return seg;
+    }       
+    
+    /**
          * Mapa de Rótulos...
          * Precisamos determinar a cor dos pixels de cada região da imagem segmentada.
          * As regiões podem ser determinadas através do array retornado pelo método seg.getSegmentedImageMap(). 
@@ -94,20 +92,22 @@ public class SegmentacaoDeImagem {
          * A função abaixo retorna as coordenadas de cada pixel da imagem, além do seu RGB.
          * Também define a cor do pixel através do parâmetro setRGB.
          */
-
+    
+    public static ImageInformation rotular(ImageInformation imagemSegmentada) {
+        
         int gray = 0;
-        int rgb2 = 0;
+        int rgb = 0;        
+        
+        for(int i = 0; i < imagemSegmentada.getTotalRegions(); i++) {
+            variacaoGray[i] = defGrey*i;
+        }    
+        
         for(int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
             gray = variacaoGray[mapaDaRegiaoSegmentada[i]];
-            rgb2 = ((gray&0x0ff)<<16)|((gray&0x0ff)<<8)|(gray&0x0ff);
-            pixelsDaImagemSegmentada[i] = rgb2;
-            
-        }         
+            rgb = ((gray&0x0ff)<<16)|((gray&0x0ff)<<8)|(gray&0x0ff);
+            pixelsDaImagemSegmentada[i] = rgb;            
+        }
         
-        
-        frame.getContentPane().add(new JLabel(new ImageIcon(seg.getRegionMarkedImage()))); // Imagem segmentada 
-        
-        frame.pack();
-        frame.setVisible(true);
-    }         
+        return imagemSegmentada;
+    }        
 }

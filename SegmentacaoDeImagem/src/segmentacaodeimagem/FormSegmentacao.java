@@ -23,6 +23,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
     String path = null;
     JLabel imgOriginal;
     JLabel imgSegmentada;
+    JLabel imgRotulada;
+    
+    ImageInformation seg;
+    
     /**
      * Creates new form FormSegmentacao
      */
@@ -199,31 +203,35 @@ public class FormSegmentacao extends javax.swing.JFrame {
         double blur = (double) ValBlur.getValue();
         int radius = (int) ValRadius.getValue();
         int size = (int) ValSize.getValue();
-
-        ImageInformation seg = ImageSegmentation.performSegmentation(path, blur, radius, size);
+        
+        seg = SegmentacaoDeImagem.segmentar(path, blur, radius, size);
         
         // Impressão na tela da quantidade de regiões gerada
         LabelRegioes.setText("Total de regiões: " + seg.getTotalRegions());
-        
-        
+                
         if(imgSegmentada != null){
             remove(imgSegmentada);
         }
+
         imgSegmentada = new JLabel(new ImageIcon(seg.getRegionMarkedImage()));
         add(imgSegmentada);
-        /*        
-        // Criação de um JFrame e inserção de 2 JLabels com cada uma das imagens.
-        JFrame frame = new JFrame();
-        frame.getContentPane().setLayout(new FlowLayout());
-        frame.getContentPane().add(new JLabel(new ImageIcon(seg.getOriginalImage()))); // Imagem original
-        frame.getContentPane().add(new JLabel(new ImageIcon(seg.getRegionMarkedImage()))); // Imagem segmentada
-        frame.pack();
-        frame.setVisible(true);
-        */
     }//GEN-LAST:event_ButtonSegmentarActionPerformed
 
+    /**
+     * Chama o metodo estatico 'rotular' da classe SegmentacaoDeImagem.
+     * @param evt 
+     */
+    
     private void ButtonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRotulosActionPerformed
-        //adicionar info dos rótulos aqui       
+
+        if(imgRotulada != null){
+            remove(imgRotulada);
+        }
+        
+        SegmentacaoDeImagem.rotular(seg);
+        
+        imgRotulada = new JLabel(new ImageIcon(seg.getRegionMarkedImage()));
+        add(imgRotulada);
     }//GEN-LAST:event_ButtonRotulosActionPerformed
 
     private void ButtonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonImgActionPerformed
