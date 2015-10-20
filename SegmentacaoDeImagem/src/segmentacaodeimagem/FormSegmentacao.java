@@ -223,15 +223,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonSegmentarActionPerformed
 
     private void ButtonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRotulosActionPerformed
-        //adicionar info dos rótulos aqui
-        BufferedImage image = UtilImageIO.loadImage(path);
-        BufferedImage outColor = ExampleSegmentSuperpixels.FazerTudo(image);
-        
-        JFrame frame = new JFrame();
-        frame.getContentPane().setLayout(new FlowLayout());
-        frame.getContentPane().add(new JLabel(new ImageIcon(outColor)));
-        frame.pack();
-        frame.setVisible(true);
+        //adicionar info dos rótulos aqui       
     }//GEN-LAST:event_ButtonRotulosActionPerformed
 
     private void ButtonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonImgActionPerformed
