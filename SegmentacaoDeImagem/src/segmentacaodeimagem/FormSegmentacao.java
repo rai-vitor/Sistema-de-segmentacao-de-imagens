@@ -224,6 +224,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
     
     private void ButtonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRotulosActionPerformed
 
+        remove(imgSegmentada);
+        remove(imgOriginal);
+        
         if(imgRotulada != null){
             remove(imgRotulada);
         }
@@ -245,6 +248,12 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 ImageIcon image = new ImageIcon(path);
                 if(imgOriginal != null)
                     remove(imgOriginal);
+                
+                if(imgRotulada != null)
+                    remove(imgRotulada);
+                
+                if(imgSegmentada != null)
+                    remove(imgSegmentada);
                 
                 imgOriginal = new JLabel(image);
                 add(imgOriginal);
