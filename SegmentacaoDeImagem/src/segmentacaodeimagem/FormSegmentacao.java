@@ -11,12 +11,12 @@ import javax.swing.SpinnerNumberModel;
  */
 public class FormSegmentacao extends javax.swing.JFrame {
 
-    JFileChooser fileChooser;
-    String path = null;
-    JLabel imgOriginal;
-    JLabel imgSegmentada;
-    JLabel imgRotulada;
-    ImageInformation seg;
+    JFileChooser fileChooser; /*Guarda as informacoes da imagem selecionada pelo usuario */
+    String path = null; /*Caminho absoluto da imagem */
+    JLabel imgOriginal; /*Representa a imagem orignal */
+    JLabel imgSegmentada; /*Representa a imagem segmentada */
+    JLabel imgRotulada; /*Representa a imagem rotulada */
+    ImageInformation seg;/*Contem a imagem segmentada */
     
     /**
      * Creates new form FormSegmentacao
@@ -216,10 +216,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
     /**
      * Este método é chamado após o botão "Mostrar mapa de rótulos" ser acionado.
-     * Chama o metodo estatico 'rotular' da classe SegmentacaoDeImagem.
+     * Chama o metodo estatico 'GerarMapaRotulos' da classe SegmentacaoDeImagem.
      */
     private void buttonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRotulosActionPerformed
-        SegmentacaoDeImagem.rotular(seg);
+        SegmentacaoDeImagem.GerarMapaRotulos(seg);
         imgRotulada = new JLabel(new ImageIcon(seg.getRegionMarkedImage()));        
         addImg(imgRotulada);
     }//GEN-LAST:event_buttonRotulosActionPerformed
