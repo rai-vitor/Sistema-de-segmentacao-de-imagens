@@ -102,7 +102,7 @@
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="ButtonImg" alignment="0" max="32767" attributes="0"/>
                               <Component id="ButtonSegmentar" alignment="0" max="32767" attributes="0"/>
-                              <Component id="ButtonRotulos" pref="174" max="32767" attributes="0"/>
+                              <Component id="ButtonRotulos" pref="177" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -136,7 +136,7 @@
                   <Component id="LabelRegioes" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="LabelImg" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="90" max="32767" attributes="0"/>
+                  <EmptySpace pref="23" max="32767" attributes="0"/>
                   <Component id="ButtonImg" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Component id="ButtonSegmentar" min="-2" max="-2" attributes="0"/>

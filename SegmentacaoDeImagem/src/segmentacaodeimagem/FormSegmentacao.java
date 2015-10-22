@@ -140,7 +140,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
                         .addGroup(PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(ButtonImg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ButtonSegmentar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ButtonRotulos, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
+                            .addComponent(ButtonRotulos, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(PanelCtrlLayout.createSequentialGroup()
                         .addComponent(LabelImg)
@@ -165,7 +165,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 .addComponent(LabelRegioes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LabelImg)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(ButtonImg)
                 .addGap(9, 9, 9)
                 .addComponent(ButtonSegmentar)
@@ -212,9 +212,15 @@ public class FormSegmentacao extends javax.swing.JFrame {
         if(imgSegmentada != null){
             remove(imgSegmentada);
         }
+        
+        if(imgRotulada != null){
+            remove(imgRotulada);
+        }
 
         imgSegmentada = new JLabel(new ImageIcon(seg.getRegionMarkedImage()));
         add(imgSegmentada);
+        revalidate();
+        repaint();
     }//GEN-LAST:event_ButtonSegmentarActionPerformed
 
     /**
@@ -233,8 +239,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
         
         SegmentacaoDeImagem.rotular(seg);
         
-        imgRotulada = new JLabel(new ImageIcon(seg.getRegionMarkedImage()));
+        imgRotulada = new JLabel(new ImageIcon(seg.getRegionMarkedImage()));        
         add(imgRotulada);
+        revalidate();
+        repaint();
     }//GEN-LAST:event_ButtonRotulosActionPerformed
 
     private void ButtonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonImgActionPerformed
