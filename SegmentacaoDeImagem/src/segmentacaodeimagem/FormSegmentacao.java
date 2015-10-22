@@ -1,30 +1,21 @@
 package segmentacaodeimagem;
-
-import boofcv.io.image.UtilImageIO;
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
-import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
-import java.awt.FlowLayout;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
 
-
 /**
- *
- * @author Rai Vitor
+ * @author Hiago Miguel & Rai Vitor.
  */
 public class FormSegmentacao extends javax.swing.JFrame {
 
-    JFileChooser fc;
+    JFileChooser fileChooser;
     String path = null;
     JLabel imgOriginal;
     JLabel imgSegmentada;
     JLabel imgRotulada;
-    
     ImageInformation seg;
     
     /**
@@ -43,30 +34,29 @@ public class FormSegmentacao extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
-        jDialog1 = new javax.swing.JDialog();
-        PanelCtrl = new javax.swing.JPanel();
-        ValBlur = new javax.swing.JSpinner();
-        ValRadius = new javax.swing.JSpinner();
-        ValSize = new javax.swing.JSpinner();
-        LabelBlur = new javax.swing.JLabel();
-        LabelRadius = new javax.swing.JLabel();
-        LabelSize = new javax.swing.JLabel();
-        LabelRegioes = new javax.swing.JLabel();
-        ButtonSegmentar = new javax.swing.JButton();
-        ButtonRotulos = new javax.swing.JButton();
-        ButtonImg = new javax.swing.JButton();
-        LabelImg = new javax.swing.JLabel();
+        fileDialog = new javax.swing.JDialog();
+        panelCtrl = new javax.swing.JPanel();
+        valBlur = new javax.swing.JSpinner();
+        valRadius = new javax.swing.JSpinner();
+        valSize = new javax.swing.JSpinner();
+        labelBlur = new javax.swing.JLabel();
+        labelRadius = new javax.swing.JLabel();
+        labelSize = new javax.swing.JLabel();
+        labelRegioes = new javax.swing.JLabel();
+        buttonSegmentar = new javax.swing.JButton();
+        buttonRotulos = new javax.swing.JButton();
+        buttonImg = new javax.swing.JButton();
+        labelImg = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout fileDialogLayout = new javax.swing.GroupLayout(fileDialog.getContentPane());
+        fileDialog.getContentPane().setLayout(fileDialogLayout);
+        fileDialogLayout.setHorizontalGroup(
+            fileDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 638, Short.MAX_VALUE)
         );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        fileDialogLayout.setVerticalGroup(
+            fileDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 399, Short.MAX_VALUE)
         );
 
@@ -75,202 +65,204 @@ public class FormSegmentacao extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(400, 200));
         setName("frame"); // NOI18N
         setPreferredSize(new java.awt.Dimension(800, 550));
-        getContentPane().setLayout(new java.awt.GridBagLayout());
 
-        PanelCtrl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        PanelCtrl.setToolTipText("Ajustes");
-        PanelCtrl.setMinimumSize(new java.awt.Dimension(50, 100));
-        PanelCtrl.setName(""); // NOI18N
-        PanelCtrl.setPreferredSize(new java.awt.Dimension(200, 400));
+        panelCtrl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelCtrl.setToolTipText("Ajustes");
+        panelCtrl.setMinimumSize(new java.awt.Dimension(50, 100));
+        panelCtrl.setName(""); // NOI18N
+        panelCtrl.setPreferredSize(new java.awt.Dimension(200, 400));
 
-        LabelBlur.setText("BlurLevel:");
+        labelBlur.setText("BlurLevel:");
 
-        LabelRadius.setText("ColorRadius:");
+        labelRadius.setText("ColorRadius:");
 
-        LabelSize.setText("MinSize:");
+        labelSize.setText("MinSize:");
 
-        LabelRegioes.setText("Total de regiões: ");
+        labelRegioes.setText("Total de regiões: ");
 
-        ButtonSegmentar.setText("Segmentar");
-        ButtonSegmentar.addActionListener(new java.awt.event.ActionListener() {
+        buttonSegmentar.setText("Segmentar");
+        buttonSegmentar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonSegmentarActionPerformed(evt);
+                buttonSegmentarActionPerformed(evt);
             }
         });
 
-        ButtonRotulos.setText("Mostrar mapa de rótulos");
-        ButtonRotulos.addActionListener(new java.awt.event.ActionListener() {
+        buttonRotulos.setText("Mostrar mapa de rótulos");
+        buttonRotulos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonRotulosActionPerformed(evt);
+                buttonRotulosActionPerformed(evt);
             }
         });
 
-        ButtonImg.setText("Selecionar Imagem");
-        ButtonImg.addActionListener(new java.awt.event.ActionListener() {
+        buttonImg.setText("Selecionar Imagem");
+        buttonImg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonImgActionPerformed(evt);
+                buttonImgActionPerformed(evt);
             }
         });
 
-        LabelImg.setText("NomeImg:");
+        labelImg.setText("NomeImg:");
 
-        javax.swing.GroupLayout PanelCtrlLayout = new javax.swing.GroupLayout(PanelCtrl);
-        PanelCtrl.setLayout(PanelCtrlLayout);
-        PanelCtrlLayout.setHorizontalGroup(
-            PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelCtrlLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelCtrlLayout = new javax.swing.GroupLayout(panelCtrl);
+        panelCtrl.setLayout(panelCtrlLayout);
+        panelCtrlLayout.setHorizontalGroup(
+            panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCtrlLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCtrlLayout.createSequentialGroup()
+                .addGroup(panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCtrlLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LabelBlur)
-                            .addComponent(LabelRadius)
-                            .addComponent(LabelSize))
+                        .addGroup(panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelBlur)
+                            .addComponent(labelRadius)
+                            .addComponent(labelSize))
                         .addGap(23, 23, 23)
-                        .addGroup(PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(ValSize)
-                            .addComponent(ValRadius, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ValBlur, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
+                        .addGroup(panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(valSize)
+                            .addComponent(valRadius, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(valBlur, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
                         .addGap(37, 37, 37))
-                    .addGroup(PanelCtrlLayout.createSequentialGroup()
-                        .addComponent(LabelRegioes)
+                    .addGroup(panelCtrlLayout.createSequentialGroup()
+                        .addComponent(labelRegioes)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelCtrlLayout.createSequentialGroup()
-                        .addGroup(PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(ButtonImg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ButtonSegmentar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ButtonRotulos, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCtrlLayout.createSequentialGroup()
+                        .addGroup(panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(buttonImg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonSegmentar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(buttonRotulos, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))
                         .addContainerGap())
-                    .addGroup(PanelCtrlLayout.createSequentialGroup()
-                        .addComponent(LabelImg)
+                    .addGroup(panelCtrlLayout.createSequentialGroup()
+                        .addComponent(labelImg)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
-        PanelCtrlLayout.setVerticalGroup(
-            PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelCtrlLayout.createSequentialGroup()
+        panelCtrlLayout.setVerticalGroup(
+            panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelCtrlLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ValBlur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LabelBlur))
+                .addGroup(panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(valBlur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelBlur))
                 .addGap(33, 33, 33)
-                .addGroup(PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ValRadius, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LabelRadius))
+                .addGroup(panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(valRadius, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelRadius))
                 .addGap(34, 34, 34)
-                .addGroup(PanelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ValSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LabelSize))
+                .addGroup(panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(valSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelSize))
                 .addGap(18, 18, 18)
-                .addComponent(LabelRegioes)
+                .addComponent(labelRegioes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LabelImg)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                .addComponent(ButtonImg)
+                .addComponent(labelImg)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
+                .addComponent(buttonImg)
                 .addGap(9, 9, 9)
-                .addComponent(ButtonSegmentar)
+                .addComponent(buttonSegmentar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ButtonRotulos)
+                .addComponent(buttonRotulos)
                 .addGap(9, 9, 9))
         );
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 200;
-        gridBagConstraints.ipady = 400;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(11, 10, 11, 10);
-        getContentPane().add(PanelCtrl, gridBagConstraints);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(265, 265, 265)
+                .addComponent(panelCtrl, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(11, 11, 11)
+                .addComponent(panelCtrl, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         getAccessibleContext().setAccessibleDescription("frame");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Configurações iniciais do layout
+     */
     private void ConfigForm() {
-        fc = new JFileChooser();
-        ValBlur.setModel(new SpinnerNumberModel(0.50, 0.00, 100.00, 0.01));
-        ValRadius.setModel(new SpinnerNumberModel(50, 1, 100, 1));
-        ValSize.setModel(new SpinnerNumberModel(500, 1, 1000, 10));
+        fileChooser = new JFileChooser();
+        valBlur.setModel(new SpinnerNumberModel(0.50, 0.00, 100.00, 0.01));
+        valRadius.setModel(new SpinnerNumberModel(50, 1, 100, 1));
+        valSize.setModel(new SpinnerNumberModel(500, 1, 1000, 10));
     }
-
-    private void ButtonSegmentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSegmentarActionPerformed
+    
+    /**
+     * Este método é chamado após o botão "Segmentar" ser acionado.
+     * A função dele é pegar uma imagem escolhida pelo usuário e fazer a segmentação dela
+     */
+    private void buttonSegmentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSegmentarActionPerformed
+        // Se o usuário não tiver selecionado nenhuma imagem a função para aqui
         if (path == null) {
             return;
         }
-
-        double blur = (double) ValBlur.getValue();
-        int radius = (int) ValRadius.getValue();
-        int size = (int) ValSize.getValue();
+        //Pega os valores da interface
+        double blur = (double) valBlur.getValue();
+        int radius = (int) valRadius.getValue();
+        int size = (int) valSize.getValue();
         
         seg = SegmentacaoDeImagem.segmentar(path, blur, radius, size);
         
-        // Impressão na tela da quantidade de regiões gerada
-        LabelRegioes.setText("Total de regiões: " + seg.getTotalRegions());
-                
-        if(imgSegmentada != null){
-            remove(imgSegmentada);
-        }
-        
-        if(imgRotulada != null){
-            remove(imgRotulada);
-        }
-
+        labelRegioes.setText("Total de regiões: " + seg.getTotalRegions());
         imgSegmentada = new JLabel(new ImageIcon(seg.getRegionMarkedImage()));
-        add(imgSegmentada);
-        revalidate();
-        repaint();
-    }//GEN-LAST:event_ButtonSegmentarActionPerformed
+        addImg(imgSegmentada);
+    }//GEN-LAST:event_buttonSegmentarActionPerformed
 
     /**
+     * Este método é chamado após o botão "Mostrar mapa de rótulos" ser acionado.
      * Chama o metodo estatico 'rotular' da classe SegmentacaoDeImagem.
-     * @param evt 
      */
-    
-    private void ButtonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonRotulosActionPerformed
-
-        remove(imgSegmentada);
-        remove(imgOriginal);
-        
-        if(imgRotulada != null){
-            remove(imgRotulada);
-        }
-        
+    private void buttonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRotulosActionPerformed
         SegmentacaoDeImagem.rotular(seg);
-        
         imgRotulada = new JLabel(new ImageIcon(seg.getRegionMarkedImage()));        
-        add(imgRotulada);
-        revalidate();
-        repaint();
-    }//GEN-LAST:event_ButtonRotulosActionPerformed
-
-    private void ButtonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonImgActionPerformed
-        int returnVal = fc.showOpenDialog(jDialog1);
+        addImg(imgRotulada);
+    }//GEN-LAST:event_buttonRotulosActionPerformed
+    
+    /**
+     * Este método é chamado após o botão 'Selecionar Imagem' ser acionado
+     * Abre um dialog para o usuário escolher uma imagem e mostra a imagem na tela.
+     * Só aceita imagens jpg.
+     */
+    private void buttonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImgActionPerformed
+        int returnVal = fileChooser.showOpenDialog(fileDialog);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
+            File file = fileChooser.getSelectedFile();
             if (file.getName().contains("jpg")) {
-                LabelImg.setText("NomeImg: " + file.getName());
+                labelImg.setText("NomeImg: " + file.getName());
                 path = file.getAbsolutePath();
-                
                 ImageIcon image = new ImageIcon(path);
-                if(imgOriginal != null)
-                    remove(imgOriginal);
-                
-                if(imgRotulada != null)
-                    remove(imgRotulada);
-                
-                if(imgSegmentada != null)
-                    remove(imgSegmentada);
-                
                 imgOriginal = new JLabel(image);
-                add(imgOriginal);
+                addImg(imgOriginal);
             } else {
-                LabelImg.setText("Utilize somente imagens jpg");
+                labelImg.setText("Utilize somente imagens jpg");
             }
         }
-    }//GEN-LAST:event_ButtonImgActionPerformed
+    }//GEN-LAST:event_buttonImgActionPerformed
+    
+    /**
+     * Adiciona uma imagem na interface e remove outras que estejam adicionadas.
+     * @param img - Imagem a ser adicionada
+     */
+    private void addImg(JLabel img){
+        if(imgOriginal != null)
+            remove(imgOriginal);
 
+        if(imgRotulada != null)
+            remove(imgRotulada);
+
+        if(imgSegmentada != null)
+            remove(imgSegmentada);
+        
+        add(img);
+        revalidate();
+        repaint();
+    }
     /**
      * @param args the command line arguments
      */
@@ -306,18 +298,18 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonImg;
-    private javax.swing.JButton ButtonRotulos;
-    private javax.swing.JButton ButtonSegmentar;
-    private javax.swing.JLabel LabelBlur;
-    private javax.swing.JLabel LabelImg;
-    private javax.swing.JLabel LabelRadius;
-    private javax.swing.JLabel LabelRegioes;
-    private javax.swing.JLabel LabelSize;
-    private javax.swing.JPanel PanelCtrl;
-    private javax.swing.JSpinner ValBlur;
-    private javax.swing.JSpinner ValRadius;
-    private javax.swing.JSpinner ValSize;
-    private javax.swing.JDialog jDialog1;
+    private javax.swing.JButton buttonImg;
+    private javax.swing.JButton buttonRotulos;
+    private javax.swing.JButton buttonSegmentar;
+    private javax.swing.JDialog fileDialog;
+    private javax.swing.JLabel labelBlur;
+    private javax.swing.JLabel labelImg;
+    private javax.swing.JLabel labelRadius;
+    private javax.swing.JLabel labelRegioes;
+    private javax.swing.JLabel labelSize;
+    private javax.swing.JPanel panelCtrl;
+    private javax.swing.JSpinner valBlur;
+    private javax.swing.JSpinner valRadius;
+    private javax.swing.JSpinner valSize;
     // End of variables declaration//GEN-END:variables
 }

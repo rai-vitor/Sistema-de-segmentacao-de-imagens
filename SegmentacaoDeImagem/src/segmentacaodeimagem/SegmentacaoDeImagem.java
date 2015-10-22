@@ -1,14 +1,11 @@
-/**
- * Uma classe que realiza a segmentação de uma imagem, bem como o mapa de rótulos da mesma.
- * @author Hiago Miguel & Raí Vitor.
- * @version 0.1
- */
-
 package segmentacaodeimagem;
-
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
 
+/**
+ * Uma classe que realiza a segmentação de uma imagem, bem como o mapa de rótulos da mesma.
+ * @author Hiago Miguel & Rai Vitor.
+ */
 public class SegmentacaoDeImagem {      
 
     /**
@@ -34,7 +31,6 @@ public class SegmentacaoDeImagem {
      * @return Retorna objeto da classe ImageInformation, responsável por armazenar as informações da imagem original, 
      * a imagem segmentada, o mapa de regiões e a quantidade de regiões geradas após o processo de segmentação.
      */
-
     public static ImageInformation segmentar(String path, double blur, int radius, int size) 
     {                        
         ImageInformation seg = ImageSegmentation.performSegmentation(path, blur,radius,size);
@@ -56,7 +52,6 @@ public class SegmentacaoDeImagem {
      * @param imagemSegmentada Imagem segmentada.
      * @return Retorna imagem segmentada rotulada.
     */
-    
     public static ImageInformation rotular(ImageInformation imagemSegmentada) 
     {        
         /* Recebe a tonalidade cinza de uma regiao.*/

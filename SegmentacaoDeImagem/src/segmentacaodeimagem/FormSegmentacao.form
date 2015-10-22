@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JDialog" name="jDialog1">
+    <Container class="javax.swing.JDialog" name="fileDialog">
 
       <Layout>
         <DimensionLayout dim="0">
@@ -46,12 +46,28 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,10,0,0,3,12"/>
   </AuxValues>
 
-  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="265" pref="265" max="-2" attributes="0"/>
+              <Component id="panelCtrl" min="-2" pref="250" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
+              <Component id="panelCtrl" min="-2" pref="500" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="PanelCtrl">
+    <Container class="javax.swing.JPanel" name="panelCtrl">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
@@ -67,11 +83,6 @@
           <Dimension value="[200, 400]"/>
         </Property>
       </Properties>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
-          <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="200" ipadY="400" insetsTop="11" insetsLeft="10" insetsBottom="11" insetsRight="10" anchor="18" weightX="0.0" weightY="0.0"/>
-        </Constraint>
-      </Constraints>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -82,32 +93,32 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="LabelBlur" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="LabelRadius" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="LabelSize" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelBlur" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelRadius" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelSize" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="ValSize" max="32767" attributes="0"/>
-                              <Component id="ValRadius" alignment="0" max="32767" attributes="0"/>
-                              <Component id="ValBlur" alignment="0" pref="54" max="32767" attributes="0"/>
+                              <Component id="valSize" max="32767" attributes="0"/>
+                              <Component id="valRadius" alignment="0" max="32767" attributes="0"/>
+                              <Component id="valBlur" alignment="0" pref="54" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="LabelRegioes" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelRegioes" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="ButtonImg" alignment="0" max="32767" attributes="0"/>
-                              <Component id="ButtonSegmentar" alignment="0" max="32767" attributes="0"/>
-                              <Component id="ButtonRotulos" pref="177" max="32767" attributes="0"/>
+                              <Component id="buttonImg" alignment="0" max="32767" attributes="0"/>
+                              <Component id="buttonSegmentar" alignment="0" max="32767" attributes="0"/>
+                              <Component id="buttonRotulos" pref="224" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="LabelImg" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelImg" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -119,86 +130,86 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="ValBlur" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="LabelBlur" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="valBlur" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelBlur" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="ValRadius" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="LabelRadius" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="valRadius" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelRadius" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="ValSize" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="LabelSize" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="valSize" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelSize" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="LabelRegioes" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelRegioes" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="LabelImg" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="23" max="32767" attributes="0"/>
-                  <Component id="ButtonImg" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelImg" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="184" max="32767" attributes="0"/>
+                  <Component id="buttonImg" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                  <Component id="ButtonSegmentar" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonSegmentar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="ButtonRotulos" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonRotulos" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JSpinner" name="ValBlur">
+        <Component class="javax.swing.JSpinner" name="valBlur">
         </Component>
-        <Component class="javax.swing.JSpinner" name="ValRadius">
+        <Component class="javax.swing.JSpinner" name="valRadius">
         </Component>
-        <Component class="javax.swing.JSpinner" name="ValSize">
+        <Component class="javax.swing.JSpinner" name="valSize">
         </Component>
-        <Component class="javax.swing.JLabel" name="LabelBlur">
+        <Component class="javax.swing.JLabel" name="labelBlur">
           <Properties>
             <Property name="text" type="java.lang.String" value="BlurLevel:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="LabelRadius">
+        <Component class="javax.swing.JLabel" name="labelRadius">
           <Properties>
             <Property name="text" type="java.lang.String" value="ColorRadius:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="LabelSize">
+        <Component class="javax.swing.JLabel" name="labelSize">
           <Properties>
             <Property name="text" type="java.lang.String" value="MinSize:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="LabelRegioes">
+        <Component class="javax.swing.JLabel" name="labelRegioes">
           <Properties>
             <Property name="text" type="java.lang.String" value="Total de regi&#xf5;es: "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="ButtonSegmentar">
+        <Component class="javax.swing.JButton" name="buttonSegmentar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Segmentar"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonSegmentarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSegmentarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="ButtonRotulos">
+        <Component class="javax.swing.JButton" name="buttonRotulos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Mostrar mapa de r&#xf3;tulos"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonRotulosActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRotulosActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="ButtonImg">
+        <Component class="javax.swing.JButton" name="buttonImg">
           <Properties>
             <Property name="text" type="java.lang.String" value="Selecionar Imagem"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ButtonImgActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonImgActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="LabelImg">
+        <Component class="javax.swing.JLabel" name="labelImg">
           <Properties>
             <Property name="text" type="java.lang.String" value="NomeImg:"/>
           </Properties>
