@@ -31,8 +31,7 @@ public class SegmentacaoDeImagem {
      * @return Retorna objeto da classe ImageInformation, responsável por armazenar as informações da imagem original, 
      * a imagem segmentada, o mapa de regiões e a quantidade de regiões geradas após o processo de segmentação.
      */
-    public static ImageInformation segmentar(String path, double blur, int radius, int size) 
-    {                        
+    public static ImageInformation segmentar(String path, double blur, int radius, int size) {                        
         ImageInformation seg = ImageSegmentation.performSegmentation(path, blur,radius,size);
 
         mapaDaRegiaoSegmentada = seg.getSegmentedImageMap();
@@ -52,17 +51,14 @@ public class SegmentacaoDeImagem {
      * @param imagemSegmentada Imagem segmentada.
      * @return Retorna imagem segmentada rotulada.
     */
-    public static ImageInformation rotular(ImageInformation imagemSegmentada) 
-    {        
+    public static ImageInformation GerarMapaRotulos(ImageInformation imagemSegmentada) {        
         /* Recebe a tonalidade cinza de uma regiao.*/
         int gray = 0;
         /* Pixel RGB de tonalidade cinza a ser mapeado para o array pixelsDaImagemSegmentada. */
         int rgb = 0;        
         
-        for(int i = 0; i < imagemSegmentada.getTotalRegions(); i++) {
-            variacaoGray[i] = defGrey*i;
-        }    
-        /* A magica do mapa de rotulos aconte aqui.*/
+        GapGray(imagemSegmentada.getTotalRegions());
+        
         for(int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
             gray = variacaoGray[mapaDaRegiaoSegmentada[i]];
             rgb = ((gray&0x0ff)<<16)|((gray&0x0ff)<<8)|(gray&0x0ff);
@@ -70,4 +66,14 @@ public class SegmentacaoDeImagem {
         }        
         return imagemSegmentada;
     }        
+    
+    /**
+     * Gera espacamentos iguais entre os possiveis 255 cinzas
+     * @param tamanhoRegiao - Quantidade de regioes existentes na imagem segmentada 
+     */
+    private static void GapGray(int tamanhoRegiao){
+        for(int i = 0; i < tamanhoRegiao; i++) {
+            variacaoGray[i] = defGrey*i;
+        }
+    }
 }
