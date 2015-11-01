@@ -1,6 +1,9 @@
 package segmentacaodeimagem;
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Uma classe que realiza a segmentação de uma imagem, bem como o mapa de rótulos da mesma.
@@ -21,6 +24,11 @@ public class SegmentacaoDeImagem {
     /* Define a intensidade da tonalidade cinza inicial a ser utilizada*/
     private static int defGrey;
     
+    private static Map<Integer,Integer> map;
+    
+    private static int coordinateX;
+    private static int coordinateY;
+    
     /**
      * Segmenta uma dada imagem de acordo com os parâmetros abaixo.
      * 
@@ -33,12 +41,16 @@ public class SegmentacaoDeImagem {
      */
     public static ImageInformation segmentar(String path, double blur, int radius, int size) {                        
         ImageInformation seg = ImageSegmentation.performSegmentation(path, blur,radius,size);
-
         mapaDaRegiaoSegmentada = seg.getSegmentedImageMap();
         pixelsDaImagemSegmentada = seg.getRegionMarkedPixels();
         variacaoGray = new int[seg.getTotalRegions()];        
-        defGrey = 255/seg.getTotalRegions();                   
+        defGrey = 255/seg.getTotalRegions();
         
+        //criando um hashmap com o pixelsDaImagemSegmentada como key e mapaDaRegiaoSegmentada como value 
+        map = new HashMap<Integer, Integer>();
+        for(int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
+            map.put(pixelsDaImagemSegmentada[i],mapaDaRegiaoSegmentada[i]);
+        }
         return seg;
     }       
     
@@ -75,5 +87,29 @@ public class SegmentacaoDeImagem {
         for(int i = 0; i < tamanhoRegiao; i++) {
             variacaoGray[i] = defGrey*i;
         }
+    }
+    
+    // define as coordenadas x,y de um pixel de acordo com o mouse click
+    public static void setPixels( int x, int y) {
+        coordinateX = x;
+        coordinateY = y;        
+    }
+    
+    
+    //imprime o pixel rgb selecionado e verifica no hashmap a regiao do pixel
+    public static void printPixelRgb(ImageInformation img) {
+        //int[] pixel = img.getRegionMarkedImage().getRaster().getPixel(coordinateX, coordinateY, new int[3]);
+        //int rgb = (pixel[0] | pixel[1] | pixel[2]);
+        int pixel = img.getRegionMarkedImage().getRGB(coordinateX, coordinateY);
+        
+        if ( map.containsKey( pixel ) ) { 
+            System.out.println("Valor da Chave "+ pixel + " = "+map.get(pixel)); 
+        }
+        else { 
+            System.err.println("Chave não existe"); 
+        } 
+        
+        System.out.println(pixel);
+       // return pixel;
     }
 }

@@ -253,9 +253,11 @@ public class FormSegmentacao extends javax.swing.JFrame {
         //deixa aqui por enquanto. Depois vemos o lugar correto para ela. Pq tentei de outra forma e deu bug kkk
         imagem.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                System.out.println("x: "+e.getX()+" y: "+e.getY());
+               System.out.println("x: "+e.getX()+" y: "+e.getY());
+               SegmentacaoDeImagem.setPixels(e.getX(),e.getY());
+               SegmentacaoDeImagem.printPixelRgb(seg);
             }
-        });
+        });        
     }
     
 
