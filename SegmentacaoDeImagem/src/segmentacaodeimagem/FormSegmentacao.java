@@ -256,6 +256,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
                System.out.println("x: "+e.getX()+" y: "+e.getY());
                SegmentacaoDeImagem.setPixels(e.getX(),e.getY());
                SegmentacaoDeImagem.printPixelRgb(seg);
+               //SegmentacaoDeImagem.darkenPixels(seg);
+               //addImg(new ImageIcon(seg.getRegionMarkedImage()));
+               //revalidate();
+               //repaint();
             }
         });        
     }

@@ -1,6 +1,7 @@
 package segmentacaodeimagem;
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class SegmentacaoDeImagem {
     
     private static int coordinateX;
     private static int coordinateY;
+    private static int pixelRegion;
     
     /**
      * Segmenta uma dada imagem de acordo com os parâmetros abaixo.
@@ -99,17 +101,46 @@ public class SegmentacaoDeImagem {
     //imprime o pixel rgb selecionado e verifica no hashmap a regiao do pixel
     public static void printPixelRgb(ImageInformation img) {
         //int[] pixel = img.getRegionMarkedImage().getRaster().getPixel(coordinateX, coordinateY, new int[3]);
-        //int rgb = (pixel[0] | pixel[1] | pixel[2]);
+        //int rgb = (pixel[0] | pixel[1] | pixel[2]);                
+        System.out.println(getPixel(img));
+       // return pixel;
+    }
+    
+    public static int getPixel(ImageInformation img) {
         int pixel = img.getRegionMarkedImage().getRGB(coordinateX, coordinateY);
         
         if ( map.containsKey( pixel ) ) { 
-            System.out.println("Valor da Chave "+ pixel + " = "+map.get(pixel)); 
+            System.out.println("Valor da Chave "+ pixel + " = "+map.get(pixel));
+            pixelRegion = map.get(pixel);
         }
         else { 
             System.err.println("Chave não existe"); 
-        } 
+        }
         
-        System.out.println(pixel);
-       // return pixel;
+        return pixel;
+    }
+    
+    //muda cor dos pixels, para destacar a região selecionada
+    public static ImageInformation darkenPixels(ImageInformation img) {
+        
+        Color c;
+        int red;
+        int green;
+        int blue;
+        int rgb;
+        
+        for(int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
+            if(mapaDaRegiaoSegmentada[i] != pixelRegion) {
+                System.out.println("\nEntrei!");
+                c = new Color(pixelsDaImagemSegmentada[i]);
+                red = c.getRed();
+                green = c.getBlue();
+                blue = c.getBlue();
+                System.out.println("\nEntrei!" + red + " " + green + " " + blue);
+                rgb = (((red/2)&0x0ff)<<16)|(((green/2)&0x0ff)<<8)|((blue/2)&0x0ff);
+                pixelsDaImagemSegmentada[i] = rgb; 
+            }
+        }
+        return img;
     }
 }
