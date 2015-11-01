@@ -2,6 +2,8 @@ package segmentacaodeimagem;
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -175,6 +177,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
         valBlur.setModel(new SpinnerNumberModel(0.50, 0.00, 100.00, 0.01));
         valRadius.setModel(new SpinnerNumberModel(50, 1, 100, 1));
         valSize.setModel(new SpinnerNumberModel(500, 1, 1000, 10));
+        
+        
     }
     
     /**
@@ -245,7 +249,16 @@ public class FormSegmentacao extends javax.swing.JFrame {
         add(imagem);
         revalidate();
         repaint();
+        
+        //deixa aqui por enquanto. Depois vemos o lugar correto para ela. Pq tentei de outra forma e deu bug kkk
+        imagem.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("x: "+e.getX()+" y: "+e.getY());
+            }
+        });
     }
+    
+
     /**
      * Método que inicia o sistema
      */
