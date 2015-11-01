@@ -1,4 +1,5 @@
 package segmentacaodeimagem;
+
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -11,16 +12,22 @@ import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
 
 /**
- * Classe de controle de interface. Todas as operações da interface do sistema são controladas por ela
+ * Classe de controle de interface. Todas as operações da interface do sistema
+ * são controladas por ela
+ *
  * @author Hiago Miguel & Rai Vitor.
  */
 public class FormSegmentacao extends javax.swing.JFrame {
 
     JFileChooser fileChooser; /*Guarda as informacoes da imagem selecionada pelo usuario */
+
     String path = null; /*Caminho absoluto da imagem */
+
     JLabel imagem; /*Representa a imagem orignal */
+
     ImageInformation seg;/*Contem a imagem segmentada */
-    
+
+
     /**
      * Cria um novo form FormSegmentacao
      */
@@ -51,6 +58,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
         buttonImg = new javax.swing.JButton();
         panelImg = new javax.swing.JPanel();
         panelNotes = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jTextField1 = new javax.swing.JTextField();
+        buttonAdd = new javax.swing.JButton();
 
         javax.swing.GroupLayout fileDialogLayout = new javax.swing.GroupLayout(fileDialog.getContentPane());
         fileDialog.getContentPane().setLayout(fileDialogLayout);
@@ -185,15 +196,47 @@ public class FormSegmentacao extends javax.swing.JFrame {
         panelNotes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelNotes.setPreferredSize(new java.awt.Dimension(200, 400));
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        buttonAdd.setText("+");
+        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelNotesLayout = new javax.swing.GroupLayout(panelNotes);
         panelNotes.setLayout(panelNotesLayout);
         panelNotesLayout.setHorizontalGroup(
             panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 194, Short.MAX_VALUE)
+            .addGroup(panelNotesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                    .addGroup(panelNotesLayout.createSequentialGroup()
+                        .addComponent(jTextField1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonAdd)))
+                .addContainerGap())
         );
         panelNotesLayout.setVerticalGroup(
             panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(panelNotesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonAdd))
+                .addContainerGap(246, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelNotes);
@@ -210,12 +253,12 @@ public class FormSegmentacao extends javax.swing.JFrame {
         fileChooser = new JFileChooser();
         valBlur.setModel(new SpinnerNumberModel(0.50, 0.00, 100.00, 0.01));
         valRadius.setModel(new SpinnerNumberModel(50, 1, 100, 1));
-        valSize.setModel(new SpinnerNumberModel(500, 1, 1000, 10));  
+        valSize.setModel(new SpinnerNumberModel(500, 1, 1000, 10));
     }
-    
+
     /**
-     * Este método é chamado após o botão "Segmentar" ser acionado.
-     * A função dele é pegar uma imagem escolhida pelo usuário e fazer a segmentação dela
+     * Este método é chamado após o botão "Segmentar" ser acionado. A função
+     * dele é pegar uma imagem escolhida pelo usuário e fazer a segmentação dela
      */
     private void buttonSegmentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSegmentarActionPerformed
         // Se o usuário não tiver selecionado nenhuma imagem a função para aqui
@@ -226,26 +269,27 @@ public class FormSegmentacao extends javax.swing.JFrame {
         double blur = (double) valBlur.getValue();
         int radius = (int) valRadius.getValue();
         int size = (int) valSize.getValue();
-        
+
         seg = SegmentacaoDeImagem.segmentar(path, blur, radius, size);
-        
+
         labelRegioes.setText("Total de regiões: " + seg.getTotalRegions());
         //imgSegmentada = new JLabel(new ImageIcon(seg.getRegionMarkedImage()));
         addImg(new ImageIcon(seg.getRegionMarkedImage()));
     }//GEN-LAST:event_buttonSegmentarActionPerformed
 
     /**
-     * Este método é chamado após o botão "Mostrar mapa de rótulos" ser acionado.
-     * Chama o metodo estatico 'GerarMapaRotulos' da classe SegmentacaoDeImagem.
+     * Este método é chamado após o botão "Mostrar mapa de rótulos" ser
+     * acionado. Chama o metodo estatico 'GerarMapaRotulos' da classe
+     * SegmentacaoDeImagem.
      */
     private void buttonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRotulosActionPerformed
-        SegmentacaoDeImagem.GerarMapaRotulos(seg);       
+        SegmentacaoDeImagem.GerarMapaRotulos(seg);
         addImg(new ImageIcon(seg.getRegionMarkedImage()));
     }//GEN-LAST:event_buttonRotulosActionPerformed
-    
+
     /**
-     * Este método é chamado após o botão 'Selecionar Imagem' ser acionado
-     * Abre um dialog para o usuário escolher uma imagem e mostra a imagem na tela.
+     * Este método é chamado após o botão 'Selecionar Imagem' ser acionado Abre
+     * um dialog para o usuário escolher uma imagem e mostra a imagem na tela.
      * Só aceita imagens jpg.
      */
     private void buttonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImgActionPerformed
@@ -262,17 +306,28 @@ public class FormSegmentacao extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_buttonImgActionPerformed
-    
+
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonAddActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+        //Não consigo apagar este método. Se vc conseguir ganha uma jujuba
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
     /**
      * Adiciona uma imagem na interface e remove outras que estejam adicionadas.
+     *
      * @param img - Imagem a ser adicionada
      */
-    private void addImg(ImageIcon image){
-        if(imagem != null)
+    private void addImg(ImageIcon image) {
+        if (imagem != null) {
             panelImg.remove(imagem);
-        
+        }
+
         Image img = image.getImage();
-        Image newimg = img.getScaledInstance(400, 400,  java.awt.Image.SCALE_SMOOTH);
+        Image newimg = img.getScaledInstance(400, 400, java.awt.Image.SCALE_SMOOTH);
         ImageIcon newIcon = new ImageIcon(newimg);
         imagem = new JLabel(newIcon);
         Dimension d = new Dimension(400, 400);
@@ -282,17 +337,16 @@ public class FormSegmentacao extends javax.swing.JFrame {
         panelImg.add(imagem);
         revalidate();
         repaint();
-        
+
         //deixa aqui por enquanto. Depois vemos o lugar correto para ela. Pq tentei de outra forma e deu bug kkk
         imagem.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-               System.out.println("x: "+e.getX()+" y: "+e.getY());
-               SegmentacaoDeImagem.setPixels(e.getX(),e.getY());
-               SegmentacaoDeImagem.printPixelRgb(seg);
+                System.out.println("x: " + e.getX() + " y: " + e.getY());
+                SegmentacaoDeImagem.setPixels(e.getX(), e.getY());
+                SegmentacaoDeImagem.printPixelRgb(seg);
             }
-        });        
+        });
     }
-    
 
     /**
      * Método que inicia o sistema
@@ -327,10 +381,14 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonAdd;
     private javax.swing.JButton buttonImg;
     private javax.swing.JButton buttonRotulos;
     private javax.swing.JButton buttonSegmentar;
     private javax.swing.JDialog fileDialog;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel labelBlur;
     private javax.swing.JLabel labelImg;
     private javax.swing.JLabel labelRadius;
