@@ -49,6 +49,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
         buttonRotulos = new javax.swing.JButton();
         labelImg = new javax.swing.JLabel();
         buttonImg = new javax.swing.JButton();
+        panelImg = new javax.swing.JPanel();
+        panelNotes = new javax.swing.JPanel();
 
         javax.swing.GroupLayout fileDialogLayout = new javax.swing.GroupLayout(fileDialog.getContentPane());
         fileDialog.getContentPane().setLayout(fileDialogLayout);
@@ -65,8 +67,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
         setTitle("frame");
         setMinimumSize(new java.awt.Dimension(400, 200));
         setName("frame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(800, 550));
-        getContentPane().setLayout(new java.awt.GridBagLayout());
+        setPreferredSize(new java.awt.Dimension(850, 500));
+        getContentPane().setLayout(new java.awt.FlowLayout());
 
         panelCtrl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelCtrl.setToolTipText("Ajustes");
@@ -162,7 +164,39 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(panelCtrl, new java.awt.GridBagConstraints());
+        getContentPane().add(panelCtrl);
+
+        panelImg.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelImg.setPreferredSize(new java.awt.Dimension(400, 400));
+
+        javax.swing.GroupLayout panelImgLayout = new javax.swing.GroupLayout(panelImg);
+        panelImg.setLayout(panelImgLayout);
+        panelImgLayout.setHorizontalGroup(
+            panelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 394, Short.MAX_VALUE)
+        );
+        panelImgLayout.setVerticalGroup(
+            panelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(panelImg);
+
+        panelNotes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        panelNotes.setPreferredSize(new java.awt.Dimension(200, 400));
+
+        javax.swing.GroupLayout panelNotesLayout = new javax.swing.GroupLayout(panelNotes);
+        panelNotes.setLayout(panelNotesLayout);
+        panelNotesLayout.setHorizontalGroup(
+            panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 194, Short.MAX_VALUE)
+        );
+        panelNotesLayout.setVerticalGroup(
+            panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 394, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(panelNotes);
 
         getAccessibleContext().setAccessibleDescription("frame");
 
@@ -176,9 +210,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         fileChooser = new JFileChooser();
         valBlur.setModel(new SpinnerNumberModel(0.50, 0.00, 100.00, 0.01));
         valRadius.setModel(new SpinnerNumberModel(50, 1, 100, 1));
-        valSize.setModel(new SpinnerNumberModel(500, 1, 1000, 10));
-        
-        
+        valSize.setModel(new SpinnerNumberModel(500, 1, 1000, 10));  
     }
     
     /**
@@ -237,7 +269,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      */
     private void addImg(ImageIcon image){
         if(imagem != null)
-            remove(imagem);
+            panelImg.remove(imagem);
         
         Image img = image.getImage();
         Image newimg = img.getScaledInstance(400, 400,  java.awt.Image.SCALE_SMOOTH);
@@ -246,7 +278,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
         Dimension d = new Dimension(400, 400);
         imagem.setMaximumSize(d);
         imagem.setSize(d);
-        add(imagem);
+        //add(imagem);
+        panelImg.add(imagem);
         revalidate();
         repaint();
         
@@ -304,6 +337,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private javax.swing.JLabel labelRegioes;
     private javax.swing.JLabel labelSize;
     private javax.swing.JPanel panelCtrl;
+    private javax.swing.JPanel panelImg;
+    private javax.swing.JPanel panelNotes;
     private javax.swing.JSpinner valBlur;
     private javax.swing.JSpinner valRadius;
     private javax.swing.JSpinner valSize;
