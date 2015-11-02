@@ -330,7 +330,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
         Dimension d = new Dimension(img.getWidth(rootPane), img.getHeight(rootPane));
         imagem.setMaximumSize(d);
         imagem.setSize(d);
-        //add(imagem);
         panelImg.add(imagem);
         revalidate();
         repaint();
@@ -339,9 +338,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
         imagem.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                System.out.println("x: "+e.getX()+" y: "+e.getY());
-               SegmentacaoDeImagem.setPixels(e.getX(),e.getY(), imagem.getHeight(), imagem.getWidth());
+               SegmentacaoDeImagem.setCoordenadas(e.getX(),e.getY(), imagem.getHeight(), imagem.getWidth());
                SegmentacaoDeImagem.getPixel(seg);
-               SegmentacaoDeImagem.darkenPixels(seg);
+               //SegmentacaoDeImagem.darkenPixels(seg);
                addImg(new ImageIcon(seg.getRegionMarkedImage()));
             }
         });

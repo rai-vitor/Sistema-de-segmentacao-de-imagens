@@ -2,9 +2,7 @@ package segmentacaodeimagem;
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
 import java.awt.Color;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 /**
  * Uma classe que realiza a segmentação de uma imagem, bem como o mapa de rótulos da mesma.
@@ -27,7 +25,9 @@ public class SegmentacaoDeImagem {
     
     private static int coordinateX;
     private static int coordinateY;
-    private static int pixelRegion;
+    private static ArrayList<Integer> pixelRegion, pixelsDaImagemSegmentada2;
+    private static Boolean isAnotation;
+    
     
     /**
      * Segmenta uma dada imagem de acordo com os parâmetros abaixo.
@@ -43,11 +43,27 @@ public class SegmentacaoDeImagem {
         ImageInformation seg = ImageSegmentation.performSegmentation(path, blur,radius,size);
         mapaDaRegiaoSegmentada = seg.getSegmentedImageMap();
         pixelsDaImagemSegmentada = seg.getRegionMarkedPixels();
+        
         variacaoGray = new int[seg.getTotalRegions()];        
         defGrey = 255/seg.getTotalRegions();
-        
+        pixelsDaImagemSegmentada2 = new ArrayList<Integer>();
+        copiar();
+        pixelRegion = new ArrayList<Integer>();
+        isAnotation = false;
         return seg;
     }       
+    
+    private static void copiar(){
+        for(int i=0; i<pixelsDaImagemSegmentada.length; i++){
+            pixelsDaImagemSegmentada2.add(pixelsDaImagemSegmentada[i]);
+        }
+    }
+    
+    private static void backup(){
+        for (int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
+            pixelsDaImagemSegmentada[i] = pixelsDaImagemSegmentada2.get(i);
+        }
+    }
     
     /**
      * Cria o mapa de rótulos de uma dada imagem segmentada.
@@ -85,16 +101,19 @@ public class SegmentacaoDeImagem {
     }
     
     // define as coordenadas x,y de um pixel de acordo com o mouse click
-    public static void setPixels( int x, int y, int altura, int largura) {
+    public static void setCoordenadas ( int x, int y, int altura, int largura) {
         System.out.println("Altura: "+altura+" Largura: "+largura);
         coordinateX = x;//largura
         coordinateY = y*largura;//altura
     }
-
     
     public static void getPixel(ImageInformation img) {
         int pixel = coordinateX + coordinateY;
-        pixelRegion = mapaDaRegiaoSegmentada[pixel];
+        //se já tiver adicionado, não adiciona
+        if(!pixelRegion.contains(mapaDaRegiaoSegmentada[pixel])){
+            pixelRegion.add(mapaDaRegiaoSegmentada[pixel]);
+            darkenPixels(img);
+        }
         System.out.println("Indice array: "+pixel+" - Regiao: "+pixelRegion);
     }
     
@@ -106,17 +125,18 @@ public class SegmentacaoDeImagem {
         int green;
         int blue;
         int rgb;
-        
+        backup();
         for(int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
-            if(mapaDaRegiaoSegmentada[i] != pixelRegion) {
-                c = new Color(pixelsDaImagemSegmentada[i]);
-                red = c.getRed();
-                green = c.getBlue();
-                blue = c.getBlue();
-                rgb = (((red/2)&0x0ff)<<16)|(((green/2)&0x0ff)<<8)|((blue/2)&0x0ff);
-                pixelsDaImagemSegmentada[i] = rgb; 
-            }
+            if(!pixelRegion.contains(mapaDaRegiaoSegmentada[i])) {
+                 c = new Color(pixelsDaImagemSegmentada[i]);
+                 red = c.getRed();
+                 green = c.getBlue();
+                 blue = c.getBlue();
+                 rgb = (((red/2)&0x0ff)<<16)|(((green/2)&0x0ff)<<8)|((blue/2)&0x0ff);
+                 pixelsDaImagemSegmentada[i] = rgb; 
+             } 
         }
+        isAnotation = true;
         return img;
     }
 }
