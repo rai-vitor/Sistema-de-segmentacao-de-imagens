@@ -74,7 +74,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         setTitle("frame");
         setMinimumSize(new java.awt.Dimension(400, 200));
         setName("frame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(850, 500));
+        setPreferredSize(new java.awt.Dimension(850, 550));
         getContentPane().setLayout(new java.awt.FlowLayout());
 
         panelCtrl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -174,13 +174,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
         getContentPane().add(panelCtrl);
 
         panelImg.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        panelImg.setPreferredSize(new java.awt.Dimension(400, 400));
+        panelImg.setPreferredSize(new java.awt.Dimension(340, 510));
 
         javax.swing.GroupLayout panelImgLayout = new javax.swing.GroupLayout(panelImg);
         panelImg.setLayout(panelImgLayout);
         panelImgLayout.setHorizontalGroup(
             panelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 334, Short.MAX_VALUE)
         );
         panelImgLayout.setVerticalGroup(
             panelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,9 +290,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * Só aceita imagens jpg.
      */
     private void buttonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImgActionPerformed
-        int returnVal = fileChooser.showOpenDialog(fileDialog);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
+        //int returnVal = fileChooser.showOpenDialog(fileDialog);
+        //if (returnVal == JFileChooser.APPROVE_OPTION) {
+            //File file = fileChooser.getSelectedFile();
+            File file = new File("imgs/model.jpg");  
             if (file.getName().contains("jpg")) {
                 labelImg.setText("NomeImg: " + file.getName());
                 path = file.getAbsolutePath();
@@ -301,7 +302,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
             } else {
                 labelImg.setText("Utilize somente imagens jpg");
             }
-        }
+        //}
     }//GEN-LAST:event_buttonImgActionPerformed
 
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
@@ -324,9 +325,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
         Image img = image.getImage();
         Image newimg = img.getScaledInstance(400, 400, java.awt.Image.SCALE_SMOOTH);
-        ImageIcon newIcon = new ImageIcon(newimg);
+        ImageIcon newIcon = new ImageIcon(img);
         imagem = new JLabel(newIcon);
-        Dimension d = new Dimension(400, 400);
+        Dimension d = new Dimension(img.getWidth(rootPane), img.getHeight(rootPane));
         imagem.setMaximumSize(d);
         imagem.setSize(d);
         //add(imagem);

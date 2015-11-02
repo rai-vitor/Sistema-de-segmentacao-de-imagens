@@ -90,8 +90,8 @@ public class SegmentacaoDeImagem {
     */
     public static void setPixels( int x, int y, int altura, int largura) {
         System.out.println("Altura: "+altura+" Largura: "+largura);
-        coordinateX = x;
-        coordinateY = y;        
+        coordinateX = x;//largura
+        coordinateY = y;//altura
     }
 
     
