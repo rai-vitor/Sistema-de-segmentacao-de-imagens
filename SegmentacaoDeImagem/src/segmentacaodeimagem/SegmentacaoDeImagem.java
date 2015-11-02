@@ -85,21 +85,17 @@ public class SegmentacaoDeImagem {
     }
     
     // define as coordenadas x,y de um pixel de acordo com o mouse click
-    /*
-    * Nessa função que precisamos corrigir o erro das coordenadas
-    */
     public static void setPixels( int x, int y, int altura, int largura) {
         System.out.println("Altura: "+altura+" Largura: "+largura);
         coordinateX = x;//largura
-        coordinateY = y;//altura
+        coordinateY = y*largura;//altura
     }
 
     
     public static void getPixel(ImageInformation img) {
-        int pixel = coordinateX * coordinateY;
+        int pixel = coordinateX + coordinateY;
         pixelRegion = mapaDaRegiaoSegmentada[pixel];
         System.out.println("Indice array: "+pixel+" - Regiao: "+pixelRegion);
-        //return pixel;
     }
     
     //muda cor dos pixels, para destacar a região selecionada
