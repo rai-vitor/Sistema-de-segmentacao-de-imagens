@@ -26,7 +26,6 @@ public class SegmentacaoDeImagem {
     private static int coordinateX;
     private static int coordinateY;
     private static ArrayList<Integer> pixelRegion, pixelsDaImagemSegmentada2;
-    private static Boolean isAnotation;
     
     
     /**
@@ -46,20 +45,19 @@ public class SegmentacaoDeImagem {
         
         variacaoGray = new int[seg.getTotalRegions()];        
         defGrey = 255/seg.getTotalRegions();
-        pixelsDaImagemSegmentada2 = new ArrayList<Integer>();
-        copiar();
-        pixelRegion = new ArrayList<Integer>();
-        isAnotation = false;
+        pixelsDaImagemSegmentada2 = new ArrayList<>();
+        CopiarArray();
+        pixelRegion = new ArrayList<>();
         return seg;
     }       
     
-    private static void copiar(){
+    private static void CopiarArray(){
         for(int i=0; i<pixelsDaImagemSegmentada.length; i++){
             pixelsDaImagemSegmentada2.add(pixelsDaImagemSegmentada[i]);
         }
     }
     
-    private static void backup(){
+    private static void RestaurarImg(){
         for (int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
             pixelsDaImagemSegmentada[i] = pixelsDaImagemSegmentada2.get(i);
         }
@@ -112,6 +110,7 @@ public class SegmentacaoDeImagem {
         //se já tiver adicionado, não adiciona
         if(!pixelRegion.contains(mapaDaRegiaoSegmentada[pixel])){
             pixelRegion.add(mapaDaRegiaoSegmentada[pixel]);
+            //só se eu add uma nova região que eu chamo a função
             darkenPixels(img);
         }
         System.out.println("Indice array: "+pixel+" - Regiao: "+pixelRegion);
@@ -125,7 +124,9 @@ public class SegmentacaoDeImagem {
         int green;
         int blue;
         int rgb;
-        backup();
+        
+        //Toda vez eu restauro img para a original. Assim garanto que somente as outras regiões serão apagadas.
+        RestaurarImg();
         for(int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
             if(!pixelRegion.contains(mapaDaRegiaoSegmentada[i])) {
                  c = new Color(pixelsDaImagemSegmentada[i]);
@@ -136,7 +137,6 @@ public class SegmentacaoDeImagem {
                  pixelsDaImagemSegmentada[i] = rgb; 
              } 
         }
-        isAnotation = true;
         return img;
     }
 }
