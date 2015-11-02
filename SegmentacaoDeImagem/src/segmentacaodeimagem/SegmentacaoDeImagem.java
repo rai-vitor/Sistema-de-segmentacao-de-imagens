@@ -57,7 +57,7 @@ public class SegmentacaoDeImagem {
         }
     }
     
-    private static void RestaurarImg(){
+    public static void RestaurarImg(){
         for (int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
             pixelsDaImagemSegmentada[i] = pixelsDaImagemSegmentada2.get(i);
         }

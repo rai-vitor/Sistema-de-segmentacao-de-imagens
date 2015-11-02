@@ -305,8 +305,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
         //}
     }//GEN-LAST:event_buttonImgActionPerformed
 
+    /**
+     * Por enquanto está somente limpando a img
+     * @param evt 
+     */
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
-        // TODO add your handling code here:
+        SegmentacaoDeImagem.RestaurarImg();
+        addImg(new ImageIcon(seg.getRegionMarkedImage()));
     }//GEN-LAST:event_buttonAddActionPerformed
 
     private void campoTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTagActionPerformed
