@@ -338,10 +338,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
         imagem.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                System.out.println("x: "+e.getX()+" y: "+e.getY());
-               SegmentacaoDeImagem.setPixels(e.getX(),e.getY());
-               SegmentacaoDeImagem.printPixelRgb(seg);
-               //SegmentacaoDeImagem.darkenPixels(seg);
-               //addImg(new ImageIcon(seg.getRegionMarkedImage()));
+               SegmentacaoDeImagem.setPixels(e.getX(),e.getY(), imagem.getHeight(), imagem.getWidth());
+               SegmentacaoDeImagem.getPixel(seg);
+               SegmentacaoDeImagem.darkenPixels(seg);
+               addImg(new ImageIcon(seg.getRegionMarkedImage()));
             }
         });
     }

@@ -25,8 +25,6 @@ public class SegmentacaoDeImagem {
     /* Define a intensidade da tonalidade cinza inicial a ser utilizada*/
     private static int defGrey;
     
-    private static Map<Integer,Integer> map;
-    
     private static int coordinateX;
     private static int coordinateY;
     private static int pixelRegion;
@@ -48,11 +46,6 @@ public class SegmentacaoDeImagem {
         variacaoGray = new int[seg.getTotalRegions()];        
         defGrey = 255/seg.getTotalRegions();
         
-        //criando um hashmap com o pixelsDaImagemSegmentada como key e mapaDaRegiaoSegmentada como value 
-        map = new HashMap<Integer, Integer>();
-        for(int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
-            map.put(pixelsDaImagemSegmentada[i],mapaDaRegiaoSegmentada[i]);
-        }
         return seg;
     }       
     
@@ -92,32 +85,21 @@ public class SegmentacaoDeImagem {
     }
     
     // define as coordenadas x,y de um pixel de acordo com o mouse click
-    public static void setPixels( int x, int y) {
+    /*
+    * Nessa função que precisamos corrigir o erro das coordenadas
+    */
+    public static void setPixels( int x, int y, int altura, int largura) {
+        System.out.println("Altura: "+altura+" Largura: "+largura);
         coordinateX = x;
         coordinateY = y;        
     }
+
     
-    
-    //imprime o pixel rgb selecionado e verifica no hashmap a regiao do pixel
-    public static void printPixelRgb(ImageInformation img) {
-        //int[] pixel = img.getRegionMarkedImage().getRaster().getPixel(coordinateX, coordinateY, new int[3]);
-        //int rgb = (pixel[0] | pixel[1] | pixel[2]);                
-        System.out.println(getPixel(img));
-       // return pixel;
-    }
-    
-    public static int getPixel(ImageInformation img) {
-        int pixel = img.getRegionMarkedImage().getRGB(coordinateX, coordinateY);
-        
-        if ( map.containsKey( pixel ) ) { 
-            System.out.println("Valor da Chave "+ pixel + " = "+map.get(pixel));
-            pixelRegion = map.get(pixel);
-        }
-        else { 
-            System.err.println("Chave não existe"); 
-        }
-        
-        return pixel;
+    public static void getPixel(ImageInformation img) {
+        int pixel = coordinateX * coordinateY;
+        pixelRegion = mapaDaRegiaoSegmentada[pixel];
+        System.out.println("Indice array: "+pixel+" - Regiao: "+pixelRegion);
+        //return pixel;
     }
     
     //muda cor dos pixels, para destacar a região selecionada
@@ -131,12 +113,10 @@ public class SegmentacaoDeImagem {
         
         for(int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
             if(mapaDaRegiaoSegmentada[i] != pixelRegion) {
-                System.out.println("\nEntrei!");
                 c = new Color(pixelsDaImagemSegmentada[i]);
                 red = c.getRed();
                 green = c.getBlue();
                 blue = c.getBlue();
-                System.out.println("\nEntrei!" + red + " " + green + " " + blue);
                 rgb = (((red/2)&0x0ff)<<16)|(((green/2)&0x0ff)<<8)|((blue/2)&0x0ff);
                 pixelsDaImagemSegmentada[i] = rgb; 
             }
