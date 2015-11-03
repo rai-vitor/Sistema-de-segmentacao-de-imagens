@@ -297,6 +297,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
             if (file.getName().contains("jpg")) {
                 labelImg.setText("NomeImg: " + file.getName());
                 path = file.getAbsolutePath();
+                /*MUDEI AQUIIIIIIIIIIIII*/
+                path = ConvertImage.scaleImage(400, 400, path);
                 ImageIcon image = new ImageIcon(path);
                 addImg(image);
             } else {
