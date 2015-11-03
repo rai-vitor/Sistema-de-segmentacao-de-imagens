@@ -57,9 +57,12 @@ public class SegmentacaoDeImagem {
         }
     }
     
-    public static void RestaurarImg(){
+    public static void RestaurarImg(int id){
         for (int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
             pixelsDaImagemSegmentada[i] = pixelsDaImagemSegmentada2.get(i);
+        }
+        if(id == 1){
+            pixelRegion.clear();
         }
     }
     
@@ -126,7 +129,7 @@ public class SegmentacaoDeImagem {
         int rgb;
         
         //Toda vez eu restauro img para a original. Assim garanto que somente as outras regiões serão apagadas.
-        RestaurarImg();
+        RestaurarImg(0);
         for(int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
             if(!pixelRegion.contains(mapaDaRegiaoSegmentada[i])) {
                  c = new Color(pixelsDaImagemSegmentada[i]);

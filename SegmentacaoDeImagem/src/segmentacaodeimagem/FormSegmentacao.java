@@ -310,7 +310,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * @param evt 
      */
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
-        SegmentacaoDeImagem.RestaurarImg();
+        SegmentacaoDeImagem.RestaurarImg(1);
         addImg(new ImageIcon(seg.getRegionMarkedImage()));
     }//GEN-LAST:event_buttonAddActionPerformed
 
@@ -330,9 +330,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
         Image img = image.getImage();
         Image newimg = img.getScaledInstance(400, 400, java.awt.Image.SCALE_SMOOTH);
-        ImageIcon newIcon = new ImageIcon(img);
+        ImageIcon newIcon = new ImageIcon(newimg);
         imagem = new JLabel(newIcon);
-        Dimension d = new Dimension(img.getWidth(rootPane), img.getHeight(rootPane));
+        Dimension d = new Dimension(newimg.getWidth(rootPane), newimg.getHeight(rootPane));
         imagem.setMaximumSize(d);
         imagem.setSize(d);
         panelImg.add(imagem);
