@@ -3,6 +3,8 @@ import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Uma classe que realiza a segmentação de uma imagem, bem como o mapa de rótulos da mesma.
@@ -26,6 +28,7 @@ public class SegmentacaoDeImagem {
     private static int coordinateX;
     private static int coordinateY;
     private static ArrayList<Integer> pixelRegion, pixelsDaImagemSegmentada2;
+    private static Map<Integer,String> tagImg = new HashMap<>();
     
     
     /**
@@ -64,6 +67,24 @@ public class SegmentacaoDeImagem {
         if(id == 1){
             pixelRegion.clear();
         }
+    }
+    
+    public static void AssocTagRegiao(String tag) {
+        
+        System.out.println("Entrei!!!");
+        
+        for(int i = 0; i < pixelRegion.size(); i++) {
+            tagImg.put(pixelRegion.get(i), tag);
+        }
+        
+        System.out.println(tagImg);
+        /*
+        for(Map.Entry<Integer,String> entry : tagImg.entrySet()) {
+            int region = entry.getKey();
+            String tagAux = entry.getValue();            
+            System.out.println("Região: " + region + "Tag: " + tagAux);
+        }*/
+        
     }
     
     /**
