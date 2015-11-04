@@ -312,9 +312,15 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * @param evt 
      */
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
-        SegmentacaoDeImagem.AssocTagRegiao(campoTag.getText());
+        /*SegmentacaoDeImagem.AssocTagRegiao(campoTag.getText());
         SegmentacaoDeImagem.RestaurarImg(1);
-        addImg(new ImageIcon(seg.getRegionMarkedImage()));
+        addImg(new ImageIcon(seg.getRegionMarkedImage()));*/
+        SQLiteJDBC banco = new SQLiteJDBC();
+        //System.out.println(banco.SelecionarImg("teste"));
+        banco.InserirImg("img/model.jpg");
+        banco.ListarImg();
+        //banco.inserirDados("img/model.jpg", "camisa", 6);
+        
         
     }//GEN-LAST:event_buttonAddActionPerformed
 
