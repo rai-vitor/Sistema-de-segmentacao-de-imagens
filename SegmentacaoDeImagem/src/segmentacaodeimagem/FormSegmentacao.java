@@ -231,7 +231,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
             }
         });
 
-        buttonSave.setText("Salvar Anotações");
+        buttonSave.setText("Salvar Alterações");
         buttonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSaveActionPerformed(evt);
