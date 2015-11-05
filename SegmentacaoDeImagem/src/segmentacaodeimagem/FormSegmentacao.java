@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -337,7 +338,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      */
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
         String tag = campoTag.getText();
-
+/*
         //Se tiver o campo vazio ou ainda não existir uma img segmentada
         if (tag.equals("") || seg == null) {
             campoTag.requestFocusInWindow();
@@ -357,13 +358,12 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
         SegmentacaoDeImagem.AssocTagRegiao(tag);
         SegmentacaoDeImagem.RestaurarImg(1);
-        addImg(new ImageIcon(seg.getRegionMarkedImage()));
-        /*
-        SQLiteJDBC banco = new SQLiteJDBC();
-        //System.out.println(banco.SelecionarImg("teste"));
-        banco.InserirImg("img/model.jpg");
-        banco.ListarImg();*/
-        //banco.inserirDados("img/model.jpg", "camisa", 6);
+        addImg(new ImageIcon(seg.getRegionMarkedImage()));*/
+        
+        SQLiteJDBC banco = SQLiteJDBC.getInstance();
+        //banco.InserirDados("img/model123.jpg", "camis345a", 07);
+        //banco.ListarImg();
+        ArrayList<Anotacao> a = banco.ListarDados();
     }//GEN-LAST:event_buttonAddActionPerformed
 
     private void campoTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTagActionPerformed
