@@ -250,7 +250,7 @@ public class SQLiteJDBC {
     
     /**
      * Deleta uma imagem no banco
-     * @param idImg id da imagem a ser deletada
+     * @param idImg - id da imagem a ser deletada
      */
     public void DeletarImg(int idImg){
         try {
@@ -271,7 +271,7 @@ public class SQLiteJDBC {
     
     /**
      * Deleta uma anotação no banco
-     * @param note anotação a ser deletada
+     * @param note - anotação a ser deletada
      */
     public void DeletarAnotacao(Anotacao note){
         int idImg = SelecionarImg(note.getPathImg());

@@ -30,7 +30,7 @@ public class SegmentacaoDeImagem {
     
     private static int coordinateX;
     private static int coordinateY;
-    private static ArrayList<Integer> pixelRegion, pixelsDaImagemSegmentada2;
+    private static ArrayList<Integer> pixelRegion, pixelsDaImagemSegmentadaBckp;
     private static Map<Integer,String> tagImg = new HashMap<>();
     
     
@@ -51,23 +51,30 @@ public class SegmentacaoDeImagem {
         
         variacaoGray = new int[seg.getTotalRegions()];        
         defGrey = 255/seg.getTotalRegions();
-        pixelsDaImagemSegmentada2 = new ArrayList<>();
-        CopiarArray();
+        pixelsDaImagemSegmentadaBckp = new ArrayList<>();
+        CopiarImgSeg();
         pixelRegion = new ArrayList<>();
         return seg;
     }       
     
-    private static void CopiarArray(){
+    /**
+     * Faz uma cópia da imagem segmentada
+     */
+    private static void CopiarImgSeg(){
         for(int i=0; i<pixelsDaImagemSegmentada.length; i++){
-            pixelsDaImagemSegmentada2.add(pixelsDaImagemSegmentada[i]);
+            pixelsDaImagemSegmentadaBckp.add(pixelsDaImagemSegmentada[i]);
         }
     }
     
-    public static void RestaurarImg(int id){
+    /**
+     * Restaura a imagem segmentada com o brilho original dela
+     * @param flag se ela for 1 limpa 'pixelRegion'
+     */
+    public static void RestaurarImg(int flag){
         for (int i = 0; i < pixelsDaImagemSegmentada.length; i++) {
-            pixelsDaImagemSegmentada[i] = pixelsDaImagemSegmentada2.get(i);
+            pixelsDaImagemSegmentada[i] = pixelsDaImagemSegmentadaBckp.get(i);
         }
-        if(id == 1){
+        if(flag == 1){
             pixelRegion.clear();
         }
     }
