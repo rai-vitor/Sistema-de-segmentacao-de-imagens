@@ -1,10 +1,18 @@
 package segmentacaodeimagem;
-
+/**
+ * Classe que realiza a persistencia das anotações no banco.
+ */
 public class Anotacao {
     private String pathImg;
     private String tag;
     private int regiao;
         
+    /**
+     * Construtor 
+     * @param pathImg_ - Caminho da imagem
+     * @param tag_ - Anotação
+     * @param regiao_ - Região da imagem
+     */
     public Anotacao(String pathImg_, String tag_, int regiao_){
         this.pathImg = pathImg_;
         this.tag = tag_;
@@ -19,9 +27,12 @@ public class Anotacao {
         banco.InserirDados(pathImg, tag, regiao);
     }
     
+    /**
+     * Remove a anotação do banco
+     */
     public void Remover(){
         SQLiteJDBC banco = SQLiteJDBC.getInstance();
-        banco.Deletar(this);
+        banco.DeletarAnotacao(this);
     }
     
     @Override

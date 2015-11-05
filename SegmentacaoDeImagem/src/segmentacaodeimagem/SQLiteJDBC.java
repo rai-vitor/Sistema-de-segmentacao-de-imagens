@@ -157,8 +157,8 @@ public class SQLiteJDBC {
     }
     
     /**
-     * 
-     * @return 
+     * Seleciona todas as imagens no banco
+     * @return retorna o caminho e o id das imagens no bano
      */
     public Map<Integer, String> ListarImg(){
         conexao = null;
@@ -192,10 +192,10 @@ public class SQLiteJDBC {
     }
     
     /**
-     * 
-     * @return 
+     * Lista todas as anotações do banco
+     * @return lista com todas as anotações
      */
-    public ArrayList<Anotacao> ListarDados(){
+    public ArrayList<Anotacao> ListarAnotacoes(){
         conexao = null;
         stmt = null;
         try {
@@ -222,6 +222,10 @@ public class SQLiteJDBC {
         return null;
     }
     
+    /**
+     * Conta a quantidade de imagens no banco
+     * @return quantidade de imagens no banco
+     */
     public static int CountImg(){
         conexao = null;
         stmt = null;
@@ -244,7 +248,11 @@ public class SQLiteJDBC {
         return 0;
     }
     
-    public void Deletar(int idImg){
+    /**
+     * Deleta uma imagem no banco
+     * @param idImg id da imagem a ser deletada
+     */
+    public void DeletarImg(int idImg){
         try {
             conexao = DriverManager.getConnection(banco);
             conexao.setAutoCommit(false);
@@ -261,7 +269,11 @@ public class SQLiteJDBC {
         }
     }
     
-    public void Deletar(Anotacao note){
+    /**
+     * Deleta uma anotação no banco
+     * @param note anotação a ser deletada
+     */
+    public void DeletarAnotacao(Anotacao note){
         int idImg = SelecionarImg(note.getPathImg());
         if(idImg == -1)
             return;
