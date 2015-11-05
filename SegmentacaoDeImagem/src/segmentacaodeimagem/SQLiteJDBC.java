@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import org.sqlite.JDBC;
 
 /**
  * Classe que persiste os dados no banco de dados Sqlite
@@ -19,9 +18,7 @@ public class SQLiteJDBC {
      * Construtor que não pode ser instanciado
      * Utilizar getInstance para ter uma instancia da classe
      */
-    private SQLiteJDBC() {
-        this.banco = "jdbc:sqlite:seg.db";
-    }
+    private SQLiteJDBC() {}
     
     /**
      * Método para garantir o padrão Singleton
@@ -98,7 +95,7 @@ public class SQLiteJDBC {
           //se não encontrar nada retorno -1
             int id = -1;
             while ( rs.next() ) {
-               id = rs.getInt("id");
+               id = rs.getInt("ID_IMG");
             }    
             
             rs.close();
@@ -121,7 +118,6 @@ public class SQLiteJDBC {
         try {
             conexao = DriverManager.getConnection(banco);
             conexao.setAutoCommit(false);
-            System.out.println("Opened database successfully");
 
             stmt = conexao.createStatement();
             String sql = "INSERT INTO IMG (PATHIMG) VALUES ('"+path+"');"; 
@@ -147,7 +143,6 @@ public class SQLiteJDBC {
         try {
             conexao = DriverManager.getConnection(banco);
             conexao.setAutoCommit(false);
-            System.out.println("Opened database successfully");
 
             stmt = conexao.createStatement();
             String sql = "INSERT INTO ANOTACAO (TAG,REGIAO,ID_IMG_FK) VALUES ('"+tag+"', '"+regiao+"', '"+imgId+"');"; 
@@ -178,7 +173,7 @@ public class SQLiteJDBC {
           ResultSet rs = stmt.executeQuery( "SELECT * FROM IMG;" );
           
           while ( rs.next() ) {
-             int id = rs.getInt("id");
+             int id = rs.getInt("ID_IMG");
              String  path = rs.getString("PATHIMG");
              System.out.println( "ID = " + id );
              System.out.println( "PATHIMG = " + path );

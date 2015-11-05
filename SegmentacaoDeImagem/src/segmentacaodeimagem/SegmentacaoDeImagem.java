@@ -74,7 +74,7 @@ public class SegmentacaoDeImagem {
     
     public static ArrayList<Anotacao> AssocTagRegiao(String tag, ArrayList<Anotacao> notes) {
         for(int i = 0; i < pixelRegion.size(); i++) {
-            Anotacao note = new Anotacao(tag, pixelRegion.get(i));
+            Anotacao note = new Anotacao(ConvertImage.getCaminhoDaImagem(), tag, pixelRegion.get(i));
             notes.add(note);
             tagImg.put(pixelRegion.get(i), tag);
         }
