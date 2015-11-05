@@ -368,6 +368,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         
         //Para não ter elementos repetidos na lista
         if(!tagsModel.contains(tag)){
+            tags = SegmentacaoDeImagem.AssocTagRegiao(tag, tags);
             tagsModel.addElement(tag);
             listaTags.setModel(tagsModel);
         }
@@ -375,8 +376,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         //Reset the text field.
         campoTag.requestFocusInWindow();
         campoTag.setText("");
-
-        tags = SegmentacaoDeImagem.AssocTagRegiao(tag, tags);
+        
         SegmentacaoDeImagem.RestaurarImg(1);
         addImg(new ImageIcon(seg.getRegionMarkedImage()));
     }//GEN-LAST:event_buttonAddActionPerformed

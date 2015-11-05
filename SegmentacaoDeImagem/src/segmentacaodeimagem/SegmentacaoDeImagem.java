@@ -52,7 +52,7 @@ public class SegmentacaoDeImagem {
         variacaoGray = new int[seg.getTotalRegions()];        
         defGrey = 255/seg.getTotalRegions();
         pixelsDaImagemSegmentadaBckp = new ArrayList<>();
-        CopiarImgSeg();
+        CopiarArray();
         pixelRegion = new ArrayList<>();
         return seg;
     }       
@@ -60,7 +60,7 @@ public class SegmentacaoDeImagem {
     /**
      * Faz uma cópia da imagem segmentada
      */
-    private static void CopiarImgSeg(){
+    private static void CopiarArray(){
         for(int i=0; i<pixelsDaImagemSegmentada.length; i++){
             pixelsDaImagemSegmentadaBckp.add(pixelsDaImagemSegmentada[i]);
         }
