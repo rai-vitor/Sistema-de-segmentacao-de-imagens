@@ -1,6 +1,7 @@
 package segmentacaodeimagem;
 
 public class Anotacao {
+    private int id;
     private String pathImg;
     private String tag;
     private int regiao;
@@ -8,12 +9,28 @@ public class Anotacao {
     public Anotacao(String tag_, int regiao_){
         this.tag = tag_;
         this.regiao = regiao_;
+        this.pathImg = "";
     }
     
     public Anotacao(String pathImg_, String tag_, int regiao_){
         this.pathImg = pathImg_;
         this.tag = tag_;
         this.regiao = regiao_;
+    }
+    
+    public Anotacao(int id_, String pathImg_, String tag_, int regiao_){
+        this.id = id_;
+        this.pathImg = pathImg_;
+        this.tag = tag_;
+        this.regiao = regiao_;
+    }
+    
+    /**
+     * Salva os dados no banco de dados
+     */
+    public void Salvar(){
+        SQLiteJDBC banco = SQLiteJDBC.getInstance();
+        banco.InserirDados(pathImg, tag, regiao);
     }
 
     /**

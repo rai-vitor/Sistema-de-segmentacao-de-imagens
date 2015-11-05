@@ -24,8 +24,7 @@ public class ConvertImage {
      * 
      * @param WIDTH Nova largura da imagem.
      * @param HEIGHT Nova altura da imagem.
-     * @param filename Caminho da imagem a ser dimensionada.
-     * @return 
+     * @param filename Caminho da imagem a ser dimensionada. 
      */
     
     public static void scaleImage(int WIDTH, int HEIGHT, String filename) {
@@ -50,12 +49,11 @@ public class ConvertImage {
      * Salva imagem redimensionada.
      * 
      * @param image Imagem a ser salva.
-     * @return Retorna o caminho da imagem redimensionada.
      */
-    
     public static void saveToFile(BufferedImage image) {
-        
-        File outputfile = new File("imgs/sample.jpg");
+        int num = SQLiteJDBC.CountImg();
+        String path = "imgs/img"+num+".jpg";
+        File outputfile = new File(path);
         
         try {
             ImageIO.write(image, "jpg", outputfile);
@@ -64,7 +62,7 @@ public class ConvertImage {
             Logger.getLogger(ConvertImage.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        setCaminhoDaImagem("imgs/sample.jpg");
+        setCaminhoDaImagem(path);
     }
     
     /**

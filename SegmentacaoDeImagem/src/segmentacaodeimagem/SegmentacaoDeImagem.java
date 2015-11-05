@@ -72,13 +72,15 @@ public class SegmentacaoDeImagem {
         }
     }
     
-    public static Map<Integer, String> AssocTagRegiao(String tag) {
+    public static ArrayList<Anotacao> AssocTagRegiao(String tag, ArrayList<Anotacao> notes) {
         for(int i = 0; i < pixelRegion.size(); i++) {
+            Anotacao note = new Anotacao(tag, pixelRegion.get(i));
+            notes.add(note);
             tagImg.put(pixelRegion.get(i), tag);
         }
         
         System.out.println(tagImg);
-        return tagImg;
+        return notes;
     }
     
     /**

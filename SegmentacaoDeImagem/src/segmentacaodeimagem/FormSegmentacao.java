@@ -27,6 +27,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     JLabel imagem; /*Representa a imagem orignal */
     ImageInformation seg;/*Contem a imagem segmentada */
     DefaultListModel tagsModel;
+    ArrayList<Anotacao> notes;
     
     private static final int DEFAULT_WIDTH = 400;
     private static final int DEFAULT_HEIGHT = 400;
@@ -66,6 +67,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listaTags = new javax.swing.JList();
         buttonClear = new javax.swing.JButton();
+        buttonSave = new javax.swing.JButton();
 
         javax.swing.GroupLayout fileDialogLayout = new javax.swing.GroupLayout(fileDialog.getContentPane());
         fileDialog.getContentPane().setLayout(fileDialogLayout);
@@ -227,19 +229,29 @@ public class FormSegmentacao extends javax.swing.JFrame {
             }
         });
 
+        buttonSave.setText("Salvar Anotações");
+        buttonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelNotesLayout = new javax.swing.GroupLayout(panelNotes);
         panelNotes.setLayout(panelNotesLayout);
         panelNotesLayout.setHorizontalGroup(
             panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNotesLayout.createSequentialGroup()
+            .addGroup(panelNotesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(buttonClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(panelNotesLayout.createSequentialGroup()
+                .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonClear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNotesLayout.createSequentialGroup()
                         .addComponent(campoTag, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonAdd)))
+                        .addComponent(buttonAdd))
+                    .addGroup(panelNotesLayout.createSequentialGroup()
+                        .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelNotesLayout.setVerticalGroup(
@@ -253,7 +265,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
                     .addComponent(buttonAdd))
                 .addGap(18, 18, 18)
                 .addComponent(buttonClear)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(buttonSave)
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         getContentPane().add(panelNotes);
@@ -275,6 +289,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         path = null;
         tagsModel = new DefaultListModel();
         listaTags.setModel(tagsModel);
+        notes = new ArrayList<>();
     }
 
     /**
@@ -338,7 +353,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      */
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
         String tag = campoTag.getText();
-/*
+
         //Se tiver o campo vazio ou ainda não existir uma img segmentada
         if (tag.equals("") || seg == null) {
             campoTag.requestFocusInWindow();
@@ -356,14 +371,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
         campoTag.requestFocusInWindow();
         campoTag.setText("");
 
-        SegmentacaoDeImagem.AssocTagRegiao(tag);
+        notes = SegmentacaoDeImagem.AssocTagRegiao(tag, notes);
         SegmentacaoDeImagem.RestaurarImg(1);
-        addImg(new ImageIcon(seg.getRegionMarkedImage()));*/
-        
-        SQLiteJDBC banco = SQLiteJDBC.getInstance();
-        //banco.InserirDados("img/model123.jpg", "camis345a", 07);
-        //banco.ListarImg();
-        ArrayList<Anotacao> a = banco.ListarDados();
+        addImg(new ImageIcon(seg.getRegionMarkedImage()));
     }//GEN-LAST:event_buttonAddActionPerformed
 
     private void campoTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTagActionPerformed
@@ -384,6 +394,18 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonClearActionPerformed
 
     /**
+     * Método chamado após clicar no botão 'Salvar Anotações'
+     * Este método salva as anotações
+     */
+    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        if(notes.size() > 0){
+            for(int i = 0; i < notes.size(); i++){
+                notes.get(i).Salvar();
+            }
+        }
+    }//GEN-LAST:event_buttonSaveActionPerformed
+
+    /**
      * Adiciona uma imagem na interface e remove outras que estejam adicionadas.
      *
      * @param img - Imagem a ser adicionada
@@ -394,7 +416,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         }
 
         Image img = image.getImage();
-        Image newimg = img.getScaledInstance(400, 400, java.awt.Image.SCALE_SMOOTH);
+        Image newimg = img.getScaledInstance(DEFAULT_WIDTH, DEFAULT_HEIGHT, java.awt.Image.SCALE_SMOOTH);
         ImageIcon newIcon = new ImageIcon(newimg);
         imagem = new JLabel(newIcon);
         Dimension d = new Dimension(newimg.getWidth(rootPane), newimg.getHeight(rootPane));
@@ -455,6 +477,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private javax.swing.JButton buttonClear;
     private javax.swing.JButton buttonImg;
     private javax.swing.JButton buttonRotulos;
+    private javax.swing.JButton buttonSave;
     private javax.swing.JButton buttonSegmentar;
     private javax.swing.JTextField campoTag;
     private javax.swing.JDialog fileDialog;

@@ -11,9 +11,9 @@ import org.sqlite.JDBC;
  */
 public class SQLiteJDBC {
     private static SQLiteJDBC instancia;
-    private Connection conexao;
-    private Statement stmt;
-    private String banco;
+    private static Connection conexao;
+    private static Statement stmt;
+    private static String banco = "jdbc:sqlite:seg.db";
 
     /**
      * Construtor que não pode ser instanciado
@@ -225,6 +225,28 @@ public class SQLiteJDBC {
           System.exit(0);
         }
         return null;
+    }
+    
+    public static int CountImg(){
+        conexao = null;
+        stmt = null;
+        try {
+          conexao = DriverManager.getConnection(banco);
+          conexao.setAutoCommit(false);
+          stmt = conexao.createStatement();
+          
+          ResultSet rs = stmt.executeQuery("SELECT COUNT (*) AS TAMANHO FROM IMG;");
+          int tamanho = rs.getInt("TAMANHO");
+         
+          rs.close();
+          stmt.close();
+          conexao.close();
+          return tamanho;
+        } catch ( Exception e ) {
+          System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+          System.exit(0);
+        }
+        return 0;
     }
 }
     
