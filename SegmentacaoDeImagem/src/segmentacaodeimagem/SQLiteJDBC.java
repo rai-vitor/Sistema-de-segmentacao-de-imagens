@@ -123,8 +123,8 @@ public class SQLiteJDBC {
             String sql = "INSERT INTO IMG (PATHIMG) VALUES ('"+path+"');"; 
             stmt.executeUpdate(sql);
           
-            stmt.close();
             conexao.commit();
+            stmt.close();
             conexao.close();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -148,8 +148,8 @@ public class SQLiteJDBC {
             String sql = "INSERT INTO ANOTACAO (TAG,REGIAO,ID_IMG_FK) VALUES ('"+tag+"', '"+regiao+"', '"+imgId+"');"; 
             stmt.executeUpdate(sql);
           
-            stmt.close();
             conexao.commit();
+            stmt.close();
             conexao.close();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -242,6 +242,40 @@ public class SQLiteJDBC {
           System.exit(0);
         }
         return 0;
+    }
+    
+    public void Deletar(int idImg){
+        try {
+            conexao = DriverManager.getConnection(banco);
+            conexao.setAutoCommit(false);
+
+            stmt = conexao.createStatement();
+            String sql = "DELETE FROM ANOTACAO WHERE ID_IMG_FK = '"+idImg+"';"; 
+            stmt.executeUpdate(sql);
+          
+            conexao.commit();
+            stmt.close();
+            conexao.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
+    }
+    
+    public void Deletar(Anotacao note){
+        try {
+            conexao = DriverManager.getConnection(banco);
+            conexao.setAutoCommit(false);
+
+            stmt = conexao.createStatement();
+            String sql = "DELETE FROM ANOTACAO WHERE TAG = '"+note.getTag()+"' AND REGIAO = '"+note.getRegiao()+"';"; 
+            stmt.executeUpdate(sql);
+          
+            conexao.commit();
+            stmt.close();
+            conexao.close();
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        }
     }
 }
     

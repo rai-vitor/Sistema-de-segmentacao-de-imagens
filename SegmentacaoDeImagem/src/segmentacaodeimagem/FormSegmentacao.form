@@ -20,7 +20,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="title" type="java.lang.String" value="frame"/>
+    <Property name="title" type="java.lang.String" value="Sistema de segmenta&#xe7;&#xe3;o, anota&#xe7;&#xe3;o e busca de imagens"/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[400, 200]"/>
     </Property>

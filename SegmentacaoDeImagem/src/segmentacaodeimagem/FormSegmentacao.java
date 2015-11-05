@@ -83,7 +83,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("frame");
+        setTitle("Sistema de segmentação, anotação e busca de imagens");
         setMinimumSize(new java.awt.Dimension(400, 200));
         setName("frame"); // NOI18N
         setPreferredSize(new java.awt.Dimension(850, 550));
@@ -294,6 +294,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         tagsModel = new DefaultListModel();
         listaTags.setModel(tagsModel);
         tags = new ArrayList<>();
+        
     }
 
     /**
@@ -409,12 +410,18 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         if(tags.size() > 0){
             for(int i = 0; i < tags.size(); i++){
+                if(i == 0){
+                    tags.get(i).LimparPath();
+                }
                 tags.get(i).Salvar();
             }
             JOptionPane.showMessageDialog(null, "Anotações salvas", "Salvo", INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
+    /**
+     * Deleta uma anotação da lista. Mas ainda não persiste no banco
+     */
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
         if(tagsModel.size() > 0 || seg == null){
             String tag = (String)listaTags.getSelectedValue();

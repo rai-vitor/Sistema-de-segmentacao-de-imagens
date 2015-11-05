@@ -30,7 +30,24 @@ public class Anotacao {
      */
     public void Salvar(){
         SQLiteJDBC banco = SQLiteJDBC.getInstance();
+        if(id == 0){
+            
+        }
         banco.InserirDados(pathImg, tag, regiao);
+    }
+    
+    public void LimparPath(){
+        SQLiteJDBC banco = SQLiteJDBC.getInstance();
+        banco.Deletar(banco.SelecionarImg(pathImg));
+    }
+    
+    
+    @Override
+    public String toString(){
+        System.out.println("id: "+id);
+        System.out.println("tag: "+tag);
+        System.out.println("região "+regiao);
+        return "";
     }
 
     /**
