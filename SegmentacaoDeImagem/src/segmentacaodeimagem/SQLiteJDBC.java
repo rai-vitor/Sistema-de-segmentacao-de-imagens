@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package segmentacaodeimagem;
 
 import java.sql.*;
@@ -15,9 +10,8 @@ import org.sqlite.JDBC;
 public class SQLiteJDBC {
     
     private Connection conexao;
-    private Statement parametro;
+    private Statement stmt;
     private String banco;
-    private Connection connection = null;
 
     public SQLiteJDBC() {
         this.banco = "jdbc:sqlite:seg.db";
@@ -31,7 +25,7 @@ public class SQLiteJDBC {
             conexao = DriverManager.getConnection(banco);
             System.out.println("Opened database successfully");
 
-            parametro = conexao.createStatement();
+            stmt = conexao.createStatement();
             String sql = "CREATE TABLE ANOTACAO " +
                          "(ID INTEGER PRIMARY KEY  AUTOINCREMENT   NOT NULL," +
                          " TAG TEXT NOT NULL, " + 
@@ -42,10 +36,10 @@ public class SQLiteJDBC {
                          "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +                        
                          " PATHIMG CHAR(50) NOT NULL)";
             
-            parametro.executeUpdate(sql);
-            parametro.executeUpdate(sql2);
+            stmt.executeUpdate(sql);
+            stmt.executeUpdate(sql2);
             
-            parametro.close();
+            stmt.close();
             conexao.close();
         } catch ( Exception e ) {
           System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -64,12 +58,12 @@ public class SQLiteJDBC {
             //InserirImg(path);
             int img_id = SelecionarImg(path);
             
-            parametro = conexao.createStatement();
+            stmt = conexao.createStatement();
             String sql = "INSERT INTO ANOTACAO (TAG,REGIAO,ID_IMG_FK) VALUES ("+tag+", "+regiao+", "+img_id+");"; 
-            parametro.executeUpdate(sql);
+            stmt.executeUpdate(sql);
 
 
-            parametro.close();
+            stmt.close();
             conexao.commit();
             conexao.close();
         } catch ( Exception e ) {
@@ -80,15 +74,15 @@ public class SQLiteJDBC {
       }
     
     public int SelecionarImg(String pathImg){
-        Connection c = null;
-        Statement stmt = null;
+        conexao = null;
+        stmt = null;
         try {
           Class.forName("org.sqlite.JDBC");
-          c = DriverManager.getConnection(banco);
-          c.setAutoCommit(false);
+          conexao = DriverManager.getConnection(banco);
+          conexao.setAutoCommit(false);
           System.out.println("Opened database successfully");
 
-          stmt = c.createStatement();
+          stmt = conexao.createStatement();
           ResultSet rs = stmt.executeQuery( "SELECT * FROM IMG WHERE PATHIMG = '"+pathImg+"';" );
           
           //Se selecionar algo retorno o id
@@ -105,7 +99,7 @@ public class SQLiteJDBC {
           } else{
             rs.close();
             stmt.close();
-            c.close();
+            conexao.close();
             return -1;
           }
         } catch ( Exception e ) {
@@ -115,36 +109,36 @@ public class SQLiteJDBC {
     }
     
     public void InserirImg(String path){
-        Connection c = null;
-        Statement stmt = null;
+        conexao = null;
+        stmt = null;
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection(banco);
-            c.setAutoCommit(false);
+            conexao = DriverManager.getConnection(banco);
+            conexao.setAutoCommit(false);
             System.out.println("Opened database successfully");
 
-            stmt = c.createStatement();
+            stmt = conexao.createStatement();
             String sql = "INSERT INTO IMG (PATHIMG) VALUES ('"+path+"');"; 
             //sql = "INSERT INTO IMG (PATHIMG) VALUES ('TESTE1233');";
             stmt.executeUpdate(sql);
           
             stmt.close();
-            c.commit();
-            c.close();
+            conexao.commit();
+            conexao.close();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
         }
     }
     
     public void ListarImg(){
-        Connection c = null;
-        Statement stmt = null;
+        conexao = null;
+        stmt = null;
         try {
-          c = DriverManager.getConnection(banco);
-          c.setAutoCommit(false);
+          conexao = DriverManager.getConnection(banco);
+          conexao.setAutoCommit(false);
           System.out.println("Opened database successfully");
 
-          stmt = c.createStatement();
+          stmt = conexao.createStatement();
           ResultSet rs = stmt.executeQuery( "SELECT * FROM IMG;" );
           while ( rs.next() ) {
              int id = rs.getInt("id");
@@ -155,7 +149,7 @@ public class SQLiteJDBC {
           }
           rs.close();
           stmt.close();
-          c.close();
+          conexao.close();
         } catch ( Exception e ) {
           System.err.println( e.getClass().getName() + ": " + e.getMessage() );
           System.exit(0);

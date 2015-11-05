@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package segmentacaodeimagem;
 
 import java.awt.Graphics2D;
@@ -38,9 +33,7 @@ public class ConvertImage {
         return saveToFile(bi);
     }
     
-    public static String saveToFile(BufferedImage img)
-    
-    {
+    public static String saveToFile(BufferedImage img){
         File outputfile = new File("imgs/sample.jpg");
         try {
             ImageIO.write(img, "jpg", outputfile);
@@ -49,9 +42,5 @@ public class ConvertImage {
         }
         
         return "imgs/sample.jpg";
-    }
-    
-    
-    
-    
+    } 
 }

@@ -270,7 +270,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
         seg = SegmentacaoDeImagem.segmentar(path, blur, radius, size);
 
         labelRegioes.setText("Total de regiões: " + seg.getTotalRegions());
-        //imgSegmentada = new JLabel(new ImageIcon(seg.getRegionMarkedImage()));
         addImg(new ImageIcon(seg.getRegionMarkedImage()));
     }//GEN-LAST:event_buttonSegmentarActionPerformed
 
@@ -297,7 +296,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
             if (file.getName().contains("jpg")) {
                 labelImg.setText("NomeImg: " + file.getName());
                 path = file.getAbsolutePath();
-                /*MUDEI AQUIIIIIIIIIIIII*/
                 path = ConvertImage.scaleImage(400, 400, path);
                 ImageIcon image = new ImageIcon(path);
                 addImg(image);
@@ -320,8 +318,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
         banco.InserirImg("img/model.jpg");
         banco.ListarImg();
         //banco.inserirDados("img/model.jpg", "camisa", 6);
-        
-        
     }//GEN-LAST:event_buttonAddActionPerformed
 
     private void campoTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTagActionPerformed
