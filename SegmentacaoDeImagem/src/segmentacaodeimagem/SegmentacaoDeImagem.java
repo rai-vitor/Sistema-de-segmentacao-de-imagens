@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Uma classe que realiza a segmentação de uma imagem, bem como o mapa de rótulos da mesma.
@@ -69,22 +72,13 @@ public class SegmentacaoDeImagem {
         }
     }
     
-    public static void AssocTagRegiao(String tag) {
-        
-        System.out.println("Entrei!!!");
-        
+    public static Map<Integer, String> AssocTagRegiao(String tag) {
         for(int i = 0; i < pixelRegion.size(); i++) {
             tagImg.put(pixelRegion.get(i), tag);
         }
         
         System.out.println(tagImg);
-        /*
-        for(Map.Entry<Integer,String> entry : tagImg.entrySet()) {
-            int region = entry.getKey();
-            String tagAux = entry.getValue();            
-            System.out.println("Região: " + region + "Tag: " + tagAux);
-        }*/
-        
+        return tagImg;
     }
     
     /**
@@ -123,8 +117,7 @@ public class SegmentacaoDeImagem {
     }
     
     // define as coordenadas x,y de um pixel de acordo com o mouse click
-    public static void setCoordenadas ( int x, int y, int altura, int largura) {
-        System.out.println("Altura: "+altura+" Largura: "+largura);
+    public static void setCoordenadas ( int x, int y, int largura) {
         coordinateX = x;//largura
         coordinateY = y*largura;//altura
     }
@@ -135,14 +128,38 @@ public class SegmentacaoDeImagem {
         if(!pixelRegion.contains(mapaDaRegiaoSegmentada[pixel])){
             pixelRegion.add(mapaDaRegiaoSegmentada[pixel]);
             //só se eu add uma nova região que eu chamo a função
-            darkenPixels(img);
+            darkenPixels(img, pixelRegion);
         }
-        System.out.println("Indice array: "+pixel+" - Regiao: "+pixelRegion);
+    }
+    
+    /**
+     * Com base nos values de um Map o método retorna um Set com as keys desses values
+     */
+    public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
+        return map.entrySet()
+                  .stream()
+                  .filter(entry -> Objects.equals(entry.getValue(), value))
+                  .map(Map.Entry::getKey)
+                  .collect(Collectors.toSet());
+    }
+    
+    /**
+     * Possivelmente vai ter o nome mudado
+     * Recebe uma tag e destaca as regiões na imagem
+     * @param img 
+     * @param tag 
+     */
+    public static void Selecionar(ImageInformation img, String tag){
+        Object[] arrayKeys = getKeysByValue(tagImg, tag).toArray();
+        ArrayList<Integer> arrayKey = new ArrayList<>();
+        for (int i = 0; i < arrayKeys.length; i++) {
+            arrayKey.add((int)arrayKeys[i]);
+        }
+        darkenPixels(img, arrayKey);
     }
     
     //muda cor dos pixels, para destacar a região selecionada
-    public static ImageInformation darkenPixels(ImageInformation img) {
-        
+    public static ImageInformation darkenPixels(ImageInformation img, ArrayList<Integer> pixelRegion) {
         Color c;
         int red;
         int green;
@@ -157,7 +174,7 @@ public class SegmentacaoDeImagem {
                  red = c.getRed();
                  green = c.getBlue();
                  blue = c.getBlue();
-                 rgb = (((red/2)&0x0ff)<<16)|(((green/2)&0x0ff)<<8)|((blue/2)&0x0ff);
+                 rgb = (((red/3)&0x0ff)<<16)|(((green/3)&0x0ff)<<8)|((blue/3)&0x0ff);
                  pixelsDaImagemSegmentada[i] = rgb; 
              } 
         }
