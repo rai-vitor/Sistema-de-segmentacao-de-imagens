@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,35 +11,75 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 /**
- *
- * @author hiago
+ * Uma classe que converte a resolução da imagem a ser trabalhada para uma resolução padrão.
+ * @author Hiago Miguel & Rai Vitor.
  */
+
 public class ConvertImage {
     
-    public static String scaleImage(int WIDTH, int HEIGHT, String filename) {
-        BufferedImage bi = null;
+    private static String caminhoDaImagem;
+        
+    /**
+     * Redimensiona a imagem para uma resolução padrão.
+     * 
+     * @param WIDTH Nova largura da imagem.
+     * @param HEIGHT Nova altura da imagem.
+     * @param filename Caminho da imagem a ser dimensionada.
+     * @return 
+     */
+    
+    public static void scaleImage(int WIDTH, int HEIGHT, String filename) {
+                
+        BufferedImage image = null;
+        
         try {
-            ImageIcon ii = new ImageIcon(filename);//path to image
-            bi = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-            Graphics2D g2d = (Graphics2D) bi.createGraphics();
+            ImageIcon icon = new ImageIcon(filename);//path to image
+            image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g2d = (Graphics2D) image.createGraphics();
             g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,RenderingHints.VALUE_RENDER_QUALITY));
-            g2d.drawImage(ii.getImage(), 0, 0, WIDTH, HEIGHT, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            g2d.drawImage(icon.getImage(), 0, 0, WIDTH, HEIGHT, null);
+        } 
+        catch (Exception e) {
+            e.getMessage();            
         }
                         
-        return saveToFile(bi);
+        saveToFile(image);
     }
     
-    public static String saveToFile(BufferedImage img){
+    /**
+     * Salva imagem redimensionada.
+     * 
+     * @param image Imagem a ser salva.
+     * @return Retorna o caminho da imagem redimensionada.
+     */
+    
+    public static void saveToFile(BufferedImage image) {
+        
         File outputfile = new File("imgs/sample.jpg");
+        
         try {
-            ImageIO.write(img, "jpg", outputfile);
-        } catch (IOException ex) {
+            ImageIO.write(image, "jpg", outputfile);
+        } 
+        catch (IOException ex) {
             Logger.getLogger(ConvertImage.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return "imgs/sample.jpg";
-    } 
+        setCaminhoDaImagem("imgs/sample.jpg");
+    }
+    
+    /**
+     * Define o local onde a imagem será salva.
+     * @param caminho Local onde a imagem será salva.
+     */
+    public static void setCaminhoDaImagem(String caminho) {
+        caminhoDaImagem = caminho;
+    }
+    
+    /**
+     * Retorna o caminho onde a imagem está salva.
+     * @return Caminho onde a imagem está salva.
+     */
+    public static String getCaminhoDaImagem() {
+        return caminhoDaImagem;
+    }
 }

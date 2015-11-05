@@ -26,6 +26,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
     JLabel imagem; /*Representa a imagem orignal */
     ImageInformation seg;/*Contem a imagem segmentada */
     DefaultListModel tagsModel;
+    
+    private static final int DEFAULT_WIDTH = 400;
+    private static final int DEFAULT_HEIGHT = 400;
 
     /**
      * Cria um novo form FormSegmentacao
@@ -318,7 +321,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
             if (file.getName().contains("jpg")) {
                 labelImg.setText("NomeImg: " + file.getName());
                 path = file.getAbsolutePath();
-                path = ConvertImage.scaleImage(400, 400, path);
+                ConvertImage.scaleImage(DEFAULT_WIDTH, DEFAULT_HEIGHT, path);
+                path = ConvertImage.getCaminhoDaImagem();
                 ImageIcon image = new ImageIcon(path);
                 addImg(image);
             } else {
