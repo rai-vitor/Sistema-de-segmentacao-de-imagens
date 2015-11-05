@@ -63,13 +63,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
         buttonImg = new javax.swing.JButton();
         panelImg = new javax.swing.JPanel();
         panelNotes = new javax.swing.JPanel();
-        campoTag = new javax.swing.JTextField();
         buttonAdd = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         listaTags = new javax.swing.JList();
         buttonClear = new javax.swing.JButton();
         buttonSave = new javax.swing.JButton();
         buttonDelete = new javax.swing.JButton();
+        campoTag = new javax.swing.JTextField();
 
         javax.swing.GroupLayout fileDialogLayout = new javax.swing.GroupLayout(fileDialog.getContentPane());
         fileDialog.getContentPane().setLayout(fileDialogLayout);
@@ -204,12 +204,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
         panelNotes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelNotes.setPreferredSize(new java.awt.Dimension(200, 400));
 
-        campoTag.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoTagActionPerformed(evt);
-            }
-        });
-
         buttonAdd.setText("+");
         buttonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -269,8 +263,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonAdd))
+                    .addComponent(buttonAdd)
+                    .addComponent(campoTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(buttonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -385,10 +379,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
         SegmentacaoDeImagem.RestaurarImg(1);
         addImg(new ImageIcon(seg.getRegionMarkedImage()));
     }//GEN-LAST:event_buttonAddActionPerformed
-
-    private void campoTagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoTagActionPerformed
-        //Não consigo apagar este método. Se vc conseguir ganha uma jujuba
-    }//GEN-LAST:event_campoTagActionPerformed
 
     /**
      * Chamado quando o usuário clica na lista de tags
