@@ -262,12 +262,15 @@ public class SQLiteJDBC {
     }
     
     public void Deletar(Anotacao note){
+        int idImg = SelecionarImg(note.getPathImg());
+        if(idImg == -1)
+            return;
         try {
             conexao = DriverManager.getConnection(banco);
             conexao.setAutoCommit(false);
 
             stmt = conexao.createStatement();
-            String sql = "DELETE FROM ANOTACAO WHERE TAG = '"+note.getTag()+"' AND REGIAO = '"+note.getRegiao()+"';"; 
+            String sql = "DELETE FROM ANOTACAO WHERE TAG = '"+note.getTag()+"' AND REGIAO = '"+note.getRegiao()+"' AND ID_IMG_FK = '"+idImg+"';"; 
             stmt.executeUpdate(sql);
           
             conexao.commit();

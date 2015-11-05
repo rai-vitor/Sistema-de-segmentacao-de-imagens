@@ -335,10 +335,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * Só aceita imagens jpg.
      */
     private void buttonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImgActionPerformed
-        //int returnVal = fileChooser.showOpenDialog(fileDialog);
-        //if (returnVal == JFileChooser.APPROVE_OPTION) {
-            //File file = fileChooser.getSelectedFile();
-            File file = new File("imgs/model.jpg");  
+        int returnVal = fileChooser.showOpenDialog(fileDialog);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            //File file = new File("imgs/model.jpg");  
             if (file.getName().contains("jpg")) {
                 labelImg.setText("NomeImg: " + file.getName());
                 path = file.getAbsolutePath();
@@ -349,7 +349,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
             } else {
                 labelImg.setText("Utilize somente imagens jpg");
             }
-        //}
+        }
     }//GEN-LAST:event_buttonImgActionPerformed
 
     /**
@@ -410,9 +410,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         if(tags.size() > 0){
             for(int i = 0; i < tags.size(); i++){
-                if(i == 0){
-                    tags.get(i).LimparPath();
-                }
                 tags.get(i).Salvar();
             }
             JOptionPane.showMessageDialog(null, "Anotações salvas", "Salvo", INFORMATION_MESSAGE);
@@ -429,6 +426,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
             
             for(int i = 0; i < tags.size(); i++){
                 if(tags.get(i).getTag().contains(tag)){
+                    tags.get(i).Remover();
                     tags.remove(i);
                 }
             }
