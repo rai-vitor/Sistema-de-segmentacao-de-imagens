@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import javax.swing.SpinnerNumberModel;
 
@@ -28,7 +29,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     JLabel imagem; /*Representa a imagem orignal */
     ImageInformation seg;/*Contem a imagem segmentada */
     DefaultListModel tagsModel; /* Componente responsável por mostrar a lista de anotações */
-    ArrayList<Anotacao> tags; /* Guarda uma lista de anotações */
+    ListAnotacoes<Anotacao> tags; /* Guarda uma lista de anotações */
     
     private static final int DEFAULT_WIDTH = 400; /*Largura do redimensionamento da imagem */
     private static final int DEFAULT_HEIGHT = 400; /*Altura do redimensionamento da imagem */
@@ -293,7 +294,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         path = null;
         tagsModel = new DefaultListModel();
         listaTags.setModel(tagsModel);
-        tags = new ArrayList<>();
+        tags = new ListAnotacoes<>();
         
     }
 
@@ -368,9 +369,11 @@ public class FormSegmentacao extends javax.swing.JFrame {
         
         //Para não ter elementos repetidos na lista
         if(!tagsModel.contains(tag)){
-            tags = SegmentacaoDeImagem.AssocTagRegiao(tag, tags);
+            SegmentacaoDeImagem.AssocTagRegiao(tag, tags);
             tagsModel.addElement(tag);
             listaTags.setModel(tagsModel);
+        } else{
+            JOptionPane.showMessageDialog(null, "Você não pode repetir a mesma anotação na imagem", "Anotações", ERROR_MESSAGE);
         }
         
         //Reset the text field.
@@ -389,7 +392,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private void listaTagsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTagsMouseClicked
         if(tagsModel.size() > 0 || seg == null){
             String tag = (String)listaTags.getSelectedValue();
-            SegmentacaoDeImagem.Selecionar(seg, tag);
+            SegmentacaoDeImagem.Selecionar(seg, tag, tags);
             addImg(new ImageIcon(seg.getRegionMarkedImage()));  
         }
     }//GEN-LAST:event_listaTagsMouseClicked
@@ -412,10 +415,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
      */
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         if(tags.size() > 0){
-            for(int i = 0; i < tags.size(); i++){
-                tags.get(i).Salvar();
-            }
+            tags.Salvar();
             JOptionPane.showMessageDialog(null, "Anotações salvas", "Salvo", INFORMATION_MESSAGE);
+        } else{
+            System.out.println(tags.size());
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
@@ -427,14 +430,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         if(tagsModel.size() > 0 || seg == null){
             String tag = (String)listaTags.getSelectedValue();
             tagsModel.removeElement(tag);
-            
-            for(int i = 0; i < tags.size(); i++){
-                if(tags.get(i).getTag().contains(tag)){
-                    tags.get(i).Remover();
-                    tags.remove(i);
-                }
-            }
-            
+            tags.Remover(tag);
             buttonClearActionPerformed(evt);
         }
     }//GEN-LAST:event_buttonDeleteActionPerformed

@@ -32,7 +32,6 @@ public class SegmentacaoDeImagem {
     private static int coordinateX;
     private static int coordinateY;
     private static ArrayList<Integer> pixelRegion, pixelsDaImagemSegmentadaBckp;
-    private static Map<Integer,String> tagImg = new HashMap<>();
     
     
     /**
@@ -85,17 +84,13 @@ public class SegmentacaoDeImagem {
      * @param tag Tag a ser associada a uma região.
      * @param notes ArrayList do tipo Anotação que contém as notas (tags) 
      * de cada região da imagem.
-     * @return Retorna o ArrayList de notas.
      */
-    public static ArrayList<Anotacao> AssocTagRegiao(String tag, ArrayList<Anotacao> notes) {
+    public static void AssocTagRegiao(String tag, ListAnotacoes<Anotacao> notes) {
         for(int i = 0; i < pixelRegion.size(); i++) {
             Anotacao note = new Anotacao(ConvertImage.getCaminhoDaImagem(), tag, pixelRegion.get(i));
             notes.add(note);
-            if(!tagImg.containsKey(pixelRegion.get(i)))
-                tagImg.put(pixelRegion.get(i), tag);
         }
-        
-        return notes;
+        System.out.println(notes);
     }
     
     /**
@@ -158,34 +153,15 @@ public class SegmentacaoDeImagem {
             darkenPixels(image, pixelRegion);
         }
     }
-        
-    /**
-     * Retorna um conjunto de chaves com base nos valores contidos em um Map.
-     * @param <T> Tipo da chave.
-     * @param <E> Tipo do valor.
-     * @param map Map a ser utilizado.
-     * @param value Valor contido no Map.
-     * @return 
-     */
-    public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
-        return map.entrySet()
-                  .stream()
-                  .filter(entry -> Objects.equals(entry.getValue(), value))
-                  .map(Map.Entry::getKey)
-                  .collect(Collectors.toSet());
-    }
     
     /**
      * Destaca as regiões na imagem de acordo com a tag recebida.
      * @param img Imagem a ser aplicada o filtro de destaque.
      * @param tag Tag da região selecionada.
+     * @param notes Lista com as anotações
      */
-    public static void Selecionar(ImageInformation img, String tag){
-        Object[] arrayKeys = getKeysByValue(tagImg, tag).toArray();
-        ArrayList<Integer> arrayKey = new ArrayList<>();
-        for (int i = 0; i < arrayKeys.length; i++) {
-            arrayKey.add((int)arrayKeys[i]);
-        }
+    public static void Selecionar(ImageInformation img, String tag, ListAnotacoes<Anotacao> notes){
+        ArrayList<Integer> arrayKey = notes.ProcurarTag(tag);
         darkenPixels(img, arrayKey);
     }
        
