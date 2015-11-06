@@ -1,4 +1,5 @@
 package segmentacaodeimagem;
+
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
 import java.awt.Color;
@@ -55,10 +56,10 @@ public class SegmentacaoDeImagem {
         CopiarArray();
         pixelRegion = new ArrayList<>();
         return seg;
-    }       
+    }           
     
     /**
-     * Faz uma cópia da imagem segmentada
+     * Realiza uma cópia da imagem segmentada.
      */
     private static void CopiarArray(){
         for(int i=0; i<pixelsDaImagemSegmentada.length; i++){
@@ -79,6 +80,13 @@ public class SegmentacaoDeImagem {
         }
     }
     
+    /**
+     * Associa uma anotação (tag) a uma região da imagem.
+     * @param tag Tag a ser associada a uma região.
+     * @param notes ArrayList do tipo Anotação que contém as notas (tags) 
+     * de cada região da imagem.
+     * @return Retorna o ArrayList de notas.
+     */
     public static ArrayList<Anotacao> AssocTagRegiao(String tag, ArrayList<Anotacao> notes) {
         for(int i = 0; i < pixelRegion.size(); i++) {
             Anotacao note = new Anotacao(ConvertImage.getCaminhoDaImagem(), tag, pixelRegion.get(i));
@@ -125,24 +133,39 @@ public class SegmentacaoDeImagem {
         }
     }
     
-    // define as coordenadas x,y de um pixel de acordo com o mouse click
+    /**
+     * Define as coordenadas x e y de um pixel, com base  as coordenadas obtidas
+     * por MouseEvent e pela largura da imagem.
+     * @param x Coordenada do eixo x da imagem.
+     * @param y Coordenada do eixo y da imagem.
+     * @param largura Largura da imagem.
+     */
     public static void setCoordenadas ( int x, int y, int largura) {
         coordinateX = x;//largura
         coordinateY = y*largura;//altura
     }
     
-    public static void getPixel(ImageInformation img) {
+    /**
+     * Destaca a região selecionada na imagem.
+     * @param image Imagem com a região selecionada.
+     */
+    public static void destacarRegiao(ImageInformation image) {
         int pixel = coordinateX + coordinateY;
         //se já tiver adicionado, não adiciona
         if(!pixelRegion.contains(mapaDaRegiaoSegmentada[pixel])){
             pixelRegion.add(mapaDaRegiaoSegmentada[pixel]);
             //só se eu add uma nova região que eu chamo a função
-            darkenPixels(img, pixelRegion);
+            darkenPixels(image, pixelRegion);
         }
     }
-    
+        
     /**
-     * Com base nos values de um Map o método retorna um Set com as keys desses values
+     * Retorna um conjunto de chaves com base nos valores contidos em um Map.
+     * @param <T> Tipo da chave.
+     * @param <E> Tipo do valor.
+     * @param map Map a ser utilizado.
+     * @param value Valor contido no Map.
+     * @return 
      */
     public static <T, E> Set<T> getKeysByValue(Map<T, E> map, E value) {
         return map.entrySet()
@@ -153,10 +176,9 @@ public class SegmentacaoDeImagem {
     }
     
     /**
-     * Possivelmente vai ter o nome mudado
-     * Recebe uma tag e destaca as regiões na imagem
-     * @param img 
-     * @param tag 
+     * Destaca as regiões na imagem de acordo com a tag recebida.
+     * @param img Imagem a ser aplicada o filtro de destaque.
+     * @param tag Tag da região selecionada.
      */
     public static void Selecionar(ImageInformation img, String tag){
         Object[] arrayKeys = getKeysByValue(tagImg, tag).toArray();
@@ -166,9 +188,15 @@ public class SegmentacaoDeImagem {
         }
         darkenPixels(img, arrayKey);
     }
-    
-    //muda cor dos pixels, para destacar a região selecionada
-    public static ImageInformation darkenPixels(ImageInformation img, ArrayList<Integer> pixelRegion) {
+       
+    /**
+     * Aplica um filtro na imagem, onde a(s) região ou regiões que não foram 
+     * selecionadas têm o seu brilho reduzido. 
+     * @param image Imagem a ser aplicada o filtro.
+     * @param pixelRegion Array que contém a(s) região ou regiões selecionadas.
+     * @return Retorna a imagem com o filtro aplicado.
+     */
+    public static ImageInformation darkenPixels(ImageInformation image, ArrayList<Integer> pixelRegion) {
         Color c;
         int red;
         int green;
@@ -187,6 +215,6 @@ public class SegmentacaoDeImagem {
                  pixelsDaImagemSegmentada[i] = rgb; 
              } 
         }
-        return img;
+        return image;
     }
 }

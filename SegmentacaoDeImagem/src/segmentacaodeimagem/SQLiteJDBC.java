@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Classe que persiste os dados no banco de dados Sqlite
+ * Classe que persiste os dados no banco de dados Sqlite.
+ * @author Hiago Miguel & Rai Vitor.
  */
 public class SQLiteJDBC {
     private static SQLiteJDBC instancia;
@@ -15,13 +16,13 @@ public class SQLiteJDBC {
     private static String banco = "jdbc:sqlite:seg.db";
 
     /**
-     * Construtor que não pode ser instanciado
-     * Utilizar getInstance para ter uma instancia da classe
+     * Construtor que não pode ser instanciado.
+     * Utilizar getInstance para ter uma instancia da classe.
      */
     private SQLiteJDBC() {}
     
     /**
-     * Método para garantir o padrão Singleton
+     * Método para garantir o padrão Singleton.
      * @return Instancia do banco de dados
      */
     public static synchronized SQLiteJDBC getInstance(){
@@ -32,7 +33,7 @@ public class SQLiteJDBC {
     }
     
     /**
-     * Cria o banco de dados e suas tabelas sqlite;
+     * Cria o banco de dados e suas tabelas sqlite.
      */
     private void CriarTabela() {
         try {
@@ -61,10 +62,10 @@ public class SQLiteJDBC {
     }
     
     /**
-     * Método que controla a inserção dos dados no banco 
-     * @param path - Caminho da imagem
-     * @param tag - Anotação
-     * @param regiao - Região da imagem que será associada a uma tag
+     * Método que controla a inserção dos dados no banco. 
+     * @param path - Caminho da imagem.
+     * @param tag - Anotação.
+     * @param regiao - Região da imagem que será associada a uma tag.
      */
     public void InserirDados(String path, String tag, int regiao) {
             int imgId = SelecionarImg(path);
@@ -77,9 +78,9 @@ public class SQLiteJDBC {
       }
     
     /**
-     * Seleciona uma imagem no banco de dados e retorna o id dela;
-     * @param pathImg - Caminho da imagem a ser procurada
-     * @return Retorna o id da imagem, se existir. Caso contrário retorna -1
+     * Seleciona uma imagem no banco de dados e retorna o id dela.
+     * @param pathImg - Caminho da imagem a ser procurada.
+     * @return Retorna o id da imagem, se existir. Caso contrário retorna -1.
      */
     public int SelecionarImg(String pathImg){
         conexao = null;
@@ -109,8 +110,8 @@ public class SQLiteJDBC {
     }
     
     /**
-     * Insere uma imagem no banco de dados
-     * @param path - Caminho da imagem a ser inserido no banco
+     * Insere uma imagem no banco de dados.
+     * @param path - Caminho da imagem a ser inserido no banco.
      */
     private void InserirImg(String path){
         conexao = null;
@@ -132,9 +133,9 @@ public class SQLiteJDBC {
     }
     
     /**
-     * Insere uma anotação no banco
-     * @param imgId - Id da imagem da anotação
-     * @param tag - Anotação
+     * Insere uma anotação no banco.
+     * @param imgId - Id da imagem da anotação.
+     * @param tag - Anotação.
      * @param regiao - Região da imagem atrelada a tag
      */
     private void InserirAnotacao(int imgId, String tag, int regiao){
@@ -157,8 +158,8 @@ public class SQLiteJDBC {
     }
     
     /**
-     * Seleciona todas as imagens no banco
-     * @return retorna o caminho e o id das imagens no bano
+     * Seleciona todas as imagens no banco.
+     * @return retorna o caminho e o id das imagens no banco.
      */
     public Map<Integer, String> ListarImg(){
         conexao = null;
@@ -192,8 +193,8 @@ public class SQLiteJDBC {
     }
     
     /**
-     * Lista todas as anotações do banco
-     * @return lista com todas as anotações
+     * Lista todas as anotações do banco.
+     * @return lista com todas as anotações.
      */
     public ArrayList<Anotacao> ListarAnotacoes(){
         conexao = null;
@@ -223,8 +224,8 @@ public class SQLiteJDBC {
     }
     
     /**
-     * Conta a quantidade de imagens no banco
-     * @return quantidade de imagens no banco
+     * Conta a quantidade de imagens no banco.
+     * @return Retorna a quantidade de imagens no banco.
      */
     public static int CountImg(){
         conexao = null;
@@ -249,8 +250,8 @@ public class SQLiteJDBC {
     }
     
     /**
-     * Deleta uma imagem no banco
-     * @param idImg - id da imagem a ser deletada
+     * Deleta uma imagem no banco.
+     * @param idImg - id da imagem a ser deletada.
      */
     public void DeletarImg(int idImg){
         try {
@@ -270,8 +271,8 @@ public class SQLiteJDBC {
     }
     
     /**
-     * Deleta uma anotação no banco
-     * @param note - anotação a ser deletada
+     * Deleta uma anotação no banco.
+     * @param note - anotação a ser deletada.
      */
     public void DeletarAnotacao(Anotacao note){
         int idImg = SelecionarImg(note.getPathImg());

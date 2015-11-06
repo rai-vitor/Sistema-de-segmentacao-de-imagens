@@ -34,7 +34,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private static final int DEFAULT_HEIGHT = 400; /*Altura do redimensionamento da imagem */
 
     /**
-     * Cria um novo form FormSegmentacao
+     * Cria um novo form FormSegmentacao.
      */
     public FormSegmentacao() {
         initComponents();
@@ -42,7 +42,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }
 
     /**
-     * Inicializa componentes do form
+     * Inicializa componentes do form.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -282,7 +282,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Configurações iniciais do layout
+     * Configurações iniciais do layout.
      */
     private void ConfigForm() {
         fileChooser = new JFileChooser();
@@ -299,7 +299,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
     /**
      * Este método é chamado após o botão "Segmentar" ser acionado. A função
-     * dele é pegar uma imagem escolhida pelo usuário e fazer a segmentação dela
+     * dele é pegar uma imagem escolhida pelo usuário e fazer a segmentação dela.
      */
     private void buttonSegmentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSegmentarActionPerformed
         // Se o usuário não tiver selecionado nenhuma imagem a função para aqui
@@ -380,10 +380,11 @@ public class FormSegmentacao extends javax.swing.JFrame {
         SegmentacaoDeImagem.RestaurarImg(1);
         addImg(new ImageIcon(seg.getRegionMarkedImage()));
     }//GEN-LAST:event_buttonAddActionPerformed
-
+    
     /**
-     * Chamado quando o usuário clica na lista de tags
-     * Este método destaca as regiões que foram salvas com o nome da tag selecionada
+     * Destaca as regiões que foram salvas com o nome da tag selecionada. Chamado 
+     * quando o usuário clica na lista de tags
+     * @param evt 
      */
     private void listaTagsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTagsMouseClicked
         if(tagsModel.size() > 0 || seg == null){
@@ -392,9 +393,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
             addImg(new ImageIcon(seg.getRegionMarkedImage()));  
         }
     }//GEN-LAST:event_listaTagsMouseClicked
-
+  
     /**
-     * Limpa todas as seleções
+     * Limpa todas as seleções.
+     * @param evt 
      */
     private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
         if(seg != null){
@@ -404,8 +406,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonClearActionPerformed
 
     /**
-     * Método chamado após clicar no botão 'Salvar Anotações'
-     * Este método salva as anotações
+     * Salva as anotações de uma imagem. Chamado após clicar no botão 
+     * 'Salvar Anotações'.
+     * @param evt 
      */
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         if(tags.size() > 0){
@@ -417,7 +420,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     /**
-     * Deleta uma anotação da lista. Mas ainda não persiste no banco
+     * Deleta uma anotação da lista. Mas ainda não persiste no banco.
+     * @param evt 
      */
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
         if(tagsModel.size() > 0 || seg == null){
@@ -462,14 +466,15 @@ public class FormSegmentacao extends javax.swing.JFrame {
         imagem.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                SegmentacaoDeImagem.setCoordenadas(e.getX(),e.getY(), imagem.getWidth());
-               SegmentacaoDeImagem.getPixel(seg);
+               SegmentacaoDeImagem.destacarRegiao(seg);
                addImg(new ImageIcon(seg.getRegionMarkedImage()));
             }
         });
     }
 
     /**
-     * Método que inicia o sistema
+     * Método que inicia o sistema.
+     * @param args 
      */
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
