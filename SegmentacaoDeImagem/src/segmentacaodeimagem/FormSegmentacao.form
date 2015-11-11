@@ -169,6 +169,7 @@
         <Component class="javax.swing.JButton" name="buttonSegmentar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Segmentar"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSegmentarActionPerformed"/>
@@ -177,6 +178,7 @@
         <Component class="javax.swing.JButton" name="buttonRotulos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Mostrar mapa de r&#xf3;tulos"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRotulosActionPerformed"/>
@@ -279,6 +281,7 @@
         <Component class="javax.swing.JButton" name="buttonAdd">
           <Properties>
             <Property name="text" type="java.lang.String" value="+"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonAddActionPerformed"/>
@@ -306,6 +309,7 @@
         <Component class="javax.swing.JButton" name="buttonClear">
           <Properties>
             <Property name="text" type="java.lang.String" value="Limpar Sele&#xe7;&#xe3;o"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonClearActionPerformed"/>
@@ -314,6 +318,7 @@
         <Component class="javax.swing.JButton" name="buttonSave">
           <Properties>
             <Property name="text" type="java.lang.String" value="Salvar Altera&#xe7;&#xf5;es"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSaveActionPerformed"/>
@@ -322,6 +327,7 @@
         <Component class="javax.swing.JButton" name="buttonDelete">
           <Properties>
             <Property name="text" type="java.lang.String" value="Excluir Tag"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonDeleteActionPerformed"/>

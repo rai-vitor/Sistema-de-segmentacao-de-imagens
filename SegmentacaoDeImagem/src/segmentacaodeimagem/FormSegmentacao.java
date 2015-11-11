@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -105,6 +104,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         labelRegioes.setText("Total de regiões: ");
 
         buttonSegmentar.setText("Segmentar");
+        buttonSegmentar.setEnabled(false);
         buttonSegmentar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSegmentarActionPerformed(evt);
@@ -112,6 +112,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         });
 
         buttonRotulos.setText("Mostrar mapa de rótulos");
+        buttonRotulos.setEnabled(false);
         buttonRotulos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonRotulosActionPerformed(evt);
@@ -206,6 +207,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         panelNotes.setPreferredSize(new java.awt.Dimension(200, 400));
 
         buttonAdd.setText("+");
+        buttonAdd.setEnabled(false);
         buttonAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonAddActionPerformed(evt);
@@ -220,6 +222,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         jScrollPane2.setViewportView(listaTags);
 
         buttonClear.setText("Limpar Seleção");
+        buttonClear.setEnabled(false);
         buttonClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonClearActionPerformed(evt);
@@ -227,6 +230,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         });
 
         buttonSave.setText("Salvar Alterações");
+        buttonSave.setEnabled(false);
         buttonSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSaveActionPerformed(evt);
@@ -234,6 +238,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         });
 
         buttonDelete.setText("Excluir Tag");
+        buttonDelete.setEnabled(false);
         buttonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonDeleteActionPerformed(evt);
@@ -295,7 +300,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         tagsModel = new DefaultListModel();
         listaTags.setModel(tagsModel);
         tags = new ListAnotacoes<>();
-        
+        CtrlBotoes(1, false);
     }
 
     /**
@@ -303,10 +308,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * dele é pegar uma imagem escolhida pelo usuário e fazer a segmentação dela.
      */
     private void buttonSegmentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSegmentarActionPerformed
-        // Se o usuário não tiver selecionado nenhuma imagem a função para aqui
-        if (path == null) {
-            return;
-        }
         //Pega os valores da interface
         double blur = (double) valBlur.getValue();
         int radius = (int) valRadius.getValue();
@@ -316,6 +317,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
         labelRegioes.setText("Total de regiões: " + seg.getTotalRegions());
         addImg(new ImageIcon(seg.getRegionMarkedImage()));
+        CtrlBotoes(3, true);
     }//GEN-LAST:event_buttonSegmentarActionPerformed
 
     /**
@@ -324,10 +326,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * SegmentacaoDeImagem.
      */
     private void buttonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRotulosActionPerformed
-        if(seg != null){
             SegmentacaoDeImagem.GerarMapaRotulos(seg);
             addImg(new ImageIcon(seg.getRegionMarkedImage()));
-        }
     }//GEN-LAST:event_buttonRotulosActionPerformed
 
     /**
@@ -336,10 +336,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * Só aceita imagens jpg.
      */
     private void buttonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImgActionPerformed
-        int returnVal = fileChooser.showOpenDialog(fileDialog);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            //File file = new File("imgs/model.jpg");  
+        //int returnVal = fileChooser.showOpenDialog(fileDialog);
+        //if (returnVal == JFileChooser.APPROVE_OPTION) {
+            //File file = fileChooser.getSelectedFile();
+            File file = new File("imgs/model.jpg");  
             if (file.getName().contains("jpg")) {
                 labelImg.setText("NomeImg: " + file.getName());
                 path = file.getAbsolutePath();
@@ -347,10 +347,12 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 path = ConvertImage.getCaminhoDaImagem();
                 ImageIcon image = new ImageIcon(path);
                 addImg(image);
+                CtrlBotoes(2, true);
             } else {
+                CtrlBotoes(1, false);
                 labelImg.setText("Utilize somente imagens jpg");
             }
-        }
+        //}
     }//GEN-LAST:event_buttonImgActionPerformed
 
     /**
@@ -360,8 +362,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
         String tag = campoTag.getText();
 
-        //Se tiver o campo vazio ou ainda não existir uma img segmentada
-        if (tag.equals("") || seg == null) {
+        //Se tiver o campo vazio
+        if (tag.equals("")) {
             campoTag.requestFocusInWindow();
             campoTag.selectAll();
             return;
@@ -372,6 +374,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
             SegmentacaoDeImagem.AssocTagRegiao(tag, tags);
             tagsModel.addElement(tag);
             listaTags.setModel(tagsModel);
+            CtrlBotoes(5, true);
         } else{
             JOptionPane.showMessageDialog(null, "Você não pode repetir a mesma anotação na imagem", "Anotações", ERROR_MESSAGE);
         }
@@ -382,6 +385,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         
         SegmentacaoDeImagem.RestaurarImg(1);
         addImg(new ImageIcon(seg.getRegionMarkedImage()));
+        
     }//GEN-LAST:event_buttonAddActionPerformed
     
     /**
@@ -402,10 +406,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * @param evt 
      */
     private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
-        if(seg != null){
-            SegmentacaoDeImagem.RestaurarImg(1);
-            addImg(new ImageIcon(seg.getRegionMarkedImage()));
-        }
+        SegmentacaoDeImagem.RestaurarImg(1);
+        addImg(new ImageIcon(seg.getRegionMarkedImage()));
+        CtrlBotoes(4, false);
     }//GEN-LAST:event_buttonClearActionPerformed
 
     /**
@@ -417,8 +420,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         if(tags.size() > 0){
             tags.Salvar();
             JOptionPane.showMessageDialog(null, "Anotações salvas", "Salvo", INFORMATION_MESSAGE);
-        } else{
-            System.out.println(tags.size());
+            CtrlBotoes(6, false);
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
@@ -464,8 +466,45 @@ public class FormSegmentacao extends javax.swing.JFrame {
                SegmentacaoDeImagem.setCoordenadas(e.getX(),e.getY(), imagem.getWidth());
                SegmentacaoDeImagem.destacarRegiao(seg);
                addImg(new ImageIcon(seg.getRegionMarkedImage()));
+               CtrlBotoes(4, true);
             }
         });
+    }
+    
+    /**
+     * 1 - todos
+     * 2 - segmentar
+     * 3 - rotulos
+     * 4 - clear e add
+     * 5 - save e delete
+     * @param id
+     * @param bool 
+     */
+    public void CtrlBotoes(int id, Boolean bool){
+        switch (id){
+            case 1:
+                buttonSegmentar.setEnabled(bool);
+                buttonRotulos.setEnabled(bool);
+                buttonAdd.setEnabled(bool);
+                buttonClear.setEnabled(bool);
+                buttonDelete.setEnabled(bool);
+                buttonSave.setEnabled(bool);
+                break;
+            case 2:
+                buttonSegmentar.setEnabled(bool);
+                break;
+            case 3:
+                buttonRotulos.setEnabled(bool);
+                break;
+            case 4:
+                buttonClear.setEnabled(bool);
+                buttonAdd.setEnabled(bool);
+                break;
+            case 5:
+                buttonSave.setEnabled(bool);
+                buttonDelete.setEnabled(bool);
+                break;
+        }
     }
 
     /**
