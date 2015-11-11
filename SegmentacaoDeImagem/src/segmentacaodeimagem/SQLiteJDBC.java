@@ -33,35 +33,6 @@ public class SQLiteJDBC {
     }
     
     /**
-     * Cria o banco de dados e suas tabelas sqlite.
-     */
-    private void CriarTabela() {
-        try {
-            conexao = DriverManager.getConnection(banco);
-
-            stmt = conexao.createStatement();
-            String sql = "CREATE TABLE ANOTACAO " +
-                         "(ID_ANOTACAO INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-                         " TAG TEXT NOT NULL, " + 
-                         " REGIAO INT NOT NULL, " +
-                         " ID_IMG_FK INT NOT NULL)";
-            
-            String sql2 = "CREATE TABLE IMG " +
-                         "(ID_IMG INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +                        
-                         " PATHIMG CHAR(50) NOT NULL)";
-            
-            stmt.executeUpdate(sql);
-            stmt.executeUpdate(sql2);
-            
-            stmt.close();
-            conexao.close();
-        } catch ( Exception e ) {
-          System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-          System.exit(0);
-        }
-    }
-    
-    /**
      * Método que controla a inserção dos dados no banco. 
      * @param path - Caminho da imagem.
      * @param tag - Anotação.
