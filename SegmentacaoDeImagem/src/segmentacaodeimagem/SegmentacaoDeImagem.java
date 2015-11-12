@@ -146,7 +146,7 @@ public class SegmentacaoDeImagem {
         if(!pixelRegion.contains(mapaDaRegiaoSegmentada[pixel])){
             pixelRegion.add(mapaDaRegiaoSegmentada[pixel]);
             //só se eu add uma nova região que eu chamo a função
-            darkenPixels(image, pixelRegion);
+            darkenPixels(pixelRegion);
         }
     }
     
@@ -158,17 +158,15 @@ public class SegmentacaoDeImagem {
      */
     public static void Selecionar(ImageInformation img, String tag, ListAnotacoes<Anotacao> notes){
         ArrayList<Integer> arrayKey = notes.ProcurarTag(tag);
-        darkenPixels(img, arrayKey);
+        darkenPixels(arrayKey);
     }
        
     /**
      * Aplica um filtro na imagem, onde a(s) região ou regiões que não foram 
      * selecionadas têm o seu brilho reduzido. 
-     * @param image Imagem a ser aplicada o filtro.
      * @param pixelRegion Array que contém a(s) região ou regiões selecionadas.
-     * @return Retorna a imagem com o filtro aplicado.
      */
-    public static ImageInformation darkenPixels(ImageInformation image, ArrayList<Integer> pixelRegion) {
+    public static void darkenPixels(ArrayList<Integer> pixelRegion) {
         Color c;
         int red;
         int green;
@@ -187,6 +185,5 @@ public class SegmentacaoDeImagem {
                  pixelsDaImagemSegmentada[i] = rgb; 
              } 
         }
-        return image;
     }
 }

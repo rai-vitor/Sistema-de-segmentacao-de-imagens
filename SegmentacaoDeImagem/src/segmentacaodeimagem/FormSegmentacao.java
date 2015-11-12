@@ -32,7 +32,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
     
     private static final int DEFAULT_WIDTH = 400; /*Largura do redimensionamento da imagem */
     private static final int DEFAULT_HEIGHT = 400; /*Altura do redimensionamento da imagem */
-
+    private final double BLUR = 0.50;
+    private final int RADIUS = 50;
+    private final int SIZE = 500;
     /**
      * Cria um novo form FormSegmentacao.
      */
@@ -292,9 +294,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
      */
     private void ConfigForm() {
         fileChooser = new JFileChooser();
-        valBlur.setModel(new SpinnerNumberModel(0.50, 0.00, 100.00, 0.01));
-        valRadius.setModel(new SpinnerNumberModel(50, 1, 100, 2));
-        valSize.setModel(new SpinnerNumberModel(500, 1, 1000, 20));
+        valBlur.setModel(new SpinnerNumberModel(BLUR, 0.00, 100.00, 0.01));
+        valRadius.setModel(new SpinnerNumberModel(RADIUS, 1, 100, 2));
+        valSize.setModel(new SpinnerNumberModel(SIZE, 1, 1000, 20));
         seg = null;
         path = null;
         tagsModel = new DefaultListModel();
