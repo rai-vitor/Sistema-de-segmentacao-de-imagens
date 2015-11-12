@@ -32,12 +32,15 @@ public class FormSegmentacao extends javax.swing.JFrame {
     JFileChooser fileChooser; /*Guarda as informacoes da imagem selecionada pelo usuario */
     String path; /*Caminho absoluto da imagem */
     JLabel imagem; /*Representa a imagem orignal */
-    ImageInformation seg;/*Contem a imagem segmentada */
+    //ImageInformation seg;/*Contem a imagem segmentada */
     DefaultListModel tagsModel; /* Componente responsável por mostrar a lista de anotações */
     ListAnotacoes<Anotacao> tags; /* Guarda uma lista de anotações */
     Vector vectorPesawat = new Vector();
     DefaultComboBoxModel boxModel;
-    String pesawat[] = {"Camisa","Sapato","Calça","Blusa","Short"};
+    String pesawat[] = {"Camisa","Sapato","Calça","Blusa","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short"};
+    Imagem img;
+    Regiao regiao;
+    
     private static final int DEFAULT_WIDTH = 400; /*Largura do redimensionamento da imagem */
     private static final int DEFAULT_HEIGHT = 400; /*Altura do redimensionamento da imagem */
     private final double BLUR = 0.50;
@@ -360,7 +363,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         valBlur.setModel(new SpinnerNumberModel(BLUR, 0.00, 100.00, 0.01));
         valRadius.setModel(new SpinnerNumberModel(RADIUS, 1, 100, 2));
         valSize.setModel(new SpinnerNumberModel(SIZE, 1, 1000, 20));
-        seg = null;
+        img = null;
         path = null;
         tagsModel = new DefaultListModel();
         listaTags.setModel(tagsModel);
@@ -394,21 +397,20 @@ public class FormSegmentacao extends javax.swing.JFrame {
         int radius = (int) valRadius.getValue();
         int size = (int) valSize.getValue();
 
-        seg = SegmentacaoDeImagem.segmentar(path, blur, radius, size);
+        img.segmentar(path, blur, radius, size);
 
-        labelRegioes.setText("Total de regiões: " + seg.getTotalRegions());
-        addImg(new ImageIcon(seg.getRegionMarkedImage()));
+        labelRegioes.setText("Total de regiões: " + img.getTotalRegioes());
+        addImg(new ImageIcon(img.getImgSegmentada()));
         CtrlBotoes(3, true);
     }//GEN-LAST:event_buttonSegmentarActionPerformed
 
     /**
      * Este método é chamado após o botão "Mostrar mapa de rótulos" ser
-     * acionado. Chama o metodo estatico 'GerarMapaRotulos' da classe
-     * SegmentacaoDeImagem.
+     * acionado. Chama o metodo estatico 'GerarMapaRotulos' da classe Imagem.
      */
     private void buttonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRotulosActionPerformed
-        SegmentacaoDeImagem.GerarMapaRotulos(seg);
-        addImg(new ImageIcon(seg.getRegionMarkedImage()));
+        img.GerarMapaRotulos();
+        addImg(new ImageIcon(img.getImgSegmentada()));
     }//GEN-LAST:event_buttonRotulosActionPerformed
 
     /**
@@ -428,6 +430,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 path = ConvertImage.getCaminhoDaImagem();
                 ImageIcon image = new ImageIcon(path);
                 addImg(image);
+                img = new Imagem();
                 CtrlBotoes(2, true);
             } else {
                 CtrlBotoes(1, false);
@@ -452,7 +455,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         
         //Para não ter elementos repetidos na lista
         if(!tagsModel.contains(tag)){
-            SegmentacaoDeImagem.AssocTagRegiao(tag, tags);
+            regiao.AssocTagRegiao(tag, tags, img);
             tagsModel.addElement(tag);
             listaTags.setModel(tagsModel);
             CtrlBotoes(5, true);
@@ -464,8 +467,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
         campoTag.requestFocusInWindow();
         campoTag.setText("");
         
-        SegmentacaoDeImagem.RestaurarImg(1);
-        addImg(new ImageIcon(seg.getRegionMarkedImage()));
+        img.RestaurarImg(1);
+        addImg(new ImageIcon(img.getImgSegmentada()));
         
     }//GEN-LAST:event_buttonAddActionPerformed
     
@@ -475,10 +478,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * @param evt 
      */
     private void listaTagsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTagsMouseClicked
-        if(tagsModel.size() > 0 || seg == null){
+        if(tagsModel.size() > 0 || img == null){
             String tag = (String)listaTags.getSelectedValue();
-            SegmentacaoDeImagem.Selecionar(seg, tag, tags);
-            addImg(new ImageIcon(seg.getRegionMarkedImage()));  
+            Busca.Selecionar(img, tag, tags);
+            addImg(new ImageIcon(img.getImgSegmentada()));  
         }
     }//GEN-LAST:event_listaTagsMouseClicked
   
@@ -487,8 +490,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * @param evt 
      */
     private void buttonClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClearActionPerformed
-        SegmentacaoDeImagem.RestaurarImg(1);
-        addImg(new ImageIcon(seg.getRegionMarkedImage()));
+        img.RestaurarImg(1);
+        addImg(new ImageIcon(img.getImgSegmentada()));
         CtrlBotoes(4, false);
     }//GEN-LAST:event_buttonClearActionPerformed
 
@@ -510,7 +513,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * @param evt 
      */
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
-        if(tagsModel.size() > 0 || seg == null){
+        if(tagsModel.size() > 0 || img == null){
             String tag = (String)listaTags.getSelectedValue();
             tagsModel.removeElement(tag);
             tags.Remover(tag);
@@ -527,8 +530,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
             panelImg.remove(imagem);
         }
 
-        Image img = image.getImage();
-        Image newimg = img.getScaledInstance(DEFAULT_WIDTH, DEFAULT_HEIGHT, java.awt.Image.SCALE_SMOOTH);
+        Image imgOriginal = image.getImage();
+        Image newimg = imgOriginal.getScaledInstance(DEFAULT_WIDTH, DEFAULT_HEIGHT, java.awt.Image.SCALE_SMOOTH);
         ImageIcon newIcon = new ImageIcon(newimg);
         imagem = new JLabel(newIcon);
         Dimension d = new Dimension(newimg.getWidth(rootPane), newimg.getHeight(rootPane));
@@ -538,15 +541,15 @@ public class FormSegmentacao extends javax.swing.JFrame {
         revalidate();
         repaint();
 
-        if(seg == null){
+        if(img == null){
             return ;
         }
         
         imagem.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-               SegmentacaoDeImagem.setCoordenadas(e.getX(),e.getY(), imagem.getWidth());
-               SegmentacaoDeImagem.destacarRegiao(seg);
-               addImg(new ImageIcon(seg.getRegionMarkedImage()));
+               regiao = new Regiao(e.getX(),e.getY(), imagem.getWidth());
+               regiao.destacarRegiao(img);
+               addImg(new ImageIcon(img.getImgSegmentada()));
                CtrlBotoes(4, true);
             }
         });
