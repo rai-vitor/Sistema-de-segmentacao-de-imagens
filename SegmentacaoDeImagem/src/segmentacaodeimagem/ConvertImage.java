@@ -51,7 +51,8 @@ public class ConvertImage {
      * @param image Imagem a ser salva.
      */
     public static void saveToFile(BufferedImage image) {
-        int num = SQLiteJDBC.CountImg();
+        SQLiteJDBC db = SQLiteJDBC.getInstance();
+        int num = db.CountImg();
         String path = "imgs/img"+num+".jpg";
         File outputfile = new File(path);
         

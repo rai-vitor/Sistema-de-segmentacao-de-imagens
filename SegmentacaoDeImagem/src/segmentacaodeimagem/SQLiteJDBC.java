@@ -13,13 +13,16 @@ public class SQLiteJDBC {
     private static SQLiteJDBC instancia;
     private static Connection conexao;
     private static Statement stmt;
-    private static String banco = "jdbc:sqlite:seg.db";
-
+    private static PreparedStatement pstmt;
+    private static String banco;
+    
     /**
      * Construtor que não pode ser instanciado.
      * Utilizar getInstance para ter uma instancia da classe.
      */
-    private SQLiteJDBC() {}
+    private SQLiteJDBC() {
+        banco = "jdbc:sqlite:seg.db";
+    }
     
     /**
      * Método para garantir o padrão Singleton.
@@ -38,7 +41,7 @@ public class SQLiteJDBC {
      * @param tag - Anotação.
      * @param regiao - Região da imagem que será associada a uma tag.
      */
-    public void InserirDados(String path, String tag, int regiao) {
+    public void InserirDados(String path, String tag, int regiao){
             int imgId = SelecionarImg(path);
             if(imgId > -1){
                 InserirAnotacao(imgId, tag, regiao);
@@ -86,20 +89,23 @@ public class SQLiteJDBC {
      */
     private void InserirImg(String path){
         conexao = null;
-        stmt = null;
+        pstmt= null;
         try {
             conexao = DriverManager.getConnection(banco);
-            conexao.setAutoCommit(false);
-
-            stmt = conexao.createStatement();
-            String sql = "INSERT INTO IMG (PATHIMG) VALUES ('"+path+"');"; 
-            stmt.executeUpdate(sql);
-          
-            conexao.commit();
-            stmt.close();
-            conexao.close();
-        } catch ( Exception e ) {
+            String sql = "INSERT INTO IMG (PATHIMG) VALUES (?);";
+            pstmt = conexao.prepareStatement(sql);
+            pstmt.setString(1,path);
+            pstmt.execute();
+            pstmt.close();
+        } catch ( SQLException  e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } finally{
+            try {
+                conexao.close();
+            } catch (SQLException e) {
+                System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            }
+            
         }
     }
     
@@ -198,19 +204,21 @@ public class SQLiteJDBC {
      * Conta a quantidade de imagens no banco.
      * @return Retorna a quantidade de imagens no banco.
      */
-    public static int CountImg(){
+    public int CountImg(){
         conexao = null;
         stmt = null;
         try {
           conexao = DriverManager.getConnection(banco);
-          conexao.setAutoCommit(false);
-          stmt = conexao.createStatement();
+          //stmt = conexao.createStatement();
+          pstmt = conexao.prepareStatement("SELECT COUNT (*) AS TAMANHO FROM IMG;");
           
-          ResultSet rs = stmt.executeQuery("SELECT COUNT (*) AS TAMANHO FROM IMG;");
+          ResultSet rs = pstmt.executeQuery();
+          //ResultSet rs = stmt.executeQuery("SELECT COUNT (*) AS TAMANHO FROM IMG;");
           int tamanho = rs.getInt("TAMANHO");
          
           rs.close();
-          stmt.close();
+          pstmt.close();
+          //stmt.close();
           conexao.close();
           return tamanho;
         } catch ( Exception e ) {

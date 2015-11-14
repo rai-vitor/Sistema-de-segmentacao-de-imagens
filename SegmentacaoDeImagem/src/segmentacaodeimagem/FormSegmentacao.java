@@ -1,6 +1,5 @@
 package segmentacaodeimagem;
 
-import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
@@ -66,12 +65,15 @@ public class FormSegmentacao extends javax.swing.JFrame {
         panelGeral = new javax.swing.JPanel();
         panelNotes = new javax.swing.JPanel();
         buttonAdd = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        listaTags = new javax.swing.JList();
         buttonClear = new javax.swing.JButton();
         buttonSave = new javax.swing.JButton();
         buttonDelete = new javax.swing.JButton();
         campoTag = new javax.swing.JTextField();
+        boxBusca = new javax.swing.JComboBox();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listaTags = new javax.swing.JList();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        listaTags2 = new javax.swing.JList();
         panelImg = new javax.swing.JPanel();
         panelCtrl = new javax.swing.JPanel();
         valBlur = new javax.swing.JSpinner();
@@ -85,8 +87,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
         buttonRotulos = new javax.swing.JButton();
         labelImg = new javax.swing.JLabel();
         buttonImg = new javax.swing.JButton();
-        panelBusca = new javax.swing.JPanel();
-        boxBusca = new javax.swing.JComboBox();
 
         javax.swing.GroupLayout fileDialogLayout = new javax.swing.GroupLayout(fileDialog.getContentPane());
         fileDialog.getContentPane().setLayout(fileDialogLayout);
@@ -103,10 +103,12 @@ public class FormSegmentacao extends javax.swing.JFrame {
         setTitle("Sistema de segmentação, anotação e busca de imagens");
         setMinimumSize(new java.awt.Dimension(400, 200));
         setName("frame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(850, 550));
+        setPreferredSize(new java.awt.Dimension(1200, 600));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         panelPrincipal.setLayout(new javax.swing.BoxLayout(panelPrincipal, javax.swing.BoxLayout.Y_AXIS));
+
+        panelGeral.setPreferredSize(new java.awt.Dimension(1500, 563));
 
         panelNotes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelNotes.setPreferredSize(new java.awt.Dimension(200, 400));
@@ -118,13 +120,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 buttonAddActionPerformed(evt);
             }
         });
-
-        listaTags.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaTagsMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(listaTags);
 
         buttonClear.setText("Limpar Seleção");
         buttonClear.setEnabled(false);
@@ -150,39 +145,73 @@ public class FormSegmentacao extends javax.swing.JFrame {
             }
         });
 
+        boxBusca.setEditable(true);
+        boxBusca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(300, 132));
+
+        listaTags.setMaximumSize(new java.awt.Dimension(150, 150));
+        listaTags.setPreferredSize(new java.awt.Dimension(150, 150));
+        listaTags.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaTagsMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(listaTags);
+
+        jScrollPane4.setPreferredSize(new java.awt.Dimension(300, 132));
+
+        listaTags2.setPreferredSize(new java.awt.Dimension(200, 200));
+        listaTags2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaTags2MouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(listaTags2);
+
         javax.swing.GroupLayout panelNotesLayout = new javax.swing.GroupLayout(panelNotes);
         panelNotes.setLayout(panelNotesLayout);
         panelNotesLayout.setHorizontalGroup(
             panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelNotesLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(buttonSave, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                    .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(buttonDelete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonClear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelNotesLayout.createSequentialGroup()
+                            .addComponent(campoTag, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(buttonAdd))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonClear, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNotesLayout.createSequentialGroup()
-                        .addComponent(campoTag)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonAdd))
-                    .addComponent(buttonSave, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
-                    .addComponent(buttonDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(boxBusca, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelNotesLayout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelNotesLayout.setVerticalGroup(
             panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNotesLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNotesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonAdd)
-                    .addComponent(campoTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(campoTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boxBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(buttonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonDelete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addGap(157, 157, 157))
         );
 
         panelImg.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -196,7 +225,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         );
         panelImgLayout.setVerticalGroup(
             panelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         panelCtrl.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -286,7 +315,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 .addComponent(labelRegioes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelImg)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonImg)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonSegmentar)
@@ -295,54 +324,27 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelBusca.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        boxBusca.setEditable(true);
-        boxBusca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        javax.swing.GroupLayout panelBuscaLayout = new javax.swing.GroupLayout(panelBusca);
-        panelBusca.setLayout(panelBuscaLayout);
-        panelBuscaLayout.setHorizontalGroup(
-            panelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBuscaLayout.createSequentialGroup()
-                .addGap(147, 147, 147)
-                .addComponent(boxBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        panelBuscaLayout.setVerticalGroup(
-            panelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelBuscaLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(boxBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout panelGeralLayout = new javax.swing.GroupLayout(panelGeral);
         panelGeral.setLayout(panelGeralLayout);
         panelGeralLayout.setHorizontalGroup(
             panelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGeralLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelBusca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(panelGeralLayout.createSequentialGroup()
-                        .addComponent(panelCtrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(panelImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(panelNotes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panelCtrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(panelImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(panelNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panelGeralLayout.setVerticalGroup(
             panelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelGeralLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(panelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelCtrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelNotes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panelCtrl, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                    .addComponent(panelImg, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                    .addComponent(panelNotes, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -370,7 +372,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
         tags = new ListAnotacoes<>();
         CtrlBotoes(1, false);
 
-        
         setVectorPesawat();
         boxModel = new DefaultComboBoxModel(vectorPesawat);
         boxBusca.setModel(boxModel);
@@ -521,6 +522,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
+    private void listaTags2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTags2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listaTags2MouseClicked
+
     /**
      * Adiciona uma imagem na interface e remove outras que estejam adicionadas.
      * @param img - Imagem a ser adicionada
@@ -647,13 +652,14 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private javax.swing.JTextField campoTag;
     private javax.swing.JDialog fileDialog;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JLabel labelBlur;
     private javax.swing.JLabel labelImg;
     private javax.swing.JLabel labelRadius;
     private javax.swing.JLabel labelRegioes;
     private javax.swing.JLabel labelSize;
     private javax.swing.JList listaTags;
-    private javax.swing.JPanel panelBusca;
+    private javax.swing.JList listaTags2;
     private javax.swing.JPanel panelCtrl;
     private javax.swing.JPanel panelGeral;
     private javax.swing.JPanel panelImg;
