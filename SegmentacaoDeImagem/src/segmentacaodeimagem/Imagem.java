@@ -4,30 +4,42 @@ import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
+import org.sqlite.SQLiteJDBCLoader;
 
 /**
  * Uma classe que realiza a segmentação de uma imagem, bem como o mapa de rótulos da mesma.
  * @author Hiago Miguel & Rai Vitor.
  */
 public class Imagem {      
-    private static int[] variacaoGray;
+    private int[] variacaoGray;
     /* Define a intensidade da tonalidade cinza inicial a ser utilizada*/
-    private static int defGrey;
-
-    private static ArrayList<Integer> pixelRegion, pixelsDaImagemSegmentadaBckp;
+    private int defGrey;
+    private final String path;
+    private double blur;
+    private int radius;
+    private int size;
+    private ArrayList<Integer> pixelRegion, pixelsDaImagemSegmentadaBckp;
     ImageInformation seg;
+    
+    public Imagem(String path, double blur, int radius, int size){
+        this.path = path;
+        this.blur = blur;
+        this.radius = radius;
+        this.size = size;
+    }
     
     /**
      * Segmenta uma dada imagem de acordo com os parâmetros abaixo.
      * 
-     * @param path Caminho da imagem.
      * @param blur Nível de desfoque (blur) para suavizar arestas da imagem.
      * @param radius Principal parâmetro do algoritmo Mean Shift. Sua mudança é bastante sensível ao resultado da segmentação.
      * @param size Tamanho mínimo das regiões obtidas na segmentação.
      */
-    public void segmentar(String path, double blur, int radius, int size) {                        
-        seg = ImageSegmentation.performSegmentation(path, blur,radius,size);
+    public void segmentar(double blur, int radius, int size) { 
+        this.blur = blur;
+        this.radius = radius;
+        this.size = size;
+        seg = ImageSegmentation.performSegmentation(getPath(), blur, radius, size);
         variacaoGray = new int[seg.getTotalRegions()];        
         defGrey = 255/seg.getTotalRegions();
         setPixelsDaImagemSegmentadaBckp(new ArrayList<>());
@@ -83,10 +95,18 @@ public class Imagem {
      * Gera espacamentos iguais entre os possiveis 255 cinzas
      * @param tamanhoRegiao - Quantidade de regioes existentes na imagem segmentada 
      */
-    private static void GapGray(int tamanhoRegiao){
+    private void GapGray(int tamanhoRegiao){
         for(int i = 0; i < tamanhoRegiao; i++) {
             variacaoGray[i] = defGrey*i;
         }
+    }
+    
+    /**
+     * Salva a imagem no banco de dados.
+     */
+    public void Salvar(){
+        SQLiteJDBC db = SQLiteJDBC.getInstance();
+        db.InserirImg(this);
     }
 
     /**
@@ -145,4 +165,34 @@ public class Imagem {
     public int getTotalRegioes() {
         return seg.getTotalRegions();
     }
+
+    /**
+     * @return the path
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * @return the blur
+     */
+    public double getBlur() {
+        return blur;
+    }
+
+    /**
+     * @return the radius
+     */
+    public int getRadius() {
+        return radius;
+    }
+
+    /**
+     * @return the size
+     */
+    public int getSize() {
+        return size;
+    }
+    
+    
 }

@@ -50,7 +50,9 @@ public class ListAnotacoes<E> extends java.util.ArrayList<E>{
     
     /**
      * Sobrescreve o método toString()
+     * @return 
      */
+    @Override
     public String toString(){
         for(int i = 0; i < this.size(); i++){
             Anotacao note = (Anotacao)this.get(i);

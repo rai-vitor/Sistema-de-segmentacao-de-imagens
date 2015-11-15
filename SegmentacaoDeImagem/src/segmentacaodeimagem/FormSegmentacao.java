@@ -29,14 +29,13 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 public class FormSegmentacao extends javax.swing.JFrame {
 
     JFileChooser fileChooser; /*Guarda as informacoes da imagem selecionada pelo usuario */
-    String path; /*Caminho absoluto da imagem */
     JLabel imagem; /*Representa a imagem orignal */
-    //ImageInformation seg;/*Contem a imagem segmentada */
     DefaultListModel tagsModel; /* Componente responsável por mostrar a lista de anotações */
+    DefaultListModel tagsBancoModel; /* Componente responsável por mostrar a lista de anotações que estão no banco */
     ListAnotacoes<Anotacao> tags; /* Guarda uma lista de anotações */
-    Vector vectorPesawat = new Vector();
+    Vector vectorPesawat = new Vector(); /* CRIADO PARA TESTE. SERÁ EXCLUÍDO */
     DefaultComboBoxModel boxModel;
-    String pesawat[] = {"Camisa","Sapato","Calça","Blusa","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short"};
+    String pesawat[] = {"Camisa","Sapato","Calça","Blusa","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short"}; /* CRIADO PARA TESTE. SERÁ EXCLUÍDO */
     Imagem img;
     Regiao regiao;
     
@@ -73,7 +72,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listaTags = new javax.swing.JList();
         jScrollPane4 = new javax.swing.JScrollPane();
-        listaTags2 = new javax.swing.JList();
+        listaTagsBanco = new javax.swing.JList();
         panelImg = new javax.swing.JPanel();
         panelCtrl = new javax.swing.JPanel();
         valBlur = new javax.swing.JSpinner();
@@ -161,13 +160,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
         jScrollPane4.setPreferredSize(new java.awt.Dimension(300, 132));
 
-        listaTags2.setPreferredSize(new java.awt.Dimension(200, 200));
-        listaTags2.addMouseListener(new java.awt.event.MouseAdapter() {
+        listaTagsBanco.setPreferredSize(new java.awt.Dimension(200, 200));
+        listaTagsBanco.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaTags2MouseClicked(evt);
+                listaTagsBancoMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(listaTags2);
+        jScrollPane4.setViewportView(listaTagsBanco);
 
         javax.swing.GroupLayout panelNotesLayout = new javax.swing.GroupLayout(panelNotes);
         panelNotes.setLayout(panelNotesLayout);
@@ -366,9 +365,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
         valRadius.setModel(new SpinnerNumberModel(RADIUS, 1, 100, 2));
         valSize.setModel(new SpinnerNumberModel(SIZE, 1, 1000, 20));
         img = null;
-        path = null;
         tagsModel = new DefaultListModel();
         listaTags.setModel(tagsModel);
+        tagsBancoModel = new DefaultListModel();
+        listaTagsBanco.setModel(tagsBancoModel);
         tags = new ListAnotacoes<>();
         CtrlBotoes(1, false);
 
@@ -381,6 +381,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
             public void itemStateChanged(ItemEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
+                        ListarTags((String)boxBusca.getSelectedItem());
                         //System.out.println("Selected '"+boxBusca.getSelectedItem()+"'");
                     }
                 });
@@ -398,7 +399,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         int radius = (int) valRadius.getValue();
         int size = (int) valSize.getValue();
 
-        img.segmentar(path, blur, radius, size);
+        img.segmentar(blur, radius, size);
 
         labelRegioes.setText("Total de regiões: " + img.getTotalRegioes());
         addImg(new ImageIcon(img.getImgSegmentada()));
@@ -426,12 +427,12 @@ public class FormSegmentacao extends javax.swing.JFrame {
             File file = new File("imgs/model.jpg");  
             if (file.getName().contains("jpg")) {
                 labelImg.setText("NomeImg: " + file.getName());
-                path = file.getAbsolutePath();
+                String path = file.getAbsolutePath();
                 ConvertImage.scaleImage(DEFAULT_WIDTH, DEFAULT_HEIGHT, path);
                 path = ConvertImage.getCaminhoDaImagem();
                 ImageIcon image = new ImageIcon(path);
                 addImg(image);
-                img = new Imagem();
+                img = new Imagem(path, BLUR, RADIUS, SIZE);
                 CtrlBotoes(2, true);
             } else {
                 CtrlBotoes(1, false);
@@ -494,6 +495,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         img.RestaurarImg(1);
         addImg(new ImageIcon(img.getImgSegmentada()));
         CtrlBotoes(4, false);
+        CtrlBotoes(7, false);
     }//GEN-LAST:event_buttonClearActionPerformed
 
     /**
@@ -503,9 +505,11 @@ public class FormSegmentacao extends javax.swing.JFrame {
      */
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         if(tags.size() > 0){
+            img.Salvar();
             tags.Salvar();
             JOptionPane.showMessageDialog(null, "Anotações salvas", "Salvo", INFORMATION_MESSAGE);
             CtrlBotoes(6, false);
+            buttonClearActionPerformed(evt);
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
@@ -522,9 +526,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
-    private void listaTags2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTags2MouseClicked
+    private void listaTagsBancoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTagsBancoMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_listaTags2MouseClicked
+    }//GEN-LAST:event_listaTagsBancoMouseClicked
 
     /**
      * Adiciona uma imagem na interface e remove outras que estejam adicionadas.
@@ -577,6 +581,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * 3 - rotulos
      * 4 - clear e add
      * 5 - save e delete
+     * 6 - save
+     * 7 - clear
      * @param id
      * @param bool 
      */
@@ -597,14 +603,23 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 buttonRotulos.setEnabled(bool);
                 break;
             case 4:
-                buttonClear.setEnabled(bool);
                 buttonAdd.setEnabled(bool);
                 break;
             case 5:
                 buttonSave.setEnabled(bool);
                 buttonDelete.setEnabled(bool);
                 break;
+            case 6:
+                buttonSave.setEnabled(bool);
+                break;
+            case 7:
+                buttonClear.setEnabled(bool);
+                break;
         }
+    }
+    
+    private void ListarTags(String tag){
+        
     }
 
     /**
@@ -659,7 +674,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private javax.swing.JLabel labelRegioes;
     private javax.swing.JLabel labelSize;
     private javax.swing.JList listaTags;
-    private javax.swing.JList listaTags2;
+    private javax.swing.JList listaTagsBanco;
     private javax.swing.JPanel panelCtrl;
     private javax.swing.JPanel panelGeral;
     private javax.swing.JPanel panelImg;
