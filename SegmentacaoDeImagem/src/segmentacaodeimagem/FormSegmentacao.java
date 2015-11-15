@@ -7,7 +7,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -19,6 +19,7 @@ import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import tree.Trie;
 
 /**
  * Classe de controle de interface. Todas as operações da interface do sistema
@@ -32,11 +33,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
     JLabel imagem; /*Representa a imagem orignal */
     DefaultListModel tagsModel; /* Componente responsável por mostrar a lista de anotações */
     DefaultListModel tagsBancoModel; /* Componente responsável por mostrar a lista de anotações que estão no banco */
+    DefaultComboBoxModel boxModel; /* Componente responsável para mostrar a lista de anotações no ComboBox */
     ListAnotacoes<Anotacao> tags; /* Guarda uma lista de anotações */
-    Vector vectorPesawat = new Vector(); /* CRIADO PARA TESTE. SERÁ EXCLUÍDO */
-    DefaultComboBoxModel boxModel;
-    String pesawat[] = {"Camisa","Sapato","Calça","Blusa","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short","Short"}; /* CRIADO PARA TESTE. SERÁ EXCLUÍDO */
-    Imagem img;
+    Trie t; /* Arvore Trie que guarda a lista do ComboBox */
+    Imagem img;  
     Regiao regiao;
     
     private static final int DEFAULT_WIDTH = 400; /*Largura do redimensionamento da imagem */
@@ -176,14 +176,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(buttonSave, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
-                    .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(buttonDelete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonClear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panelNotesLayout.createSequentialGroup()
-                            .addComponent(campoTag, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(buttonAdd))
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)))
+                    .addComponent(buttonDelete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonClear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelNotesLayout.createSequentialGroup()
+                        .addComponent(campoTag, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonAdd))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(boxBusca, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -290,10 +289,11 @@ public class FormSegmentacao extends javax.swing.JFrame {
                                     .addComponent(valBlur, javax.swing.GroupLayout.Alignment.LEADING))))
                         .addGap(37, 37, 37))
                     .addGroup(panelCtrlLayout.createSequentialGroup()
-                        .addGroup(panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelRegioes)
-                            .addComponent(labelImg))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(labelRegioes)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelCtrlLayout.createSequentialGroup()
+                        .addComponent(labelImg)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         panelCtrlLayout.setVerticalGroup(
             panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,9 +310,9 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 .addGroup(panelCtrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(valSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelSize))
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(labelRegioes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(labelImg)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonImg)
@@ -365,18 +365,14 @@ public class FormSegmentacao extends javax.swing.JFrame {
         valRadius.setModel(new SpinnerNumberModel(RADIUS, 1, 100, 2));
         valSize.setModel(new SpinnerNumberModel(SIZE, 1, 1000, 20));
         img = null;
+        
         tagsModel = new DefaultListModel();
         listaTags.setModel(tagsModel);
-        tagsBancoModel = new DefaultListModel();
-        listaTagsBanco.setModel(tagsBancoModel);
+        
         tags = new ListAnotacoes<>();
         CtrlBotoes(1, false);
 
-        setVectorPesawat();
-        boxModel = new DefaultComboBoxModel(vectorPesawat);
-        boxBusca.setModel(boxModel);
-        AutoCompleteDecorator.decorate(boxBusca);
-
+        initComboBox();
         boxBusca.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 SwingUtilities.invokeLater(new Runnable() {
@@ -426,13 +422,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
             //File file = fileChooser.getSelectedFile();
             File file = new File("imgs/model.jpg");  
             if (file.getName().contains("jpg")) {
-                labelImg.setText("NomeImg: " + file.getName());
                 String path = file.getAbsolutePath();
                 ConvertImage.scaleImage(DEFAULT_WIDTH, DEFAULT_HEIGHT, path);
                 path = ConvertImage.getCaminhoDaImagem();
                 ImageIcon image = new ImageIcon(path);
                 addImg(image);
                 img = new Imagem(path, BLUR, RADIUS, SIZE);
+                labelImg.setText("NomeImg: " + file.getName());
                 CtrlBotoes(2, true);
             } else {
                 CtrlBotoes(1, false);
@@ -509,12 +505,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
             tags.Salvar();
             JOptionPane.showMessageDialog(null, "Anotações salvas", "Salvo", INFORMATION_MESSAGE);
             CtrlBotoes(6, false);
+            initComboBox();
             buttonClearActionPerformed(evt);
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     /**
-     * Deleta uma anotação da lista. Mas ainda não persiste no banco.
+     * Deleta uma anotação da lista.
      * @param evt 
      */
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
@@ -526,8 +523,30 @@ public class FormSegmentacao extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
+    /**
+     * 
+     * @param evt 
+     */
     private void listaTagsBancoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTagsBancoMouseClicked
-        // TODO add your handling code here:
+        tagsModel.clear();
+        tags.clear();
+        String tag = (String)listaTagsBanco.getSelectedValue();
+        if(tag.length()<1){
+            return;
+        }
+        SQLiteJDBC db = SQLiteJDBC.getInstance();
+        img = db.SelecionarImg(tag, tags);
+        img.segmentar(img.getBlur(), img.getRadius(), img.getSize());
+        labelRegioes.setText("Total de regiões: " + img.getTotalRegioes());
+        addImg(new ImageIcon(img.getImgSegmentada()));
+        CtrlBotoes(3, true);
+        
+        for (int i = 0; i < tags.size(); i++) {
+            if(!tagsModel.contains(tags.get(i).getTag())){
+                tagsModel.addElement(tags.get(i).getTag());
+            }
+        }
+        listaTags.setModel(tagsModel);
     }//GEN-LAST:event_listaTagsBancoMouseClicked
 
     /**
@@ -565,14 +584,40 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }
     
     /**
-     * método feito só para teste, logo será apagado.
-     * Ele preenche o vetor que vai ter os campos do jComboBox
+     * Inicializa o ComboBox com as anotações que estão no banco de dados.
      */
-    public void setVectorPesawat(){
-        int a;
-        for(a=0;a<pesawat.length;a++){
-            vectorPesawat.add(pesawat[a]);
+    private void initComboBox(){
+        t = new Trie();
+        SQLiteJDBC db = SQLiteJDBC.getInstance();
+        t = db.getAnotacoes();
+        ArrayList<String> listaTag = new ArrayList<>();
+        t.print(t.getRoot(), "", listaTag);
+        boxModel = new DefaultComboBoxModel();
+        
+        for (int i = 0; i < listaTag.size(); i++) {
+            boxModel.addElement(listaTag.get(i));
         }
+        
+        boxBusca.setModel(boxModel);
+        AutoCompleteDecorator.decorate(boxBusca);
+    }
+    
+    /**
+     * Lista as tags selecionadas pelo ComboBox na segunda lista.
+     * @param tag 
+     */
+    private void ListarTags(String tag){
+        ArrayList<String> listaPaths = new ArrayList<>();
+        SQLiteJDBC db = SQLiteJDBC.getInstance();
+        db.buscarPath(tag, listaPaths);
+        
+        tagsBancoModel = new DefaultListModel();
+        
+        for(int i = 0; i<listaPaths.size(); i++){
+            tagsBancoModel.addElement(listaPaths.get(i));
+        }
+        
+        listaTagsBanco.setModel(tagsBancoModel);
     }
 
     /**
@@ -587,6 +632,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * @param bool 
      */
     public void CtrlBotoes(int id, Boolean bool){
+        bool = true;
         switch (id){
             case 1:
                 buttonSegmentar.setEnabled(bool);
@@ -596,6 +642,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 buttonDelete.setEnabled(bool);
                 buttonSave.setEnabled(bool);
                 break;
+                /*
             case 2:
                 buttonSegmentar.setEnabled(bool);
                 break;
@@ -603,6 +650,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 buttonRotulos.setEnabled(bool);
                 break;
             case 4:
+                buttonClear.setEnabled(bool);
                 buttonAdd.setEnabled(bool);
                 break;
             case 5:
@@ -614,14 +662,10 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 break;
             case 7:
                 buttonClear.setEnabled(bool);
-                break;
+                break;*/
         }
     }
     
-    private void ListarTags(String tag){
-        
-    }
-
     /**
      * Método que inicia o sistema.
      * @param args 

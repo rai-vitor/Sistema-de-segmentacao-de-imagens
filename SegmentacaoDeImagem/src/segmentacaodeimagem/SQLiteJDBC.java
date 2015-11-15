@@ -47,7 +47,7 @@ public class SQLiteJDBC {
      * @param regiao - Região da imagem que será associada a uma tag.
      */
     public void InserirDados(String path, String tag, int regiao) {
-        int imgId = SelecionarImg(path);
+        int imgId = SelecionarIdImg(path);
         InserirAnotacao(imgId, tag, regiao);
     }
 
@@ -57,7 +57,7 @@ public class SQLiteJDBC {
      * @param pathImg - Caminho da imagem a ser procurada.
      * @return Retorna o id da imagem, se existir. Caso contrário retorna -1.
      */
-    public int SelecionarImg(String pathImg) {
+    public int SelecionarIdImg(String pathImg) {
         conexao = null;
         stmt = null;
         try {
@@ -82,6 +82,74 @@ public class SQLiteJDBC {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             return -1;
         }
+    }
+    
+    /**
+     * Seleciona uma imagem no banco de dados e retorna o id dela.
+     *
+     * @param pathImg - Caminho da imagem a ser procurada.
+     * @return Retorna o id da imagem, se existir. Caso contrário retorna -1.
+     */
+    public Imagem SelecionarImg(String pathImg, ListAnotacoes<Anotacao> notes) {
+        conexao = null;
+        stmt = null;
+        try {
+            conexao = DriverManager.getConnection(banco);
+            stmt = conexao.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM ANOTACAO INNER JOIN IMG ON ANOTACAO.ID_IMG_FK = IMG.ID_IMG WHERE PATHIMG = '" + pathImg + "';");
+
+            Imagem img = null;
+            while (rs.next()) {
+                String path = rs.getString("PATHIMG");
+                double blur = rs.getDouble("BLUR");
+                int radius = rs.getInt("RADIUS");
+                int size = rs.getInt("SIZE");
+                img = new Imagem(path,blur, radius, size);
+                
+                String tag = rs.getString("TAG");
+                int regiao = rs.getInt("REGIAO");
+                Anotacao note = new Anotacao(path, tag, regiao);
+                notes.add(note);
+            }
+
+            rs.close();
+            stmt.close();
+            conexao.close();
+            return img;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            return null;
+        }
+    }
+    
+    /**
+     * Seleciona uma imagem no banco de dados e retorna o id dela.
+     *
+     * @param tag
+     * @param s     
+     */
+    public void buscarPath(String tag, ArrayList<String> s) {
+        conexao = null;
+        pstmt = null;
+        try {
+            conexao = DriverManager.getConnection(banco);
+            String sql = "SELECT * FROM ANOTACAO INNER JOIN IMG ON ANOTACAO.ID_IMG_FK = IMG.ID_IMG WHERE TAG = '"+tag+"';";
+            pstmt = conexao.prepareStatement(sql);
+            
+            ResultSet rs = pstmt.executeQuery();
+            String path;
+            while(rs.next()){
+                path = rs.getString("PATHIMG");
+                if(!s.contains(path)){
+                    s.add(path);
+                }
+            }
+            
+            pstmt.close();
+            conexao.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } 
     }
 
     /**
@@ -265,7 +333,7 @@ public class SQLiteJDBC {
      * @param note - anotação a ser deletada.
      */
     public void DeletarAnotacao(Anotacao note) {
-        int idImg = SelecionarImg(note.getPathImg());
+        int idImg = SelecionarIdImg(note.getPathImg());
         if (idImg == -1) {
             return;
         }
@@ -287,23 +355,23 @@ public class SQLiteJDBC {
 
     /**
      * Busca no banco de dados todas as anotações
-     * @param tags - Recebe todas as informações da tabela TAGS
-     * @param imgs - Recebe todas as informações da tabela IMGS
      * @return Arvore Trie com todas as anotações.
      */
-    public Trie getAnotacoes(ListAnotacoes<Anotacao> tags, ArrayList<Imagem> imgs) {
+    public Trie getAnotacoes() {
         conexao = null;
         stmt = null;
         try {
             conexao = DriverManager.getConnection(banco);
             stmt = conexao.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ANOTACAO INNER JOIN IMG ON ANOTACAO.ID_IMG_FK = IMG.ID_IMG;");
-
+            ResultSet rs = stmt.executeQuery("SELECT * FROM ANOTACAO;");
+/*
             tags.clear();
-            imgs.clear();
+            imgs.clear();*/
             Trie t = new Trie();
             while (rs.next()) {
+                
                 String tag = rs.getString("TAG");
+                /*
                 int regiao = rs.getInt("REGIAO");
                 String pathImg = rs.getString("PATHIMG");
                 Anotacao note = new Anotacao(pathImg, tag, regiao);
@@ -316,7 +384,7 @@ public class SQLiteJDBC {
                     Imagem img = new Imagem(pathImg,blur, radius, size);
                     imgs.add(img);
                 }
-                
+                */
                 t.insert(tag); // add na arvore trie
             }
 

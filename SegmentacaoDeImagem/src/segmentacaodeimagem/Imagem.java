@@ -4,7 +4,6 @@ import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import org.sqlite.SQLiteJDBCLoader;
 
 /**
  * Uma classe que realiza a segmentação de uma imagem, bem como o mapa de rótulos da mesma.
@@ -193,6 +192,4 @@ public class Imagem {
     public int getSize() {
         return size;
     }
-    
-    
 }
