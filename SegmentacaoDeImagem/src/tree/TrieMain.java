@@ -1,4 +1,5 @@
 package tree;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -10,6 +11,7 @@ public class TrieMain{
 
         Scanner scan = new Scanner(System.in);
         Trie t = new Trie(); 
+        ArrayList<String> s = new ArrayList<>();
         char ch;
 
         do{
@@ -40,7 +42,8 @@ public class TrieMain{
                     System.out.println("Resultado da busca: "+ t.search( scan.next() ));
                     break;                                          
                 case 4: 
-                    t.print(t.getRoot(), "");
+                    t.print(t.getRoot(), "", s);
+                    System.out.println(s.toString());
                     break;            
                 default: 
                     System.out.println("Numero invalido \n ");

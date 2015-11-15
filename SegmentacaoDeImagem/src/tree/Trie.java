@@ -1,5 +1,7 @@
 package tree;
 
+import java.util.ArrayList;
+
 public class Trie{
 
     private final TrieNode root;
@@ -40,7 +42,7 @@ public class Trie{
         return current.getEnd();
     }
     
-    void print(TrieNode node, String path) {
+    public void print(TrieNode node, String path, ArrayList<String> s) {
         if(this.root.childList.isEmpty()){
             System.out.println("Árvore vazia!");
             return;
@@ -49,10 +51,10 @@ public class Trie{
             path += node.getContent();
         }
         if(node.getEnd()==true){
-            System.out.println(path);
+            s.add(path);
         }
         for(TrieNode childList : node.childList){
-            print(childList, path);
+            print(childList, path, s);
             path = path.substring(0, path.length());
         }
     }
