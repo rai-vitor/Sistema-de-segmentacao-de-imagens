@@ -8,7 +8,7 @@ class TrieNode{
     public ArrayList<TrieNode> childList; 
 
     public TrieNode(char c){
-        childList = new ArrayList<TrieNode>();
+        childList = new ArrayList<>();
         isEnd = false;
         content = c;
         count = 0;
@@ -42,4 +42,3 @@ class TrieNode{
         return this.count;
     }
 }
-

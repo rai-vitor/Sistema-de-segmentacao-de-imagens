@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Classe da view das funções da arvore.
+ * ESSA CLASSE NÃO VAI EXISTIR FOI SÓ PARA TESTAR
  */
 public class TrieMain{
 

@@ -1,5 +1,4 @@
 package tree;
-
 import java.util.ArrayList;
 
 public class Trie{
@@ -12,7 +11,7 @@ public class Trie{
     
     public void insert(String word) {
         if (search(word) == true) {
-            System.out.println("palavra já inserida");
+            //System.out.println("palavra já inserida");
             return;
         }
         TrieNode current = root; 
@@ -26,14 +25,12 @@ public class Trie{
             }
             current.addCount(1);
         }
-
         current.setEnd(true);
     }
 
     public boolean search(String word){
         TrieNode current = root;  
         for (char ch : word.toCharArray() ){
-
             if (current.subNode(ch) == null)
                 return false;
             else
@@ -44,7 +41,7 @@ public class Trie{
     
     public void print(TrieNode node, String path, ArrayList<String> s) {
         if(this.root.childList.isEmpty()){
-            System.out.println("Árvore vazia!");
+            //System.out.println("Árvore vazia!");
             return;
         }
         if(node.getContent()!=' '){
@@ -61,7 +58,7 @@ public class Trie{
  
     public void remove(String word){
         if (search(word) == false){
-            System.out.println(word +" Não está na árvore\n");
+            //System.out.println(word +" Não está na árvore\n");
             return;
         }             
 
