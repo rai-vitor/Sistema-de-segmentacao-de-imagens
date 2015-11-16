@@ -16,7 +16,7 @@ public class DataBase {
 
     private static DataBase instancia;
     private static Connection conexao;
-    private static Statement stmt;
+    //private static Statement stmt;
     private static PreparedStatement pstmt;
     private static String banco;
 
@@ -59,13 +59,13 @@ public class DataBase {
      * @return Retorna o id da imagem, se existir. Caso contrário retorna -1.
      */
     public int SelecionarIdImg(String pathImg) {
-        conexao = null;
-        stmt = null;
         try {
             conexao = DriverManager.getConnection(banco);
-            stmt = conexao.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM IMG WHERE PATHIMG = '" + pathImg + "';");
-
+            String query = "SELECT * FROM IMG WHERE PATHIMG = ?;";
+            pstmt = conexao.prepareStatement(query);
+            pstmt.setString(1, pathImg);
+            ResultSet rs = pstmt.executeQuery();
+            
             //Se selecionar algo retorna o id
             //se não encontrar nada retorno -1
             int id = -1;
@@ -74,7 +74,7 @@ public class DataBase {
             }
 
             rs.close();
-            stmt.close();
+            pstmt.close();
             conexao.close();
             return id;
         } catch (Exception e) {
@@ -87,15 +87,16 @@ public class DataBase {
      * Seleciona uma imagem no banco de dados e retorna o id dela.
      *
      * @param pathImg - Caminho da imagem a ser procurada.
+     * @param notes
      * @return Retorna o id da imagem, se existir. Caso contrário retorna -1.
      */
     public Imagem SelecionarImg(String pathImg, ListAnotacoes<Anotacao> notes) {
-        conexao = null;
-        stmt = null;
         try {
             conexao = DriverManager.getConnection(banco);
-            stmt = conexao.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ANOTACAO INNER JOIN IMG ON ANOTACAO.ID_IMG_FK = IMG.ID_IMG WHERE PATHIMG = '" + pathImg + "';");
+            String query = "SELECT * FROM ANOTACAO INNER JOIN IMG ON ANOTACAO.ID_IMG_FK = IMG.ID_IMG WHERE PATHIMG = ?;";
+            pstmt = conexao.prepareStatement(query);
+            pstmt.setString(1, pathImg);
+            ResultSet rs = pstmt.executeQuery();
 
             Imagem img = null;
             while (rs.next()) {
@@ -112,7 +113,7 @@ public class DataBase {
             }
 
             rs.close();
-            stmt.close();
+            pstmt.close();
             conexao.close();
             return img;
         } catch (Exception e) {
@@ -122,18 +123,15 @@ public class DataBase {
     }
     
     /**
-     * Seleciona uma imagem no banco de dados e retorna o id dela.
-     *
      * @param tag
      * @param s     
      */
     public void buscarPath(String tag, ArrayList<String> s) {
-        conexao = null;
-        pstmt = null;
         try {
             conexao = DriverManager.getConnection(banco);
-            String sql = "SELECT * FROM ANOTACAO INNER JOIN IMG ON ANOTACAO.ID_IMG_FK = IMG.ID_IMG WHERE TAG = '"+tag+"';";
-            pstmt = conexao.prepareStatement(sql);
+            String query = "SELECT * FROM ANOTACAO INNER JOIN IMG ON ANOTACAO.ID_IMG_FK = IMG.ID_IMG WHERE TAG = ?;";
+            pstmt = conexao.prepareStatement(query);
+            pstmt.setString(1, tag);
             
             ResultSet rs = pstmt.executeQuery();
             String path;
@@ -157,8 +155,6 @@ public class DataBase {
      * @param img
      */
     public void InserirImg(Imagem img) {
-        conexao = null;
-        pstmt = null;
         try {
             conexao = DriverManager.getConnection(banco);
             String sql = "INSERT INTO IMG (PATHIMG, BLUR, RADIUS, SIZE) VALUES (?, ?, ?, ?);";
@@ -168,7 +164,6 @@ public class DataBase {
             pstmt.setInt(3, img.getRadius());
             pstmt.setInt(4, img.getSize());
             pstmt.execute();
-            pstmt.close();
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
@@ -189,15 +184,16 @@ public class DataBase {
      * @param regiao - Região da imagem atrelada a tag
      */
     private void InserirAnotacao(int imgId, String tag, int regiao) {
-        conexao = null;
-        stmt = null;
         try {
             conexao = DriverManager.getConnection(banco);
-            stmt = conexao.createStatement();
-            String sql = "INSERT INTO ANOTACAO (TAG,REGIAO,ID_IMG_FK) VALUES ('" + tag + "', '" + regiao + "', '" + imgId + "');";
-            stmt.executeUpdate(sql);
+            String sql = "INSERT INTO ANOTACAO (TAG,REGIAO,ID_IMG_FK) VALUES (?, ?, ?);";
+            pstmt = conexao.prepareStatement(sql);
+            pstmt.setString(1, tag);
+            pstmt.setInt(2, regiao);
+            pstmt.setInt(3, imgId);
+            pstmt.execute();
             
-            stmt.close();
+            pstmt.close();
             conexao.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -206,24 +202,17 @@ public class DataBase {
 
     /**
      * Conta a quantidade de imagens no banco.
-     *
      * @return Retorna a quantidade de imagens no banco.
      */
     public int CountImg() {
-        conexao = null;
-        stmt = null;
         try {
             conexao = DriverManager.getConnection(banco);
-            //stmt = conexao.createStatement();
             pstmt = conexao.prepareStatement("SELECT COUNT (*) AS TAMANHO FROM IMG;");
-
             ResultSet rs = pstmt.executeQuery();
-            //ResultSet rs = stmt.executeQuery("SELECT COUNT (*) AS TAMANHO FROM IMG;");
             int tamanho = rs.getInt("TAMANHO");
 
             rs.close();
             pstmt.close();
-            //stmt.close();
             conexao.close();
             return tamanho;
         } catch (Exception e) {
@@ -245,11 +234,14 @@ public class DataBase {
         }
         try {
             conexao = DriverManager.getConnection(banco);
-            stmt = conexao.createStatement();
-            String sql = "DELETE FROM ANOTACAO WHERE TAG = '" + note.getTag() + "' AND REGIAO = '" + note.getRegiao() + "' AND ID_IMG_FK = '" + idImg + "';";
-            stmt.executeUpdate(sql);
+            String sql = "DELETE FROM ANOTACAO WHERE TAG = ? AND REGIAO = ? AND ID_IMG_FK = ?;";
+            pstmt = conexao.prepareStatement(sql);
+            pstmt.setString(1, note.getTag());
+            pstmt.setInt(2, note.getRegiao());
+            pstmt.setInt(3, idImg);
+            pstmt.executeUpdate(sql);
 
-            stmt.close();
+            pstmt.close();
             conexao.close();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -261,12 +253,10 @@ public class DataBase {
      * @return Arvore Trie com todas as anotações.
      */
     public Trie getAnotacoes() {
-        conexao = null;
-        stmt = null;
         try {
             conexao = DriverManager.getConnection(banco);
-            stmt = conexao.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ANOTACAO;");
+            pstmt = conexao.prepareStatement("SELECT * FROM ANOTACAO;");
+            ResultSet rs = pstmt.executeQuery();
 
             Trie t = new Trie();
             while (rs.next()) {
@@ -275,7 +265,7 @@ public class DataBase {
             }
 
             rs.close();
-            stmt.close();
+            pstmt.close();
             conexao.close();
             return t;
         } catch (Exception e) {
