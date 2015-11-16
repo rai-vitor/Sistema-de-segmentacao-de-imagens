@@ -531,10 +531,11 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private void listaTagsBancoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTagsBancoMouseClicked
         tagsModel.clear();
         tags.clear();
-        String tag = (String)listaTagsBanco.getSelectedValue();
-        if(tag.length()<1){
+        if(listaTagsBanco.getSelectedValue() == null){
+            System.out.println("certinho");
             return;
         }
+        String tag = (String)listaTagsBanco.getSelectedValue();
         DataBase db = DataBase.getInstance();
         img = db.SelecionarImg(tag, tags);
         img.segmentar(img.getBlur(), img.getRadius(), img.getSize());
