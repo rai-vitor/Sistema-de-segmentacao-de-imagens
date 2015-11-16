@@ -1,6 +1,5 @@
 package segmentacaodeimagem;
 
-import database.DataBase;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
@@ -45,6 +44,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private final double BLUR = 0.50;
     private final int RADIUS = 50;
     private final int SIZE = 500;
+    
     /**
      * Cria um novo form FormSegmentacao.
      */
@@ -73,7 +73,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         listaTags = new javax.swing.JList();
         jScrollPane4 = new javax.swing.JScrollPane();
-        listaTagsBanco = new javax.swing.JList();
+        listaImgs = new javax.swing.JList();
         panelImg = new javax.swing.JPanel();
         panelCtrl = new javax.swing.JPanel();
         valBlur = new javax.swing.JSpinner();
@@ -161,13 +161,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
         jScrollPane4.setPreferredSize(new java.awt.Dimension(300, 132));
 
-        listaTagsBanco.setPreferredSize(new java.awt.Dimension(200, 200));
-        listaTagsBanco.addMouseListener(new java.awt.event.MouseAdapter() {
+        listaImgs.setPreferredSize(new java.awt.Dimension(200, 200));
+        listaImgs.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaTagsBancoMouseClicked(evt);
+                listaImgsMouseClicked(evt);
             }
         });
-        jScrollPane4.setViewportView(listaTagsBanco);
+        jScrollPane4.setViewportView(listaImgs);
 
         javax.swing.GroupLayout panelNotesLayout = new javax.swing.GroupLayout(panelNotes);
         panelNotes.setLayout(panelNotesLayout);
@@ -379,7 +379,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         ListarTags((String)boxBusca.getSelectedItem());
-                        //System.out.println("Selected '"+boxBusca.getSelectedItem()+"'");
                     }
                 });
             }
@@ -387,8 +386,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }
 
     /**
-     * Este método é chamado após o botão "Segmentar" ser acionado. A função
-     * dele é pegar uma imagem escolhida pelo usuário e fazer a segmentação dela.
+     * Este método é chamado após o botão "Segmentar" ser acionado. 
+     * A função dele é pegar uma imagem escolhida pelo usuário e mostrar ela segmentada na tela.
      */
     private void buttonSegmentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSegmentarActionPerformed
         //Pega os valores da interface
@@ -405,7 +404,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
 
     /**
      * Este método é chamado após o botão "Mostrar mapa de rótulos" ser
-     * acionado. Chama o metodo estatico 'GerarMapaRotulos' da classe Imagem.
+     * acionado. 
+     * Mostra o mapa de rótulos na tela.
      */
     private void buttonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRotulosActionPerformed
         img.GerarMapaRotulos();
@@ -429,7 +429,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 ImageIcon image = new ImageIcon(path);
                 addImg(image);
                 img = new Imagem(path, BLUR, RADIUS, SIZE);
-                labelImg.setText("NomeImg: " + file.getName());
+                labelImg.setText("NomeImg: " + path);
                 CtrlBotoes(2, true);
             } else {
                 CtrlBotoes(1, false);
@@ -439,7 +439,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonImgActionPerformed
 
     /**
-     * Atrela uma tag a uma região da imagem e adiciona a tag na lista de tags
+     * Adiciona na listaTags um novo item.
      * @param evt 
      */
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
@@ -462,19 +462,16 @@ public class FormSegmentacao extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Você não pode repetir a mesma anotação na imagem", "Anotações", ERROR_MESSAGE);
         }
         
-        //Reset the text field.
         campoTag.requestFocusInWindow();
         campoTag.setText("");
         
         img.RestaurarImg(1);
         addImg(new ImageIcon(img.getImgSegmentada()));
-        
     }//GEN-LAST:event_buttonAddActionPerformed
     
     /**
-     * Destaca as regiões que foram salvas com o nome da tag selecionada. Chamado 
-     * quando o usuário clica na lista de tags
-     * @param evt 
+     * Mostra na tela a imagem com a região destacada que tem a tag selecionada pelo usuário
+     * @param evt - Mouse click
      */
     private void listaTagsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTagsMouseClicked
         if(tagsModel.size() > 0 || img == null){
@@ -512,7 +509,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     /**
-     * Deleta uma anotação da lista.
+     * Retira uma tag da lista.
      * @param evt 
      */
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
@@ -525,31 +522,27 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
     /**
-     * 
-     * @param evt 
+     * Método chamado quando usuário clica em listaTagsBanco.
+     * Este método mostra na tela a imagem, selecionada pelo usuário, com as anotações.
+     * @param evt - evento do mouse click
      */
-    private void listaTagsBancoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaTagsBancoMouseClicked
-        tagsModel.clear();
-        tags.clear();
-        if(listaTagsBanco.getSelectedValue() == null){
-            System.out.println("certinho");
+    private void listaImgsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaImgsMouseClicked
+        //verifica se clicou em um item ou num lugar vazio
+        if(listaImgs.getSelectedValue() == null){
             return;
         }
-        String tag = (String)listaTagsBanco.getSelectedValue();
-        DataBase db = DataBase.getInstance();
-        img = db.SelecionarImg(tag, tags);
+        
+        String tag = (String)listaImgs.getSelectedValue();
+        
+        img = Busca.BuscarImg(tag, tagsModel, tags);
+        listaTags.setModel(tagsModel);
         img.segmentar(img.getBlur(), img.getRadius(), img.getSize());
         labelRegioes.setText("Total de regiões: " + img.getTotalRegioes());
+        labelImg.setText("NomeImg: " + img.getPath());
+        
         addImg(new ImageIcon(img.getImgSegmentada()));
         CtrlBotoes(3, true);
-        
-        for (int i = 0; i < tags.size(); i++) {
-            if(!tagsModel.contains(tags.get(i).getTag())){
-                tagsModel.addElement(tags.get(i).getTag());
-            }
-        }
-        listaTags.setModel(tagsModel);
-    }//GEN-LAST:event_listaTagsBancoMouseClicked
+    }//GEN-LAST:event_listaImgsMouseClicked
 
     /**
      * Adiciona uma imagem na interface e remove outras que estejam adicionadas.
@@ -589,9 +582,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * Inicializa o ComboBox com as anotações que estão no banco de dados.
      */
     private void initComboBox(){
-        t = new Trie();
-        DataBase db = DataBase.getInstance();
-        t = db.getAnotacoes();
+        t = Busca.BuscarTags();
         ArrayList<String> listaTag = new ArrayList<>();
         t.print(t.getRoot(), "", listaTag);
         boxModel = new DefaultComboBoxModel();
@@ -609,17 +600,14 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * @param tag 
      */
     private void ListarTags(String tag){
-        ArrayList<String> listaPaths = new ArrayList<>();
-        DataBase db = DataBase.getInstance();
-        db.buscarPath(tag, listaPaths);
-        
+        ArrayList<String> listaPaths = Busca.ListarTags(tag);
         tagsBancoModel = new DefaultListModel();
         
         for(int i = 0; i<listaPaths.size(); i++){
             tagsBancoModel.addElement(listaPaths.get(i));
         }
         
-        listaTagsBanco.setModel(tagsBancoModel);
+        listaImgs.setModel(tagsBancoModel);
     }
 
     /**
@@ -719,8 +707,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
     private javax.swing.JLabel labelRadius;
     private javax.swing.JLabel labelRegioes;
     private javax.swing.JLabel labelSize;
+    private javax.swing.JList listaImgs;
     private javax.swing.JList listaTags;
-    private javax.swing.JList listaTagsBanco;
     private javax.swing.JPanel panelCtrl;
     private javax.swing.JPanel panelGeral;
     private javax.swing.JPanel panelImg;
