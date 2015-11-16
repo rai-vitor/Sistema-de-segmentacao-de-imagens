@@ -1,4 +1,7 @@
 package segmentacaodeimagem;
+
+import database.DataBase;
+
 /**
  * Classe que realiza a persistência das anotações no banco.
  * @author Hiago Miguel & Rai Vitor.
@@ -24,7 +27,7 @@ public class Anotacao {
      * Salva os dados no banco de dados.
      */
     public void Salvar(){
-        SQLiteJDBC banco = SQLiteJDBC.getInstance();
+        DataBase banco = DataBase.getInstance();
         banco.InserirDados(pathImg, tag, regiao);
     }
     
@@ -32,7 +35,7 @@ public class Anotacao {
      * Remove a anotação do banco.
      */
     public void Remover(){
-        SQLiteJDBC banco = SQLiteJDBC.getInstance();
+        DataBase banco = DataBase.getInstance();
         banco.DeletarAnotacao(this);
     }
     

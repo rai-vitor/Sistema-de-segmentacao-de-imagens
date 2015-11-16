@@ -1,5 +1,6 @@
 package segmentacaodeimagem;
 
+import database.DataBase;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
@@ -51,7 +52,7 @@ public class ConvertImage {
      * @param image Imagem a ser salva.
      */
     public static void saveToFile(BufferedImage image) {
-        SQLiteJDBC db = SQLiteJDBC.getInstance();
+        DataBase db = DataBase.getInstance();
         int num = db.CountImg();
         String path = "imgs/img"+num+".jpg";
         File outputfile = new File(path);

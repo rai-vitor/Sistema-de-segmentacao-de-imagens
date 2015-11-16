@@ -1,9 +1,12 @@
-package segmentacaodeimagem;
+package database;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import segmentacaodeimagem.Anotacao;
+import segmentacaodeimagem.Imagem;
+import segmentacaodeimagem.ListAnotacoes;
 import tree.Trie;
 
 /**
@@ -11,9 +14,9 @@ import tree.Trie;
  *
  * @author Hiago Miguel & Rai Vitor.
  */
-public class SQLiteJDBC {
+public class DataBase {
 
-    private static SQLiteJDBC instancia;
+    private static DataBase instancia;
     private static Connection conexao;
     private static Statement stmt;
     private static PreparedStatement pstmt;
@@ -23,7 +26,7 @@ public class SQLiteJDBC {
      * Construtor que não pode ser instanciado. Utilizar getInstance para ter
      * uma instancia da classe.
      */
-    private SQLiteJDBC() {
+    private DataBase() {
         banco = "jdbc:sqlite:seg.db";
     }
 
@@ -32,9 +35,9 @@ public class SQLiteJDBC {
      *
      * @return Instancia do banco de dados
      */
-    public static synchronized SQLiteJDBC getInstance() {
+    public static synchronized DataBase getInstance() {
         if (instancia == null) {
-            instancia = new SQLiteJDBC();
+            instancia = new DataBase();
         }
         return instancia;
     }

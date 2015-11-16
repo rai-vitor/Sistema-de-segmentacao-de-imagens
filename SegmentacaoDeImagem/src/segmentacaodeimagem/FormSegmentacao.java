@@ -1,5 +1,6 @@
 package segmentacaodeimagem;
 
+import database.DataBase;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
@@ -534,7 +535,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         if(tag.length()<1){
             return;
         }
-        SQLiteJDBC db = SQLiteJDBC.getInstance();
+        DataBase db = DataBase.getInstance();
         img = db.SelecionarImg(tag, tags);
         img.segmentar(img.getBlur(), img.getRadius(), img.getSize());
         labelRegioes.setText("Total de regiões: " + img.getTotalRegioes());
@@ -588,7 +589,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      */
     private void initComboBox(){
         t = new Trie();
-        SQLiteJDBC db = SQLiteJDBC.getInstance();
+        DataBase db = DataBase.getInstance();
         t = db.getAnotacoes();
         ArrayList<String> listaTag = new ArrayList<>();
         t.print(t.getRoot(), "", listaTag);
@@ -608,7 +609,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      */
     private void ListarTags(String tag){
         ArrayList<String> listaPaths = new ArrayList<>();
-        SQLiteJDBC db = SQLiteJDBC.getInstance();
+        DataBase db = DataBase.getInstance();
         db.buscarPath(tag, listaPaths);
         
         tagsBancoModel = new DefaultListModel();

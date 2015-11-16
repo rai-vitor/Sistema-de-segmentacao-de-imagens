@@ -1,5 +1,6 @@
 package segmentacaodeimagem;
 
+import database.DataBase;
 import br.ufrn.imd.lp2.imagesegmentation.ImageInformation;
 import br.ufrn.imd.lp2.imagesegmentation.ImageSegmentation;
 import java.awt.image.BufferedImage;
@@ -104,7 +105,7 @@ public class Imagem {
      * Salva a imagem no banco de dados.
      */
     public void Salvar(){
-        SQLiteJDBC db = SQLiteJDBC.getInstance();
+        DataBase db = DataBase.getInstance();
         db.InserirImg(this);
     }
 

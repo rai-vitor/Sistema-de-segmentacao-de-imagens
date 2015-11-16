@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 /**
  * classe ainda não utilizada. Feita para eu me lembrar de corrigir ela se der tempo.
- * @author rai_desk
  */
 public class ConnectionFactory {
     public Connection getConnection() {
