@@ -1,24 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package segmentacaodeimagem;
 
 /**
- *
- * @author Rai
+ * Uma classe que realiza operções sobre as regiões de uma imagem segmentada.
+ * @author Hiago Miguel & Rai Vitor
  */
 public class Regiao {
     
+    /* Coordenadas de um pixel */
     private int coordinateX;
     private int coordinateY;
     
      /**
      * Define as coordenadas x e y de um pixel, com base  as coordenadas obtidas
      * por MouseEvent e pela largura da imagem.
-     * @param coordinateX
-     * @param coordinateY
+     * @param coordinateX Coordenada x de um pixel.
+     * @param coordinateY Coordenada y de um pixel.
      * @param largura Largura da imagem.
      */
     public Regiao(int coordinateX, int coordinateY, int largura) {
@@ -28,14 +24,14 @@ public class Regiao {
     
      /**
      * Destaca a região selecionada na imagem.
-     * @param img
+     * @param img Imagem que contém a região do pixel a ser destacado.
      */
     public void destacarRegiao(Imagem img) {
         int pixel = coordinateX + coordinateY;
-        //se já tiver adicionado, não adiciona        
+        //Se a região do pixel a ser destacada já estiver adicionada no array pixelRegion, então esta não é adicionada.
          if(!img.getPixelRegion().contains(img.getMapaDaRegiaoSegmentada()[pixel])){
             img.getPixelRegion().add(img.getMapaDaRegiaoSegmentada()[pixel]);
-            //só se eu add uma nova região que eu chamo a função
+            //O destaque da região só será feito se a região adicionada for nova.
             Filtro.EscurecerPixel(img);         
         }
     }    

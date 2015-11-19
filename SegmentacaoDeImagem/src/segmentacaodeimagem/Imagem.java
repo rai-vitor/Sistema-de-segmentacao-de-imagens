@@ -14,12 +14,25 @@ public class Imagem {
     private int[] variacaoGray;
     /* Define a intensidade da tonalidade cinza inicial a ser utilizada*/
     private int defGrey;
-    private final String path;
+    /* Campos para realizar a segmentação da imagem. */
+    private final String path;    
     private double blur;
     private int radius;
     private int size;
-    private ArrayList<Integer> pixelRegion, pixelsDaImagemSegmentadaBckp;
+    /* Array que contém as regiões dos pixels selecionados */
+    private ArrayList<Integer> pixelRegion;
+    /* Array que contém os pixels RGB da imagem segmentada não modificados. */
+    private ArrayList<Integer> pixelsDaImagemSegmentadaBckp;
+    /* Objeto do tipo ImageInformation que contém dados da imagem segmentada. */
     ImageInformation seg;
+    
+    /**
+     * Construtor da classe Imagem. Inicializa os parâmetros abaixo.
+     * @param path Local de armazenamento da imagem segmentada.
+     * @param blur 
+     * @param radius
+     * @param size 
+     */
     
     public Imagem(String path, double blur, int radius, int size){
         this.path = path;
@@ -110,14 +123,16 @@ public class Imagem {
     }
 
     /**
-     * @return the mapaDaRegiaoSegmentada
+     * Retorna o mapa da imagem segmentada.
+     * @return o array de inteiros (mapa) da imagem segmenta.
      */
     public int[] getMapaDaRegiaoSegmentada() {
         return seg.getSegmentedImageMap();
     }
 
     /**
-     * @return the pixelsDaImagemSegmentada
+     * Retorna os pixels da imagem segmentada.
+     * @return o array de pixels RGB da imagem segmentada.
      */
     public int[] getPixelsDaImagemSegmentada() {
         return seg.getRegionMarkedPixels();
@@ -125,72 +140,81 @@ public class Imagem {
 
 
     /**
-     * @return the pixelRegion
+     * Retorna as regiões dos pixels selecionados.
+     * @return o array das regiões dos pixels selecionados.
      */
     public ArrayList<Integer> getPixelRegion() {
         return pixelRegion;
     }
-
-    /**
-     * @param aPixelRegion the pixelRegion to set
-     */
-    public void setPixelRegion(ArrayList<Integer> aPixelRegion) {
-        pixelRegion = aPixelRegion;
-    }
-
-    /**
-     * @return the pixelsDaImagemSegmentadaBckp
+    
+     /**
+     * Retorna o array original, não modificado, dos pixels RGB da imagem segmentada.
+     * @return o array original dos pixels RGB da imagem segmentada.
      */
     public ArrayList<Integer> getPixelsDaImagemSegmentadaBckp() {
         return pixelsDaImagemSegmentadaBckp;
     }
 
-    /**
-     * @param aPixelsDaImagemSegmentadaBckp the pixelsDaImagemSegmentadaBckp to set
+     /**
+      * Retorna o número total de regiões da imagem segmentada.
+     * @return o inteiro do total de regiões da imagem segmentada.
      */
-    public void setPixelsDaImagemSegmentadaBckp(ArrayList<Integer> aPixelsDaImagemSegmentadaBckp) {
-        pixelsDaImagemSegmentadaBckp = aPixelsDaImagemSegmentadaBckp;
+    public int getTotalRegioes() {
+        return seg.getTotalRegions();
     }
-
-    /**
-     * @return the imgSegmentada
+    
+     /**
+      * Retorna a imagem segmentada.
+     * @return a imagem segmentada.
      */
     public BufferedImage getImgSegmentada() {
         return seg.getRegionMarkedImage();
     }
 
     /**
-     * @return the totalRegioes
-     */
-    public int getTotalRegioes() {
-        return seg.getTotalRegions();
-    }
-
-    /**
-     * @return the path
+     * Retorna o local de armazenamento da imagem.
+     * @return a string que contém o local de armazenamento da imagem.
      */
     public String getPath() {
         return path;
     }
 
     /**
-     * @return the blur
+     * Retorna o valor do blur.
+     * @return o blur para a segmentação da imagem.
      */
     public double getBlur() {
         return blur;
     }
 
     /**
-     * @return the radius
+     * Retorna o valor do radius
+     * @return o radius para a segmentação da imagem.
      */
     public int getRadius() {
         return radius;
     }
 
     /**
-     * @return the size
+     * Retorna o valor size (Tamanho mínimo das regiões obtidas na segmentação.). 
+     * @return o size para a segmentação da imagem.
      */
     public int getSize() {
         return size;
+    }
+    
+    /**
+     * Define o array pixelRegion.
+     * @param aPixelRegion o array das regiões dos pixels selecionados a ser definido.
+     */
+    public void setPixelRegion(ArrayList<Integer> aPixelRegion) {
+        pixelRegion = aPixelRegion;
+    }
+
+    /** Define o array pixelsDaImagemSegmentadaBckp.
+     * @param aPixelsDaImagemSegmentadaBckp o array orginal dos pixels RGB da imagem segmentada a ser definido.
+     */
+    public void setPixelsDaImagemSegmentadaBckp(ArrayList<Integer> aPixelsDaImagemSegmentadaBckp) {
+        pixelsDaImagemSegmentadaBckp = aPixelsDaImagemSegmentadaBckp;
     }
 }
