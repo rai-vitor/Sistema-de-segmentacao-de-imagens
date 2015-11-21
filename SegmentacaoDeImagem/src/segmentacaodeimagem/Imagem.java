@@ -138,7 +138,6 @@ public class Imagem {
         return seg.getRegionMarkedPixels();
     }
 
-
     /**
      * Retorna as regiões dos pixels selecionados.
      * @return o array das regiões dos pixels selecionados.

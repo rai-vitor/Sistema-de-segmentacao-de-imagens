@@ -261,7 +261,7 @@ public class DataBase {
             Trie t = new Trie();
             while (rs.next()) {
                 String tag = rs.getString("TAG");
-                t.insert(tag); // add na arvore trie
+                t.insert(tag); // adiciona na árvore trie
             }
 
             rs.close();
