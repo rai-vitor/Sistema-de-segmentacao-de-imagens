@@ -29,21 +29,21 @@ import tree.Trie;
  */
 public class FormSegmentacao extends javax.swing.JFrame {
 
-    JFileChooser fileChooser; /*Guarda as informacoes da imagem selecionada pelo usuario */
-    JLabel imagem; /*Representa a imagem orignal */
+    JFileChooser fileChooser; /* Guarda as informacoes da imagem selecionada pelo usuario */
+    JLabel imagem; /* Representa a imagem orignal */
     DefaultListModel tagsModel; /* Componente responsável por mostrar a lista de anotações */
     DefaultListModel tagsBancoModel; /* Componente responsável por mostrar a lista de anotações que estão no banco */
     DefaultComboBoxModel boxModel; /* Componente responsável para mostrar a lista de anotações no ComboBox */
     ListAnotacoes<Anotacao> tags; /* Guarda uma lista de anotações */
     Trie t; /* Arvore Trie que guarda a lista do ComboBox */
-    Imagem img;  
-    Regiao regiao;
+    Imagem img; /* Guarda as informações da imagem que está sendo mostrada */
+    Regiao regiao; /*  */
     
     private static final int DEFAULT_WIDTH = 533; /*Largura do redimensionamento da imagem */
     private static final int DEFAULT_HEIGHT = 400; /*Altura do redimensionamento da imagem */
-    private final double BLUR = 0.50;
-    private final int RADIUS = 50;
-    private final int SIZE = 500;
+    private final double BLUR = 0.50; /* Valor inicial do blur */
+    private final int RADIUS = 50; /* Valor inicial do Radius */
+    private final int SIZE = 500; /* Valor inicial do Size */
     
     /**
      * Cria um novo form FormSegmentacao.
@@ -465,6 +465,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
             tagsModel.removeElement(tag);
             tags.Remover(tag);
             buttonClearActionPerformed(evt);
+            initComboBox();
         }
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
@@ -488,7 +489,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         labelImg.setText("NomeImg: " + img.getPath());
         
         addImg(new ImageIcon(img.getImgSegmentada()));
-        CtrlBotoes(3, true);
+        CtrlBotoes(5, true);
     }//GEN-LAST:event_listaImgsMouseClicked
 
     /**
@@ -510,6 +511,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 img = new Imagem(path, BLUR, RADIUS, SIZE);
                 labelImg.setText("NomeImg: " + path);
                 CtrlBotoes(2, true);
+                tagsBancoModel.clear();
+                tagsModel.clear();
             } else {
                 CtrlBotoes(1, false);
                 labelImg.setText("Utilize somente imagens jpg");
@@ -622,7 +625,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * @param bool 
      */
     public void CtrlBotoes(int id, Boolean bool){
-        bool = true;
+        //bool = true;
         switch (id){
             case 1:
                 buttonSegmentar.setEnabled(bool);
@@ -631,8 +634,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 buttonClear.setEnabled(bool);
                 buttonDelete.setEnabled(bool);
                 buttonSave.setEnabled(bool);
+                campoTag.setEnabled(bool);
                 break;
-                /*
             case 2:
                 buttonSegmentar.setEnabled(bool);
                 break;
@@ -640,19 +643,22 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 buttonRotulos.setEnabled(bool);
                 break;
             case 4:
+                campoTag.setEnabled(bool);
                 buttonClear.setEnabled(bool);
                 buttonAdd.setEnabled(bool);
                 break;
             case 5:
                 buttonSave.setEnabled(bool);
                 buttonDelete.setEnabled(bool);
+                buttonRotulos.setEnabled(bool);
+                buttonSegmentar.setEnabled(bool);
                 break;
             case 6:
                 buttonSave.setEnabled(bool);
                 break;
             case 7:
                 buttonClear.setEnabled(bool);
-                break;*/
+                break;
         }
     }
     

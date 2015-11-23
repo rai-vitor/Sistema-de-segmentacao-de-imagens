@@ -234,12 +234,11 @@ public class DataBase {
         }
         try {
             conexao = DriverManager.getConnection(banco);
-            String sql = "DELETE FROM ANOTACAO WHERE TAG = ? AND REGIAO = ? AND ID_IMG_FK = ?;";
+            String sql = "DELETE FROM ANOTACAO WHERE TAG = ? AND ID_IMG_FK = ?;";
             pstmt = conexao.prepareStatement(sql);
             pstmt.setString(1, note.getTag());
-            pstmt.setInt(2, note.getRegiao());
-            pstmt.setInt(3, idImg);
-            pstmt.executeUpdate(sql);
+            pstmt.setInt(2, idImg);
+            pstmt.execute();
 
             pstmt.close();
             conexao.close();
