@@ -7,7 +7,7 @@ import tree.Trie;
 
 /**
  * Uma classe que realiza a busca de tags associadas as regiões das imagens e, que implementa o autocomplete.
- * @author Rai Vitor.
+ * @author Hiago Miguel & Rai Vitor.
  */
 
 public class Busca {
