@@ -39,7 +39,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     Imagem img;  
     Regiao regiao;
     
-    private static final int DEFAULT_WIDTH = 400; /*Largura do redimensionamento da imagem */
+    private static final int DEFAULT_WIDTH = 533; /*Largura do redimensionamento da imagem */
     private static final int DEFAULT_HEIGHT = 400; /*Altura do redimensionamento da imagem */
     private final double BLUR = 0.50;
     private final int RADIUS = 50;
@@ -103,12 +103,12 @@ public class FormSegmentacao extends javax.swing.JFrame {
         setTitle("Sistema de segmentação, anotação e busca de imagens");
         setMinimumSize(new java.awt.Dimension(400, 200));
         setName("frame"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1200, 600));
+        setPreferredSize(new java.awt.Dimension(1335, 450));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         panelPrincipal.setLayout(new javax.swing.BoxLayout(panelPrincipal, javax.swing.BoxLayout.Y_AXIS));
 
-        panelGeral.setPreferredSize(new java.awt.Dimension(1500, 563));
+        panelGeral.setPreferredSize(new java.awt.Dimension(2000, 400));
 
         panelNotes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelNotes.setPreferredSize(new java.awt.Dimension(200, 400));
@@ -175,12 +175,12 @@ public class FormSegmentacao extends javax.swing.JFrame {
             panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelNotesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(panelNotesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(buttonSave, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                     .addComponent(buttonDelete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonClear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelNotesLayout.createSequentialGroup()
-                        .addComponent(campoTag, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoTag)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonAdd))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))
@@ -204,7 +204,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
                     .addComponent(buttonAdd)
                     .addComponent(campoTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(boxBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonClear, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonDelete)
@@ -214,13 +214,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
         );
 
         panelImg.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        panelImg.setPreferredSize(new java.awt.Dimension(400, 400));
+        panelImg.setPreferredSize(new java.awt.Dimension(400, 533));
 
         javax.swing.GroupLayout panelImgLayout = new javax.swing.GroupLayout(panelImg);
         panelImg.setLayout(panelImgLayout);
         panelImgLayout.setHorizontalGroup(
             panelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGap(0, 528, Short.MAX_VALUE)
         );
         panelImgLayout.setVerticalGroup(
             panelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,13 +315,13 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 .addComponent(labelRegioes)
                 .addGap(18, 18, 18)
                 .addComponent(labelImg)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonImg)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonSegmentar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonRotulos)
-                .addContainerGap())
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panelGeralLayout = new javax.swing.GroupLayout(panelGeral);
@@ -332,20 +332,20 @@ public class FormSegmentacao extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelCtrl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(panelImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
+                .addComponent(panelImg, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panelGeralLayout.setVerticalGroup(
             panelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelGeralLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(panelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelCtrl, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-                    .addComponent(panelImg, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
-                    .addComponent(panelNotes, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelGeralLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(panelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(panelImg, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                    .addComponent(panelCtrl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         panelPrincipal.add(panelGeral);
@@ -384,59 +384,6 @@ public class FormSegmentacao extends javax.swing.JFrame {
             }
         });
     }
-
-    /**
-     * Este método é chamado após o botão "Segmentar" ser acionado. 
-     * A função dele é pegar uma imagem escolhida pelo usuário e mostrar ela segmentada na tela.
-     */
-    private void buttonSegmentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSegmentarActionPerformed
-        //Pega os valores da interface
-        double blur = (double) valBlur.getValue();
-        int radius = (int) valRadius.getValue();
-        int size = (int) valSize.getValue();
-
-        img.segmentar(blur, radius, size);
-
-        labelRegioes.setText("Total de regiões: " + img.getTotalRegioes());
-        addImg(new ImageIcon(img.getImgSegmentada()));
-        CtrlBotoes(3, true);
-    }//GEN-LAST:event_buttonSegmentarActionPerformed
-
-    /**
-     * Este método é chamado após o botão "Mostrar mapa de rótulos" ser
-     * acionado. 
-     * Mostra o mapa de rótulos na tela.
-     */
-    private void buttonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRotulosActionPerformed
-        img.GerarMapaRotulos();
-        addImg(new ImageIcon(img.getImgSegmentada()));
-    }//GEN-LAST:event_buttonRotulosActionPerformed
-
-    /**
-     * Este método é chamado após o botão 'Selecionar Imagem' ser acionado Abre
-     * um dialog para o usuário escolher uma imagem e mostra a imagem na tela.
-     * Só aceita imagens jpg.
-     */
-    private void buttonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImgActionPerformed
-        //int returnVal = fileChooser.showOpenDialog(fileDialog);
-        //if (returnVal == JFileChooser.APPROVE_OPTION) {
-            //File file = fileChooser.getSelectedFile();
-            File file = new File("imgs/model.jpg");  
-            if (file.getName().contains("jpg")) {
-                String path = file.getAbsolutePath();
-                ConvertImage.scaleImage(DEFAULT_WIDTH, DEFAULT_HEIGHT, path);
-                path = ConvertImage.getCaminhoDaImagem();
-                ImageIcon image = new ImageIcon(path);
-                addImg(image);
-                img = new Imagem(path, BLUR, RADIUS, SIZE);
-                labelImg.setText("NomeImg: " + path);
-                CtrlBotoes(2, true);
-            } else {
-                CtrlBotoes(1, false);
-                labelImg.setText("Utilize somente imagens jpg");
-            }
-        //}
-    }//GEN-LAST:event_buttonImgActionPerformed
 
     /**
      * Adiciona na listaTags um novo item.
@@ -543,6 +490,59 @@ public class FormSegmentacao extends javax.swing.JFrame {
         addImg(new ImageIcon(img.getImgSegmentada()));
         CtrlBotoes(3, true);
     }//GEN-LAST:event_listaImgsMouseClicked
+
+    /**
+     * Este método é chamado após o botão 'Selecionar Imagem' ser acionado Abre
+     * um dialog para o usuário escolher uma imagem e mostra a imagem na tela.
+     * Só aceita imagens jpg.
+     */
+    private void buttonImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonImgActionPerformed
+        int returnVal = fileChooser.showOpenDialog(fileDialog);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            //File file = new File("imgs/model.jpg");
+            if (file.getName().contains("jpg")) {
+                String path = file.getAbsolutePath();
+                ConvertImage.scaleImage(DEFAULT_WIDTH, DEFAULT_HEIGHT, path);
+                path = ConvertImage.getCaminhoDaImagem();
+                ImageIcon image = new ImageIcon(path);
+                addImg(image);
+                img = new Imagem(path, BLUR, RADIUS, SIZE);
+                labelImg.setText("NomeImg: " + path);
+                CtrlBotoes(2, true);
+            } else {
+                CtrlBotoes(1, false);
+                labelImg.setText("Utilize somente imagens jpg");
+            }
+        }
+    }//GEN-LAST:event_buttonImgActionPerformed
+
+    /**
+     * Este método é chamado após o botão "Mostrar mapa de rótulos" ser
+     * acionado. 
+     * Mostra o mapa de rótulos na tela.
+     */
+    private void buttonRotulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRotulosActionPerformed
+        img.GerarMapaRotulos();
+        addImg(new ImageIcon(img.getImgSegmentada()));
+    }//GEN-LAST:event_buttonRotulosActionPerformed
+
+    /**
+     * Este método é chamado após o botão "Segmentar" ser acionado. 
+     * A função dele é pegar uma imagem escolhida pelo usuário e mostrar ela segmentada na tela.
+     */
+    private void buttonSegmentarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSegmentarActionPerformed
+        //Pega os valores da interface
+        double blur = (double) valBlur.getValue();
+        int radius = (int) valRadius.getValue();
+        int size = (int) valSize.getValue();
+
+        img.segmentar(blur, radius, size);
+
+        labelRegioes.setText("Total de regiões: " + img.getTotalRegioes());
+        addImg(new ImageIcon(img.getImgSegmentada()));
+        CtrlBotoes(3, true);
+    }//GEN-LAST:event_buttonSegmentarActionPerformed
 
     /**
      * Adiciona uma imagem na interface e remove outras que estejam adicionadas.
