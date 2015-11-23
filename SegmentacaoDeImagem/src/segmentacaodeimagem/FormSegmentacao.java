@@ -373,6 +373,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         tags = new ListAnotacoes<>();
         CtrlBotoes(1, false);
 
+        tagsBancoModel = new DefaultListModel();
         initComboBox();
         boxBusca.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -401,6 +402,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
         
         //Para não ter elementos repetidos na lista
         if(!tagsModel.contains(tag)){
+            tag = tag.replace(" ", "_");
             regiao.AssocTagRegiao(tag, tags, img);
             tagsModel.addElement(tag);
             listaTags.setModel(tagsModel);
@@ -604,7 +606,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      */
     private void ListarTags(String tag){
         ArrayList<String> listaPaths = Busca.ListarTags(tag);
-        tagsBancoModel = new DefaultListModel();
+        
         
         for(int i = 0; i<listaPaths.size(); i++){
             tagsBancoModel.addElement(listaPaths.get(i));
