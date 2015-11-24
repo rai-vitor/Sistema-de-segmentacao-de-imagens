@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Uma classe que realiza a segmentação de uma imagem, bem como o mapa de rótulos da mesma.
- * @author Hiago Miguel & Rai Vitor.
+ * @author Hiago Miguel e Rai Vitor.
  */
 public class Imagem {      
     private int[] variacaoGray;
@@ -29,9 +29,9 @@ public class Imagem {
     /**
      * Construtor da classe Imagem. Inicializa os parâmetros abaixo.
      * @param path Local de armazenamento da imagem segmentada.
-     * @param blur 
-     * @param radius
-     * @param size 
+     * @param blur valor do blur
+     * @param radius valor do radius
+     * @param size valor do size
      */
     
     public Imagem(String path, double blur, int radius, int size){

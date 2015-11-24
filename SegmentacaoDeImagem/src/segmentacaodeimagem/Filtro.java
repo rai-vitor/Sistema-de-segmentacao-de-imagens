@@ -1,13 +1,16 @@
 package segmentacaodeimagem;
 
 import java.awt.Color;
-
+/**
+ * Aplica filtro em uma imagem.
+ * @author Hiago Miguel e Rai Vitor.
+ */
 public class Filtro {
     
     /**
      * Aplica um filtro na imagem, onde a(s) região ou regiões que não foram 
      * selecionadas têm o seu brilho reduzido. 
-     * @param img
+     * @param img Imagem que será aplicada o filtro
      */
     public static void EscurecerPixel(Imagem img){
         Color c;

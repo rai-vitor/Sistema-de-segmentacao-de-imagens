@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 
 /**
  * Uma classe que converte a resolução da imagem a ser trabalhada para uma resolução padrão.
- * @author Hiago Miguel & Rai Vitor.
+ * @author Hiago Miguel e Rai Vitor.
  */
 
 public class ConvertImage {

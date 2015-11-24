@@ -50,7 +50,7 @@ public class ListAnotacoes<E> extends java.util.ArrayList<E>{
     
     /**
      * Sobrescreve o método toString()
-     * @return 
+     * @return string vazia
      */
     @Override
     public String toString(){

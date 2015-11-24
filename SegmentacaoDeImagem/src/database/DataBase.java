@@ -10,7 +10,7 @@ import tree.Trie;
 /**
  * Classe que persiste os dados no banco de dados Sqlite.
  *
- * @author Hiago Miguel & Rai Vitor.
+ * @author Hiago Miguel e Rai Vitor.
  */
 public class DataBase {
 
@@ -84,11 +84,10 @@ public class DataBase {
     }
     
     /**
-     * Seleciona uma imagem no banco de dados e retorna o id dela.
-     *
-     * @param pathImg - Caminho da imagem a ser procurada.
-     * @param notes
-     * @return Retorna o id da imagem, se existir. Caso contrário retorna -1.
+     * Seleciona uma imagem no banco de dados e preenche uma lista com as suas anotações
+     * @param pathImg Caminho da imagem a ser procurada.
+     * @param notes Lista de anotações onde serão inseridas as tags da imagem.
+     * @return Retorna uma instancia da imagem.
      */
     public Imagem SelecionarImg(String pathImg, ListAnotacoes<Anotacao> notes) {
         try {
@@ -123,10 +122,11 @@ public class DataBase {
     }
     
     /**
-     * @param tag
-     * @param s     
+     * Procura imagens que tenham a tag enviada no parametro
+     * @param tag tag a ser procurada
+     * @param pathList Lista com o caminho das imagens selecionadas
      */
-    public void buscarPath(String tag, ArrayList<String> s) {
+    public void buscarPath(String tag, ArrayList<String> pathList) {
         try {
             conexao = DriverManager.getConnection(banco);
             String query = "SELECT * FROM ANOTACAO INNER JOIN IMG ON ANOTACAO.ID_IMG_FK = IMG.ID_IMG WHERE TAG = ?;";
@@ -137,8 +137,8 @@ public class DataBase {
             String path;
             while(rs.next()){
                 path = rs.getString("PATHIMG");
-                if(!s.contains(path)){
-                    s.add(path);
+                if(!pathList.contains(path)){
+                    pathList.add(path);
                 }
             }
             
@@ -152,7 +152,7 @@ public class DataBase {
     /**
      * Insere uma imagem no banco de dados.
      *
-     * @param img
+     * @param img Imagem a ser inserida no banco
      */
     public void InserirImg(Imagem img) {
         try {

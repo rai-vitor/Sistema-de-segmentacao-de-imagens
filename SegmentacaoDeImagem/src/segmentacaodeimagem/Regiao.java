@@ -2,7 +2,7 @@ package segmentacaodeimagem;
 
 /**
  * Uma classe que realiza operções sobre as regiões de uma imagem segmentada.
- * @author Hiago Miguel & Rai Vitor
+ * @author Hiago Miguel e Rai Vitor
  */
 public class Regiao {
     
@@ -41,7 +41,7 @@ public class Regiao {
      * @param tag Tag a ser associada a uma região.
      * @param notes ArrayList do tipo Anotação que contém as notas (tags) 
      * de cada região da imagem.
-     * @param img
+     * @param img Imagem que terá uma tag associada
      */
     public void AssocTagRegiao(String tag, ListAnotacoes<Anotacao> notes, Imagem img) {
         for(int i = 0; i < img.getPixelRegion().size(); i++) {

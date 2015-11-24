@@ -25,7 +25,7 @@ import tree.Trie;
  * Classe de controle de interface. Todas as operações da interface do sistema
  * são controladas por ela
  *
- * @author Hiago Miguel & Rai Vitor.
+ * @author Hiago Miguel e Rai Vitor.
  */
 public class FormSegmentacao extends javax.swing.JFrame {
 
@@ -623,8 +623,8 @@ public class FormSegmentacao extends javax.swing.JFrame {
      * 5 - save e delete
      * 6 - save
      * 7 - clear
-     * @param id
-     * @param bool 
+     * @param id Numero que informa qual grupo de botao deseja selecionar
+     * @param bool true se deseja habilitar ou false se deseja desabilitar
      */
     public void CtrlBotoes(int id, Boolean bool){
         //bool = true;
@@ -666,7 +666,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     
     /**
      * Método que inicia o sistema.
-     * @param args 
+     * @param args argumentos para iniciar o sistema
      */
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

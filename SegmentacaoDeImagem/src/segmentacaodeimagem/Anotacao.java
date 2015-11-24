@@ -4,7 +4,7 @@ import database.DataBase;
 
 /**
  * Classe que realiza a persistência das anotações no banco.
- * @author Hiago Miguel & Rai Vitor.
+ * @author Hiago Miguel e Rai Vitor.
  */
 public class Anotacao {
     private String pathImg;
