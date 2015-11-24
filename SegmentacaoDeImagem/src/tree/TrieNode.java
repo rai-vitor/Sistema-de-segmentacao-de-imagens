@@ -8,7 +8,7 @@ import java.util.*;
 class TrieNode{
     private char content; 
     private boolean isEnd; 
-    private int count;  
+    private int cont;  
     public ArrayList<TrieNode> childList; 
     
     /**
@@ -20,7 +20,7 @@ class TrieNode{
         childList = new ArrayList<>();
         isEnd = false;
         content = c;
-        count = 0;
+        cont = 0;
     }  
 
     /**
@@ -64,15 +64,15 @@ class TrieNode{
      * Incrementa o número total de nós da árvore.
      * @param n Valor a ser incrementado.
      */
-    public void addCount(int n){
-        this.count += n;
+    public void addCont(int n){
+        this.cont += n;
     }
     
     /**
      * Retorna o número total de nós da árvore.
      * @return Número total de nós da árvore.
      */
-    public int getCount(){
-        return this.count;
+    public int getCont(){
+        return this.cont;
     }
 }

@@ -550,7 +550,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSegmentarActionPerformed
 
     /**
-     * Adiciona uma imagem na interface e remove outras que estejam adicionadas.
+     * Adiciona uma imagem na interface e Remover outras que estejam adicionadas.
      * @param img - Imagem a ser adicionada
      */
     private void addImg(ImageIcon image) {

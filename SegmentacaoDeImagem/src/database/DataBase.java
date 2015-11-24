@@ -260,7 +260,7 @@ public class DataBase {
             Trie t = new Trie();
             while (rs.next()) {
                 String tag = rs.getString("TAG");
-                t.insert(tag); // adiciona na árvore trie
+                t.Inserir(tag); // adiciona na árvore trie
             }
 
             rs.close();

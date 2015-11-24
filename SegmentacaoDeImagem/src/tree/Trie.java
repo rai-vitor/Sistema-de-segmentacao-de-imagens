@@ -15,52 +15,83 @@ public class Trie{
     
     /**
      * Insere uma palavra na Trie.
-     * @param word Palavra a ser inserida.
+     * @param palavra Palavra a ser inserida.
      */
-    public void insert(String word) {
-        if (search(word) == true) {
-            //System.out.println("palavra já inserida");
+    public void Inserir(String palavra) {
+        if (Buscar(palavra) == true) {
             return;
         }
-        TrieNode current = root; 
-        for (char ch : word.toCharArray() ) {
-            TrieNode child = current.subNode(ch);
+        TrieNode atual = root; 
+        for (char ch : palavra.toCharArray() ) {
+            TrieNode child = atual.subNode(ch);
             if (child != null) {
-                current = child;
+                atual = child;
             } else {
-                 current.childList.add(new TrieNode(ch));
-                 current = current.subNode(ch);
+                 atual.childList.add(new TrieNode(ch));
+                 atual = atual.subNode(ch);
             }
-            current.addCount(1);
+            atual.addCont(1);
         }
-        current.setEnd(true);
+        atual.setEnd(true);
     }
 
     /**
      * Busca uma palavra na Trie.
-     * @param word Palavra a ser buscada.
+     * @param palavra Palavra a ser buscada.
      * @return Verdadeiro ou Falso.
      */
-    public boolean search(String word){
-        TrieNode current = root;  
-        for (char ch : word.toCharArray() ){
-            if (current.subNode(ch) == null)
+    public boolean Buscar(String palavra){
+        TrieNode atual = root;  
+        for (char ch : palavra.toCharArray() ){
+            if (atual.subNode(ch) == null)
                 return false;
             else
-                current = current.subNode(ch);
+                atual = atual.subNode(ch);
         }      
-        return current.getEnd();
+        return atual.getEnd();
+    }
+ 
+    /**
+     * Remove uma palavra da árvore.
+     * @param palavra Palavra a ser removida.
+     */
+    public void Remover(String palavra){
+        if (Buscar(palavra) == false){
+            return;
+        }             
+
+        TrieNode atual = root;
+
+        for (char ch : palavra.toCharArray()){
+            TrieNode child = atual.subNode(ch);
+            if (child.getCont() == 1){
+                atual.childList.remove(child);
+                return;
+            } else{
+                child.addCont(-1);
+                atual = child;
+            }
+        }
+
+        atual.setEnd(false);
     }
     
     /**
-     * Imprime a árvore Trie.
+     * Retorna a raíz da árvore.
+     * @return  Raíz da árvore.
+     */
+    public TrieNode getRoot(){
+        return root;
+    }
+    
+    /**
+     * Imprime a árvore Trie em um array
      * @param node Nó a partir do qual a árvore será impressa.
-     * @param path 
-     * @param s 
+     * @param path Caminho inicial da arvore
+     * @param s Array que recebe o resultado final de cada busca
      */
     public void print(TrieNode node, String path, ArrayList<String> s) {
         if(this.root.childList.isEmpty()){
-            //System.out.println("Árvore vazia!");
             return;
         }
         if(node.getContent()!=' '){
@@ -73,39 +104,5 @@ public class Trie{
             print(childList, path, s);
             path = path.substring(0, path.length());
         }
-    }
- 
-    /**
-     * Remove uma palavra da árvore.
-     * @param word Palavra a ser removida.
-     */
-    public void remove(String word){
-        if (search(word) == false){
-            //System.out.println(word +" Não está na árvore\n");
-            return;
-        }             
-
-        TrieNode current = root;
-
-        for (char ch : word.toCharArray()){
-            TrieNode child = current.subNode(ch);
-            if (child.getCount() == 1){
-                current.childList.remove(child);
-                return;
-            } else{
-                child.addCount(-1);
-                current = child;
-            }
-        }
-
-        current.setEnd(false);
-    }
-    
-    /**
-     * Retorna a raíz da árvore.
-     * @return  Raíz da árvore.
-     */
-    public TrieNode getRoot(){
-        return root;
     }
 }       

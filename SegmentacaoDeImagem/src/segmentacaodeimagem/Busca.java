@@ -47,7 +47,7 @@ public class Busca {
     }
     
     /**
-     * Utiliza a Trie para buscar do banco de dados as anotações associadas às imagens.
+     * Utiliza a Trie para Buscar do banco de dados as anotações associadas às imagens.
      * @return A árvore trie.
      */
     public static Trie BuscarTags(){
