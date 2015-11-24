@@ -606,8 +606,7 @@ public class FormSegmentacao extends javax.swing.JFrame {
      */
     private void ListarTags(String tag){
         ArrayList<String> listaPaths = Busca.ListarTags(tag);
-        
-        
+        tagsBancoModel.clear();
         for(int i = 0; i<listaPaths.size(); i++){
             tagsBancoModel.addElement(listaPaths.get(i));
         }
