@@ -1,11 +1,20 @@
 package tree;
 import java.util.*;
 
+/**
+ * Uma classe que representa o nó da árvore trie.
+ * @author Hiago Miguel e Rai Vitor
+ */
 class TrieNode{
     private char content; 
     private boolean isEnd; 
     private int count;  
     public ArrayList<TrieNode> childList; 
+    
+    /**
+     * Construtor da Classe TrieNode
+     * @param c Caractere do nó.
+     */
 
     public TrieNode(char c){
         childList = new ArrayList<>();
@@ -14,6 +23,11 @@ class TrieNode{
         count = 0;
     }  
 
+    /**
+     * Sub nó da árvore Trie.
+     * @param c Caractere do nó.
+     * @return Sub nó.
+     */
     public TrieNode subNode(char c){
         if (childList != null)
             for (TrieNode eachChild : childList)
@@ -22,22 +36,42 @@ class TrieNode{
         return null;
     }
     
+    /**
+     * Retorna o conteúdo do nó;
+     * @return Caractere.
+     */
     public char getContent(){
         return this.content;
     }
     
+    /**
+     * Define se é o fim da árvore ou não.
+     * @param b 
+     */
     public void setEnd(boolean b){
         this.isEnd = b;
     }
     
+    /**
+     * Retorna se é o fim da árvore ou não.
+     * @return Se é o fim da árvore ou não.
+     */
     public boolean getEnd(){
         return this.isEnd;
     }
     
+    /**
+     * Incrementa o número total de nós da árvore.
+     * @param n Valor a ser incrementado.
+     */
     public void addCount(int n){
         this.count += n;
     }
     
+    /**
+     * Retorna o número total de nós da árvore.
+     * @return Número total de nós da árvore.
+     */
     public int getCount(){
         return this.count;
     }
